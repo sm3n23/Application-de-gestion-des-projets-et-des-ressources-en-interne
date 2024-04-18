@@ -12,6 +12,6 @@ public class EmployeeDto {
 
     private String name;
 
-    private Set<Long> projectIds = new HashSet<>();
+    private Long projectId;
 
 }

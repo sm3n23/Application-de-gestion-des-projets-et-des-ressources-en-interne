@@ -36,16 +36,17 @@ public class TacheServiceImpl implements TacheService{
         tache.setName(tacheDto.getName());
 
 
-        Project project = projectRepository.findById(tacheDto.getProjectId())
+        if(tacheDto.getProjectId()!=null){
+            Project project = projectRepository.findById(tacheDto.getProjectId())
                 .orElseThrow(()->new NotFoundException("project not found"));
-        tache.setProject(project);
+            tache.setProject(project);}
 
         return tacheRepository.save(tache);
     }
 
     @Override
-    public Tache updateTache(Long EmployeeId, TacheDto tacheDto) {
-        Tache tache = tacheRepository.findById(EmployeeId)
+    public Tache updateTache(Long id, TacheDto tacheDto) {
+        Tache tache = tacheRepository.findById(id)
                 .orElseThrow(()->new NotFoundException("tache not found"));
         tache.setName(tacheDto.getName());
 
@@ -66,8 +67,8 @@ public class TacheServiceImpl implements TacheService{
     }
 
     @Override
-    public void deleteDto(Long EmployeeId) {
+    public void deleteTache(Long id) {
 
-        tacheRepository.deleteById(EmployeeId);
+        tacheRepository.deleteById(id);
     }
 }

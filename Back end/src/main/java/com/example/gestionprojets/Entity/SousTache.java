@@ -22,19 +22,14 @@ public class SousTache {
 
     private String name;
 
-    private Date dateDebut;
 
-    private Date dateFin;
-
-    private String etat;
-
-    /*@OneToMany(mappedBy = "sousTache", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "sousTache", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    private Set<Employee> employees= new HashSet<>();*/
+    private Set<Employee> employees= new HashSet<>();
 
-    /*@ManyToOne
+    @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "tache_id")
     @JsonIgnore
-    private Tache tache;*/
+    private Tache tache;
 }

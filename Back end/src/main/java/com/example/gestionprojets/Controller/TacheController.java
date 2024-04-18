@@ -7,7 +7,6 @@ import com.example.gestionprojets.Service.TacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,13 +19,13 @@ public class TacheController {
     private TacheService tacheService;
 
     @GetMapping("/taches")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    //@PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<List<Tache>> getTaches(){
         List<Tache> taches = tacheService.getTaches();
         return ResponseEntity.ok(taches);
     }
 
-    @PostMapping("/tache")
+    @PostMapping("/taches")
     //@PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<Tache> createTache(@RequestBody TacheDto tacheDto){
         Tache createdTache  = tacheService.createTache(tacheDto);
@@ -34,7 +33,7 @@ public class TacheController {
         return new ResponseEntity<>(createdTache, HttpStatus.CREATED);
     }
 
-    @PutMapping("/tache/{id}")
+    @PutMapping("/taches/{id}")
     public ResponseEntity<Tache> updateTache(@PathVariable Long id, @RequestBody TacheDto tacheDto){
         Tache updatedTache = tacheService.updateTache(id,tacheDto);
 
@@ -45,10 +44,10 @@ public class TacheController {
         }
     }
 
-    @DeleteMapping("/tache/{id}")
+    @DeleteMapping("/taches/{id}")
 
     public ResponseEntity<String> deleteTache(@PathVariable Long id){
-         tacheService.deleteDto(id);
+         tacheService.deleteTache(id);
          return  ResponseEntity.ok("Tache deleted");
     }
 }

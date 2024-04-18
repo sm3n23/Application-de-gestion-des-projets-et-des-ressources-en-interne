@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -31,7 +33,8 @@ public class ProjectServiceImpl implements ProjectService{
     public Project createProject(ProjectDto projectDto) {
         Project project = new Project();
         project.setName(projectDto.getName());
-
+        project.setStartDate(projectDto.getStartDate());
+        project.setFinishDate(projectDto.getFinishDate());
         /*Set<Employee> employees = projectDto.getEmployeesIds().stream()
                 .map(id -> employeeRepository.findById(id)
                         .orElseThrow(() -> new NotFoundException("Employee not found with id: " + id)))
@@ -51,6 +54,8 @@ public class ProjectServiceImpl implements ProjectService{
                 .orElseThrow(()->new NotFoundException("project not found"));
 
         project.setName(project.getName());
+        project.setStartDate(projectDto.getStartDate());
+        project.setFinishDate(projectDto.getFinishDate());
         return projectRepository.save(project);
     }
 
@@ -58,5 +63,20 @@ public class ProjectServiceImpl implements ProjectService{
     public void deleteProject(Long id) {
         projectRepository.deleteById(id);
 
+    }
+
+    public List<Project> searchProjects(String name, Date startDate, Date finishDate) {
+        List<Project> projects = new ArrayList<>();
+
+        if (name != null) projects.addAll(projectRepository.findByName(name));
+        if (startDate != null) projects.addAll(projectRepository.findByStartDate(startDate));
+        if (finishDate != null) projects.addAll(projectRepository.findByFinishDate(finishDate));
+
+        // Remove duplicates if any exist when multiple params are used
+        return projects.stream().distinct().collect(Collectors.toList());
+    }
+
+    public List<Project> findFinishedProjectsBetween(Date startPeriod, Date endPeriod) {
+        return projectRepository.findByFinishDateBetween(startPeriod, endPeriod);
     }
 }

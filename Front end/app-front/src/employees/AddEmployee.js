@@ -17,7 +17,7 @@ export default function AddEmployee() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:8085/employee", employee);
+    await axios.post("http://localhost:8085/projects", employee);
     navigate("/");
   };
 

@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
 @Entity
 @Table
 @Setter@Getter
@@ -21,24 +21,17 @@ public class Employee {
 
     private String name;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(
-            name = "employee_project",
-            joinColumns = @JoinColumn(name = "employee_id"),
-            inverseJoinColumns = @JoinColumn(name = "project_id")
-    )
-    private Set<Project> projects = new HashSet<>();
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name= "project_id")
+    private Project project;
 
 
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Tache tache;
 
-    /*@ManyToOne(cascade = CascadeType.ALL)
-    private SousTache sousTache;*/
+    @ManyToOne(cascade = CascadeType.ALL)
+    private SousTache sousTache;
 
 
     /*@OneToOne(cascade = CascadeType.ALL)

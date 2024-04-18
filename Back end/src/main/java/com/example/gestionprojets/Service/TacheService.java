@@ -12,5 +12,5 @@ public interface TacheService {
 
     Tache updateTache(Long id, TacheDto tacheDto);
 
-    void deleteDto(Long id);
+    void deleteTache(Long id);
 }

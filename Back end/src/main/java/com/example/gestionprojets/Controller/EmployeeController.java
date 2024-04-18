@@ -28,7 +28,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employees);
     }
 
-    @PostMapping("/employee")
+    @PostMapping("/employees")
     public ResponseEntity<Employee> createEmployee(@RequestBody EmployeeDto employeeDto){
         Employee createdEmployee = employeeService.createEmployee(employeeDto);
 

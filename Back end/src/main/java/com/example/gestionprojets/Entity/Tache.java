@@ -29,8 +29,8 @@ public class Tache {
     @OneToMany(mappedBy = "tache",fetch = FetchType.EAGER)
     private Set<Employee> employees= new HashSet<>();
 
-    /*@OneToMany(mappedBy = "tache",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private Set<SousTache> sousTache =new HashSet<>();*/
+    @OneToMany(mappedBy = "tache",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private Set<SousTache> sousTache =new HashSet<>();
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name= "project_id")

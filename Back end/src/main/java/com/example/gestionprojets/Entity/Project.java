@@ -8,10 +8,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Entity;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.*;
+
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table
@@ -23,7 +22,11 @@ public class Project {
 
     private String name;
 
-    @ManyToMany(mappedBy = "projects")
+    private LocalDate startDate;
+
+    private LocalDate finishDate;
+
+    @OneToMany(mappedBy = "project")
     private Set<Employee> employees = new HashSet<>();
 
     @OneToMany(mappedBy = "project")

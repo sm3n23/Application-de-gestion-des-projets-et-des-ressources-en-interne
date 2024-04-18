@@ -14,12 +14,12 @@ public class DtoMapper {
     public EmployeeDto fromEmployee(Employee employee){
         EmployeeDto employeeDto = new EmployeeDto();
         BeanUtils.copyProperties(employee, employeeDto);
-        if (employee.getProjects() != null) {
+        /*if (employee.getProjects() != null) {
             Set<Long> projectIds = employee.getProjects().stream()
                     .map(Project::getId)
                     .collect(Collectors.toSet());
             employeeDto.setProjectIds(projectIds);
-        }
+        }*/
         return employeeDto;
     }
 

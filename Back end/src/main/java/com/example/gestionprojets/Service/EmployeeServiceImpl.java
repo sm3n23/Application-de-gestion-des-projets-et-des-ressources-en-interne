@@ -73,6 +73,9 @@ public class EmployeeServiceImpl implements EmployeeService{
                 .orElseThrow(() -> new NotFoundException("Employee not found"));
         employee.setName(employeeDto.getName());
 
+        Project project = projectRepository.findById(employeeDto.getProjectId())
+                .orElseThrow(()->new NotFoundException("Project not found"));
+        employee.setProject(project);
 
 
 
@@ -80,7 +83,7 @@ public class EmployeeServiceImpl implements EmployeeService{
                 .orElseThrow(()->new NotFoundException("Tache not found with id: " + employeesDto.getTacheId()));
         employee.setTache(tache);*/
 
-        if (employeeDto.getProjectIds() != null) {
+        /*if (employeeDto.getProjectIds() != null) {
             Set<Project> projects = employeeDto.getProjectIds().stream()
                     .map(ID-> projectRepository.findById(ID)
                             .orElseThrow(()->new NotFoundException("Project not found")))
@@ -92,7 +95,7 @@ public class EmployeeServiceImpl implements EmployeeService{
             });
             employee.setProjects(projects);
 
-        }
+        }*/
 
         return employeeRepository.save(employee);
     }
