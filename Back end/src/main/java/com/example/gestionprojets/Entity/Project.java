@@ -3,7 +3,6 @@ package com.example.gestionprojets.Entity;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,12 +20,13 @@ public class Project {
     private Long id;
 
     private String name;
+    private String status;
 
     private LocalDate startDate;
 
     private LocalDate finishDate;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project",fetch = FetchType.EAGER)
     private Set<Employee> employees = new HashSet<>();
 
     @OneToMany(mappedBy = "project")

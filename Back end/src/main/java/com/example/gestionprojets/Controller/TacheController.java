@@ -7,6 +7,7 @@ import com.example.gestionprojets.Service.TacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class TacheController {
     private TacheService tacheService;
 
     @GetMapping("/taches")
-    //@PreAuthorize("hasAnyAuthority('ADMIN')")
+    //@PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     public ResponseEntity<List<Tache>> getTaches(){
         List<Tache> taches = tacheService.getTaches();
         return ResponseEntity.ok(taches);

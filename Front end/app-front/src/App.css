@@ -40,3 +40,161 @@
 .bg-custom {
   background-color: #fd7e14; 
 }
+
+.sidebar {
+  width: 250px; /* Adjust width as needed */
+  background-color: #333; /* Dark background for the sidebar */
+  color: white;
+  height: 100vh; /* Full-height */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
+}
+
+.sidebar-item {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 18px; /* Increased font size */
+  color: #fd7e14;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar-item:hover {
+  color: #f1f1f1; /* Light grey on hover */
+}
+
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
+
+.main-content {
+  margin-left: 250px; /* Same as the width of the sidebar */
+  padding: 1em;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.table-container {
+  /* Your styles for table container */
+}
+
+.piechart-container {
+  width: 100%; /* or a specific size */
+  align-self: end; /* Aligns the pie chart at the bottom */
+  justify-self: start; /* Aligns the pie chart on the left side */
+}
+
+/* Responsive behavior if necessary */
+@media (min-width: 768px) {
+  .layout {
+    grid-template-columns: auto 300px; /* Adjust the size as necessary */
+    align-items: start;
+  }
+}
+.employee-list-container {
+  max-height: 200px; /* Adjust the height as needed */
+  overflow-y: auto; /* Enables vertical scrolling */
+  background-color: #f8f9fa; /* Light grey background, adjust as needed */
+  padding: 10px; /* Padding inside the container */
+  border-radius: 5px; /* Optional: rounds the corners of the scrollable area */
+}
+
+.employee-item {
+  padding: 10px 0; /* Adds padding to the top and bottom of each item, 0 padding on the left and right */
+  margin: 0 10px; /* Optional: Adds margin to the left and right of each item */
+  border-bottom: 1px solid #e9ecef; /* Light grey border for separating items */
+}
+
+.employee-item:last-child {
+  border-bottom: none; /* Removes the border from the last item */
+}
+
+.employee-name {
+  font-size: 16px; /* Adjust the font size as needed */
+  color: #495057; /* Dark grey text, adjust as needed */
+}
+
+.employee-role {
+  font-size: 14px; /* Smaller font size for roles */
+  color: #6c757d; /* Medium grey text, adjust as needed */
+}
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.status {
+    border-radius: 5px;
+    padding: 5px 10px;
+    color: #fff;
+    text-align: center;
+}
+
+.confirmed {
+    background-color: green;
+}
+
+.declined {
+    background-color: red;
+}
+
+.processing {
+    background-color: orange;
+}
+
+.tag {
+    display: inline-block;
+    padding: 5px;
+    margin-right: 5px;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.vip {
+    background-color: blue;
+}
+
+.promo {
+    background-color: purple;
+}
+
+.closed {
+    background-color: gray;
+}

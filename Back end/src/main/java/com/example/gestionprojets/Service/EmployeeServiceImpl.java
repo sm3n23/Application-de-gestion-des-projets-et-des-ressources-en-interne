@@ -4,8 +4,11 @@ import com.example.gestionprojets.Dto.EmployeeDto;
 import com.example.gestionprojets.Entity.Employee;
 import com.example.gestionprojets.Entity.Project;
 //import com.example.gestionprojets.Entity.Tache;
+import com.example.gestionprojets.Entity.Role;
+import com.example.gestionprojets.Entity.Tache;
 import com.example.gestionprojets.Repositories.EmployeeRepository;
 import com.example.gestionprojets.Repositories.ProjectRepository;
+import com.example.gestionprojets.Repositories.TacheRepository;
 import com.example.gestionprojets.mappers.DtoMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,6 +31,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Autowired
     private ProjectRepository projectRepository;
 
+    private TacheRepository tacheRepository;
 
     public EmployeeDto getEmployeeById(Long id) {
         Employee employee = employeeRepository.findById(id)
@@ -60,11 +63,24 @@ public class EmployeeServiceImpl implements EmployeeService{
     public Employee createEmployee(EmployeeDto employeeDto) {
         Employee employee = new Employee();
         employee.setName(employeeDto.getName());
-
-
-
-
+        employee.setRole(convertStringToRole(employeeDto.getRole()));
+        Project project = projectRepository.findById(employeeDto.getProjectId())
+                .orElseThrow(()->new NotFoundException("Project not found"));
+        employee.setProject(project);
+        /*if(employeeDto.getTacheId()!=null){
+            Tache tache = tacheRepository.findById(employeeDto.getTacheId())
+                    .orElseThrow(()->new NotFoundException("Tache not found with id: " + employeeDto.getTacheId()));
+            employee.setTache(tache);
+        }*/
         return employeeRepository.save(employee);
+    }
+
+    private Role convertStringToRole(String roleStr) {
+        try {
+            return Role.valueOf(roleStr.toUpperCase());
+        } catch (IllegalArgumentException | NullPointerException e) {
+            throw new IllegalArgumentException("Invalid role provided: " + roleStr);
+        }
     }
 
     @Override
@@ -79,9 +95,11 @@ public class EmployeeServiceImpl implements EmployeeService{
 
 
 
-        /*Tache tache = tacheRepository.findById(employeesDto.getTacheId())
-                .orElseThrow(()->new NotFoundException("Tache not found with id: " + employeesDto.getTacheId()));
-        employee.setTache(tache);*/
+        /*if(employeeDto.getTacheId()!=null){
+            Tache tache = tacheRepository.findById(employeeDto.getTacheId())
+                    .orElseThrow(()->new NotFoundException("Tache not found with id: " + employeeDto.getTacheId()));
+            employee.setTache(tache);
+        }*/
 
         /*if (employeeDto.getProjectIds() != null) {
             Set<Project> projects = employeeDto.getProjectIds().stream()

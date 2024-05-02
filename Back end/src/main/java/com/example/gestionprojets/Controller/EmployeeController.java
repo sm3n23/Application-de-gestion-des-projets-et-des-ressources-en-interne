@@ -3,6 +3,7 @@ package com.example.gestionprojets.Controller;
 import com.example.gestionprojets.Dto.EmployeeDto;
 import com.example.gestionprojets.Entity.Employee;
 import com.example.gestionprojets.Service.EmployeeService;
+import com.example.gestionprojets.Service.KeyCloackClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,8 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    @Autowired
+    private KeyCloackClientService keyCloackClientService;
     @GetMapping("/employees/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
         return ResponseEntity.ok(employeeService.getEmployee(id));
@@ -31,12 +34,13 @@ public class EmployeeController {
     @PostMapping("/employees")
     public ResponseEntity<Employee> createEmployee(@RequestBody EmployeeDto employeeDto){
         Employee createdEmployee = employeeService.createEmployee(employeeDto);
+        //keyCloackClientService.createUserInKeycloak(createdEmployee.getName(), "defaultPassword");
 
         return new ResponseEntity<>(createdEmployee, HttpStatus.CREATED);
     }
 
     @PutMapping("/employees/{id}")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id,@RequestBody EmployeeDto employeeDto){
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody EmployeeDto employeeDto){
         Employee updatedEmployee = employeeService.updateEmployee(id, employeeDto);
         if(updatedEmployee!=null){
             return ResponseEntity.ok(updatedEmployee);

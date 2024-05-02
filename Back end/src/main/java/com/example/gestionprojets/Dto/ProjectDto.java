@@ -13,6 +13,7 @@ public class ProjectDto {
 
     private String name;
 
+    private String status;
     private LocalDate startDate;
     private LocalDate finishDate;
 

@@ -2,13 +2,10 @@ package com.example.gestionprojets.Entity;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashSet;
 import java.util.Set;
-
 
 
 @Entity
@@ -20,15 +17,17 @@ public class Employee {
     private Long id;
 
     private String name;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name= "project_id")
     private Project project;
 
 
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private Tache tache;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Tache> taches;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private SousTache sousTache;

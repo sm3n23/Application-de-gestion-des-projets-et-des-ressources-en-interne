@@ -2,12 +2,8 @@ package com.example.gestionprojets.mappers;
 
 import com.example.gestionprojets.Dto.EmployeeDto;
 import com.example.gestionprojets.Entity.Employee;
-import com.example.gestionprojets.Entity.Project;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class DtoMapper {

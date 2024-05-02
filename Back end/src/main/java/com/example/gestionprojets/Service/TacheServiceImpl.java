@@ -10,6 +10,7 @@ import com.example.gestionprojets.Repositories.TacheRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -54,13 +55,16 @@ public class TacheServiceImpl implements TacheService{
                 .orElseThrow(()->new NotFoundException("project not found"));
         tache.setProject(project);
 
-        /*if(tacheDto.getEmployeesIds()!=null){
-            Set<Employee> employees = tacheDto.getEmployeesIds().stream()
-                    .map(id->employeeRepository.findById(id).orElseThrow(
+        List<Employee> employees = employeeRepository.findAllById(tacheDto.getEmployeesIds());
+        tache.setEmployees(new HashSet<>(employees));
+
+            /*Set<Employee> employees = tacheDto.getEmployeesIds().stream()
+                    .map(EmployeeId->employeeRepository.findById(EmployeeId).orElseThrow(
                             ()->new NotFoundException("Employee not found")))
                     .collect(Collectors.toSet());
-            tache.setEmployees(employees);
-        }*/
+            tache.setEmployees(employees);*/
+
+
 
 
         return tacheRepository.save(tache);

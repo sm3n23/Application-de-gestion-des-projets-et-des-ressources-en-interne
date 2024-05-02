@@ -13,5 +13,7 @@ public class EmployeeDto {
     private String name;
 
     private Long projectId;
+    private String role;
+    private Long tacheId;
 
 }

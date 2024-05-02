@@ -1,18 +1,15 @@
 package com.example.gestionprojets.Service;
 
 import com.example.gestionprojets.Dto.ProjectDto;
-import com.example.gestionprojets.Entity.Employee;
 import com.example.gestionprojets.Entity.Project;
 import com.example.gestionprojets.Repositories.EmployeeRepository;
 import com.example.gestionprojets.Repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,6 +30,7 @@ public class ProjectServiceImpl implements ProjectService{
     public Project createProject(ProjectDto projectDto) {
         Project project = new Project();
         project.setName(projectDto.getName());
+        project.setStatus(projectDto.getStatus());
         project.setStartDate(projectDto.getStartDate());
         project.setFinishDate(projectDto.getFinishDate());
         /*Set<Employee> employees = projectDto.getEmployeesIds().stream()
@@ -68,7 +66,7 @@ public class ProjectServiceImpl implements ProjectService{
     public List<Project> searchProjects(String name, Date startDate, Date finishDate) {
         List<Project> projects = new ArrayList<>();
 
-        if (name != null) projects.addAll(projectRepository.findByName(name));
+        if (name != null) projects.addAll(projectRepository.findByNameContainingIgnoreCase(name));
         if (startDate != null) projects.addAll(projectRepository.findByStartDate(startDate));
         if (finishDate != null) projects.addAll(projectRepository.findByFinishDate(finishDate));
 
