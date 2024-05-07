@@ -163,7 +163,7 @@ function TaskList({ tasks, onDeleteTask, onAddTask, randomColor }) {
       <label className="form-label">Tasks:</label>
       <div className="form-control my-2">
         {tasks.map((task) => (
-          <div key={task.id} className="tag my-3" style={{ backgroundColor: randomColor() }}>
+          <div key={task.id} className="tag my-4" style={{ backgroundColor: randomColor() }}>
             {task.name}
             <button type="button" onClick={() => onDeleteTask(task.id)} className="icon-button"><i className="fa-sharp fa-solid fa-circle-xmark"></i></button>
           </div>
