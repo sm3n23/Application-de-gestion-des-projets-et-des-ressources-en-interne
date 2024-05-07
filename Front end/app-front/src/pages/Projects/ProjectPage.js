@@ -28,6 +28,7 @@ export default function ProjectPage() {
       setProjects(processedProjects);
     }
 
+    console.log(projects)
     
   return (
     <div className='container'>

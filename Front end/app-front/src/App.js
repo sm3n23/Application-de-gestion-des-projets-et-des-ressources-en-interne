@@ -6,10 +6,11 @@ import SearchResults from "./pages/SearchResults";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ViewEmployee from "./employees/ViewEmployee";
 import AddEmployee from "./employees/AddEmployee";
-import EditEmployee from "./employees/EditEmployee";
+import EditEmployee from "./pages/Employees/EditEmployee";
 import Sidebar from "./layout/sidebar";
 import EmployeePage from "./pages/Employees/EmployeesPage";
 import ProjectPage from "./pages/Projects/ProjectPage";
+import EditProject from "./pages/Projects/EditProject/EditProject";
 
 function App() {
   return (
@@ -24,8 +25,9 @@ function App() {
           <Route exact path="/collaborateur" element={<EmployeePage/>}></Route>
           <Route exact path="/projects" element={<ProjectPage/>}></Route>
           <Route exact path="/viewemployee/:id" element={<ViewEmployee />}></Route>
-          <Route exact path="/editemployee/:id" element={<EditEmployee />}></Route>
+          <Route exact path="/collaborateur/edit/:id" element={<EditEmployee />}></Route>
           <Route exact path="/addemployee" element={<AddEmployee />}></Route>
+          <Route exact path="/projects/edit/:id" element={<EditProject />}></Route>
           
           <Route path="/search" element={<SearchResults />} /> 
         </Routes>

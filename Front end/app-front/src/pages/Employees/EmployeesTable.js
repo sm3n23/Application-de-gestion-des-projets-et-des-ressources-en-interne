@@ -1,5 +1,6 @@
 import React from 'react';
 import './Table.css'; 
+import { Link } from 'react-router-dom';
 
 const EmployeeTable = ({employees}) => {
     const randomColor = () => {
@@ -24,7 +25,7 @@ const EmployeeTable = ({employees}) => {
                         {employees.map((employee)=>(
                             <tr key={employee.id}>
                             <td>{employee.name}</td>
-                            <td>{employee.projectName}</td>
+                            <td><span className="tag" style={{ backgroundColor: randomColor() }}>{employee.projectName} </span></td>
                             <td>May 14, 2020, 12:45:57</td>
                             <td>Rens Erkens</td>
                             <td>
@@ -36,7 +37,10 @@ const EmployeeTable = ({employees}) => {
                                 )): <span className="tag" style={{ backgroundColor: randomColor() }}>{"No Tasks Assigned"}</span>} 
                                 
                             </td>
-                            <td>23,400</td>
+                            <td>
+                                <Link className='btn btn-sm btn-outline-info mx-2 px-3' to={`/collaborateur/edit/${employee.id}`}>Edit</Link>
+                                <Link className='btn btn-sm btn-outline-danger ' to={`/collaborateur/delete/${employee.id}`}>Delete</Link>
+                            </td>
                         </tr>
                         ))}
                         

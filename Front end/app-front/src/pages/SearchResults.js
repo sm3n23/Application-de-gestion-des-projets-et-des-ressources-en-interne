@@ -3,22 +3,25 @@ import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
 
 function useQuery() {
-    return new URLSearchParams(useLocation().search);
+  return new URLSearchParams(useLocation().search);
 }
 
 export default function Home() {
   const [projects, setProjects] = useState([]);
   const query = useQuery();
   const searchName = query.get("name");
-  console.log(searchName)
+  console.log(searchName);
 
   useEffect(() => {
     loadProjects();
   }, [searchName]);
 
   const loadProjects = async () => {
-    const result = await axios.get(`http://localhost:8085/projects/search?name=${searchName}`);
-    setProjects(result.data);
+    const result = await axios.get(
+      `http://localhost:8085/projects/search?name=${searchName}`
+    );
+    const processedProjects = processProjects(result.data);
+    setProjects(processedProjects);
   };
 
   const deleteProject = async (id) => {
@@ -26,32 +29,80 @@ export default function Home() {
     loadProjects();
   };
 
+  const randomColor = () => {
+    return `#${Math.floor(Math.random() * 16777215)
+      .toString(16)
+      .padStart(6, "0")}`;
+  };
+  const processProjects = (projects) => {
+    return projects.map(project => {
+        const employees = project.employees.map(emp => emp.name);
+        const tasks = project.taches.map(task => task.name);
+        return {
+            ...project,
+            employees,
+            tasks
+        };
+    });
+};
   return (
     <div className="container">
-      <div className="py-4">
-        <h1>Projects</h1>
-        <table className="table border shadow">
-          <thead className="thead-light">
+      <div className="table-container">
+        <table className="table table-striped table-hover">
+          <thead>
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">Name</th>
-              <th scope="col">Start Date</th>
-              <th scope="col">Finish Date</th>
-              <th scope="col">Actions</th>
+              <th>Email</th>
+              <th>Country</th>
+              <th>Signup time</th>
+              <th>Affiliate</th>
+              <th>Status</th>
+              <th>Tags</th>
+              <th>Balance, EUR</th>
             </tr>
           </thead>
           <tbody>
-            {projects.map((project, index) => (
+            {projects.map((project) => (
               <tr key={project.id}>
-                <th scope="row">{index + 1}</th>
                 <td>{project.name}</td>
-                <td>{project.startDate}</td>
-                <td>{project.finishDate}</td>
+                <td>Germany</td>
+                <td>May 14, 2020, 12:45:57</td>
                 <td>
-                  <Link className="btn btn-primary mx-2" to={`/viewproject/${project.id}`}>View</Link>
-                  <Link className="btn btn-outline-primary mx-2" to={`/editproject/${project.id}`}>Edit</Link>
-                  <button className="btn btn-danger mx-2" onClick={() => deleteProject(project.id)}>Delete</button>
+                  {project.employees.map((employee, index) => (
+                    <span
+                      key={index}
+                      className="tag"
+                      style={{ backgroundColor: randomColor() }}
+                    >
+                      {employee}
+                    </span>
+                  ))}
                 </td>
+                <td>
+                  <span
+                    className="status-circle"
+                    style={{
+                      backgroundColor:
+                        project.status === "On Going"
+                          ? "green"
+                          : project.status === "Not Started"
+                          ? "red"
+                          : "orange",
+                    }}
+                  ></span>{" "}
+                  {project.status}
+                </td>
+                <td>
+                  {project.tasks.map((task, index) => (
+                    <span
+                      key={index}
+                      className="tag"
+                      style={{ backgroundColor: randomColor() }}
+                    >
+                      {task}
+                    </span>
+                  ))}
+                </td>
+                <td>23,400</td>
               </tr>
             ))}
           </tbody>

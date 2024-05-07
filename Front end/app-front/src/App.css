@@ -38,7 +38,7 @@
 }
 
 .bg-custom {
-  background-color: #fd7e14; 
+  background-color: #b8b0a8; 
 }
 
 .sidebar {
@@ -58,7 +58,7 @@
   padding: 6px 8px 6px 16px;
   text-decoration: none;
   font-size: 18px; /* Increased font size */
-  color: #fd7e14;
+  color: #ff7300;
   display: block;
   transition: 0.3s;
 }

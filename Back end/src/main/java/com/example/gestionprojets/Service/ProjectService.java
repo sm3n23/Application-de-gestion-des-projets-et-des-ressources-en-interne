@@ -11,6 +11,8 @@ import java.util.List;
 public interface ProjectService {
     List<Project> findProjects();
 
+    Project findProjectById(Long id);
+
     Project createProject(ProjectDto projectDto);
 
     Project updateProject(Long id, ProjectDto projectDto);

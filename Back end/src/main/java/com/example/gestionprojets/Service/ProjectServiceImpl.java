@@ -27,6 +27,14 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
+    public Project findProjectById(Long id) {
+        Project project = projectRepository.findById(id)
+                .orElseThrow(()->new NotFoundException("project not found"));
+        return project;
+    }
+
+
+    @Override
     public Project createProject(ProjectDto projectDto) {
         Project project = new Project();
         project.setName(projectDto.getName());

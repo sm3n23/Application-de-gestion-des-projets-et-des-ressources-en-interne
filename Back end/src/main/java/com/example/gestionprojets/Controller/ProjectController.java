@@ -31,6 +31,16 @@ public class ProjectController {
         return ResponseEntity.ok(projects);
     }
 
+    @GetMapping("/projects/{id}")
+    public ResponseEntity<Project> getProject(@PathVariable Long id){
+        Project project = projectService.findProjectById(id);
+        if(project!=null){
+            return ResponseEntity.ok(project);
+        }
+        else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @PostMapping("/projects")
     public ResponseEntity<Project> createProject(@RequestBody ProjectDto projectDto){
