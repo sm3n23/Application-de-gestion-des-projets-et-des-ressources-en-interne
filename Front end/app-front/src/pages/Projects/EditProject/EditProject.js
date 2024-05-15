@@ -43,11 +43,21 @@ export default function EditProject() {
   };
 
   // Add new employee to project
-  const addEmployeeToProject = (employee) => {
-    setProject((prev) => ({
-      ...prev,
-      employees: [...prev.employees, employee]
-    }));
+  const addEmployeeToProject = async (employee) => {
+    try {
+      const updatedEmployee = {
+        ...employee,
+        projectId: id,
+      };
+      await axios.put(`http://localhost:8085/employees/${employee.id}`, updatedEmployee);
+      setProject((prev) => ({
+        ...prev,
+        employees: [...prev.employees, updatedEmployee]
+      }));
+    } catch (error) {
+      console.error("Failed to add employee to project:", error);
+      alert("Failed to add employee to project. Please try again.");
+    }
   };
 
   // Handle form submission
@@ -66,7 +76,7 @@ export default function EditProject() {
     try {
         const newTask = {
             name: taskName,
-            projectId: id // Assuming 'id' is the project ID from useParams()
+            projectId: id 
         };
 
         const response = await axios.post("http://localhost:8085/taches", newTask);
@@ -102,6 +112,8 @@ export default function EditProject() {
       alert("An error occurred while deleting the task.");
     }
   };
+
+  
 
   // Generate random color for tags
   const randomColor = () => `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, "0")}`;
@@ -163,7 +175,7 @@ function TaskList({ tasks, onDeleteTask, onAddTask, randomColor }) {
       <label className="form-label">Tasks:</label>
       <div className="form-control my-2">
         {tasks.map((task) => (
-          <div key={task.id} className="tag my-4" style={{ backgroundColor: randomColor() }}>
+          <div key={task.id} className="tag my-3" style={{ backgroundColor: randomColor() }}>
             {task.name}
             <button type="button" onClick={() => onDeleteTask(task.id)} className="icon-button"><i className="fa-sharp fa-solid fa-circle-xmark"></i></button>
           </div>

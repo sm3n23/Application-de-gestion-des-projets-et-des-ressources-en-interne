@@ -1,0 +1,217 @@
+.profile-page {
+    background-color: #f2f6ff; /* Change to your desired color */
+}
+
+.container-p {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 20px;
+    background-color: #f2f6ff;
+    border-radius: 10px;
+    flex-grow: 1;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header button {
+    background: none;
+    border: none;
+    color: #3b82f6;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.header button i {
+    margin-right: 8px;
+}
+
+.profile {
+    display: flex;
+    flex-grow: 1;
+    gap: 20px;
+}
+.profile-left h2 {
+    margin: 0; /* Ensure no margin below the heading */
+}
+.profile-left {
+    flex: 1;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.profile-left img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto;
+}
+
+.profile-left h2 {
+    margin: 10px 0;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+}
+
+.profile-left p {
+    color: #555;
+    text-align: center;
+}
+
+.profile-left .description {
+    margin: 20px 0;
+    color: #666;
+    font-size: 14px;
+    text-align: center;
+}
+
+.profile-left .skills {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.profile-left .skills button {
+    background-color: #e0e7ff;
+    border: none;
+    border-radius: 20px;
+    padding: 5px 10px;
+    margin: 5px;
+    color: #3b82f6;
+    cursor: default;
+    font-size: 14px;
+}
+
+.profile-left .add-notes {
+    margin-top: 20px;
+}
+
+.profile-left .add-notes textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    resize: none;
+}
+
+.profile-left .add-notes button {
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+}
+
+.profile-right {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profile-right .section {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex-grow: 1;
+}
+
+.profile-right .section h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #333;
+    border-bottom: 2px solid #e5eaf0;
+    padding-bottom: 5px;
+}
+
+.profile-right .section p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.profile-right .basic-info .info-item {
+    font-size: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-right .basic-info .info-item p {
+    color: #757373;
+    margin: 5px 0;
+}
+.profile-right .basic-info .info-item p span {
+    display: block;
+    margin-top: 5px;
+    color: #434040;
+    margin-right: 50px;
+}
+.profile-right .buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.profile-right .buttons button {
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.experience-list {
+    list-style: none;
+    padding: 0;
+}
+
+.experience-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.experience-list .circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.experience-list .infosys {
+    background-color: #60a5fa;
+}
+
+.experience-list .pixel-studio {
+    background-color: #ec4899;
+}
+
+.experience-list .ramotion-studio {
+    background-color: #f59e0b;
+}

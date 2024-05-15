@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import PieChart from "./PieChart"; 
 import EmployeeList from "./employeeList";
+import ProjectsTable from "../Projects/ProjectsTable";
 
 export default function Home() {
   const [projects, setProjects] = useState([]);
@@ -14,10 +15,23 @@ export default function Home() {
     loadEmployees();
   }, []);
 
+  const processProjects = (projects) => {
+    return projects.map(project => {
+        const employees = project.employees.map(emp => emp.name);
+        const tasks = project.taches.map(task => task.name);
+        return {
+            ...project,
+            employees,
+            tasks
+        };
+    });
+};
+
   const loadProjects = async () => {
     try {
       const result = await axios.get("http://localhost:8085/projects");
-      setProjects(result.data);
+      const processedProjects = processProjects(result.data);
+      setProjects(processedProjects);
 
       const statusCounts = {
         "Not Started": 0,
@@ -59,50 +73,8 @@ export default function Home() {
   return (
     <div className="container m-2">
       <div className="py-4">
-        <div className="">
-          <div className="table-container">
-            <table class="table border shadow">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Start Date </th>
-                  <th scope="col">finish Date </th>
-                </tr>
-              </thead>
-              <tbody>
-                {projects.map((project, index) => (
-                  <tr key={project.id}>
-                    <th scope="row">{index + 1}</th>
-                    <td>{project.name}</td>
-                    <td> {project.startDate}</td>
-                    <td>{project.finishDate}</td>
-                    <td>
-                      <Link
-                        className="btn btn-primary mx-2"
-                        to={`/viewemployee/${project.id}`}
-                      >
-                        View
-                      </Link>
-                      <Link
-                        className="btn btn-outline-primary mx-2"
-                        to={`/editemployee/${project.id}`}
-                      >
-                        Edit
-                      </Link>
-                      <button
-                        className="btn btn-danger mx-2"
-                        onClick={() => deleteProject(project.id)}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+      
+      <ProjectsTable projects={projects} setProjects={setProjects}/>
         <div className="row my-5">
           
           <div className=" col-lg-6 col-md-6 px-3">

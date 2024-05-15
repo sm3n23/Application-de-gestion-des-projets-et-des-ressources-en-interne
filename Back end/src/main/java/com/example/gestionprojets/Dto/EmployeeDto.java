@@ -14,6 +14,6 @@ public class EmployeeDto {
 
     private Long projectId;
     private String role;
-    private Long tacheId;
+    private Set<Long> tachesIds;
 
 }

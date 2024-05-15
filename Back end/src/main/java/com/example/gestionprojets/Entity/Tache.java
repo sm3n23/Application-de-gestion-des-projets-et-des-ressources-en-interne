@@ -32,7 +32,7 @@ public class Tache {
     @OneToMany(mappedBy = "tache",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Set<SousTache> sousTache =new HashSet<>();
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name= "project_id")
     private Project project;
 

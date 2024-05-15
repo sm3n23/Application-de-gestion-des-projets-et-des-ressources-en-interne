@@ -6,11 +6,13 @@ import SearchResults from "./pages/SearchResults";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ViewEmployee from "./employees/ViewEmployee";
 import AddEmployee from "./employees/AddEmployee";
-import EditEmployee from "./pages/Employees/EditEmployee";
+import EditEmployee from "./pages/Employees/EditEmployee/EditEmployee";
 import Sidebar from "./layout/sidebar";
 import EmployeePage from "./pages/Employees/EmployeesPage";
 import ProjectPage from "./pages/Projects/ProjectPage";
 import EditProject from "./pages/Projects/EditProject/EditProject";
+import AddProject from "./pages/Projects/AddProject/AddProject";
+import Profile from "./pages/Employees/Profile/Profile";
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
           <Route exact path="/collaborateur/edit/:id" element={<EditEmployee />}></Route>
           <Route exact path="/addemployee" element={<AddEmployee />}></Route>
           <Route exact path="/projects/edit/:id" element={<EditProject />}></Route>
+          <Route exact path="/projects/add" element={<AddProject />}></Route>
+          <Route exact path="/employees/1" element={<Profile></Profile>}></Route>
           
           <Route path="/search" element={<SearchResults />} /> 
         </Routes>

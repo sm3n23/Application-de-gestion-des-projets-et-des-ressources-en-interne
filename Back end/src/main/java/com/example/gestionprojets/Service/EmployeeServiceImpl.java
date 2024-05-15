@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -92,6 +93,9 @@ public class EmployeeServiceImpl implements EmployeeService{
         Project project = projectRepository.findById(employeeDto.getProjectId())
                 .orElseThrow(()->new NotFoundException("Project not found"));
         employee.setProject(project);
+
+        List<Tache> taches = tacheRepository.findAllById(employeeDto.getTachesIds());
+        employee.setTaches(new HashSet<>(taches) );
 
 
 

@@ -26,10 +26,10 @@ public class Project {
 
     private LocalDate finishDate;
 
-    @OneToMany(mappedBy = "project",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "project")
     private Set<Employee> employees = new HashSet<>();
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Tache> taches = new HashSet<>();
 
     /*@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Setter@Getter
@@ -17,5 +18,6 @@ public class ProjectDto {
     private LocalDate startDate;
     private LocalDate finishDate;
 
-    private Set<Long> employeesIds;
+    private List<Long> employeeIds;
+    private List<Long> tachesIds;
 }

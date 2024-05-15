@@ -1,3 +1,4 @@
+
 .container {
     width: 100%;
     margin-top: 40px;
@@ -115,4 +116,24 @@ tr:hover {
     cursor: pointer;
     color: #666; /* Dark grey color for the close button */
   }
+  /* Add this to your CSS file if needed */
+  .btn-orange {
+    background-color: orange;
+    border-color: orange;
+    color: white;
+  }
   
+  .btn-orange:hover {
+    background-color: darkorange;
+    border-color: darkorange;
+  }
+
+  .btn-orange-outline {
+    background-color: transparent;
+    border-color: orange;
+    color: orange;
+  }
+  .btn-orange-outline:hover {
+    background-color: darkorange;
+    border-color: darkorange;
+  }

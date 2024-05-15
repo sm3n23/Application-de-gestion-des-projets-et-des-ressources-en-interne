@@ -7,6 +7,7 @@ import java.util.Set;
 @Data
 public class TacheDto {
 
+    private Long id;
 
     private String name;
 

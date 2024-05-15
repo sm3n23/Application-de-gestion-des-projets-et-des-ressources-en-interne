@@ -1,15 +1,17 @@
 package com.example.gestionprojets.Service;
 
 import com.example.gestionprojets.Dto.ProjectDto;
+import com.example.gestionprojets.Dto.TacheDto;
+import com.example.gestionprojets.Entity.Employee;
 import com.example.gestionprojets.Entity.Project;
+import com.example.gestionprojets.Entity.Tache;
 import com.example.gestionprojets.Repositories.EmployeeRepository;
 import com.example.gestionprojets.Repositories.ProjectRepository;
+import com.example.gestionprojets.Repositories.TacheRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,6 +20,10 @@ public class ProjectServiceImpl implements ProjectService{
     @Autowired
     private ProjectRepository projectRepository;
 
+    @Autowired
+    private TacheRepository tacheRepository;
+
+    @Autowired
     private EmployeeRepository employeeRepository;
 
     @Override
@@ -59,9 +65,20 @@ public class ProjectServiceImpl implements ProjectService{
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(()->new NotFoundException("project not found"));
 
-        project.setName(project.getName());
-        project.setStartDate(projectDto.getStartDate());
-        project.setFinishDate(projectDto.getFinishDate());
+        project.setName(projectDto.getName());
+        project.setStatus(projectDto.getStatus());
+
+        if (projectDto.getEmployeeIds() != null) {
+            List<Employee> employees = employeeRepository.findAllById(projectDto.getEmployeeIds());
+            project.setEmployees(new HashSet<>(employees));  // Convert to Set
+        }
+
+        if (projectDto.getTachesIds() != null) {
+            List<Tache> taches = tacheRepository.findAllById(projectDto.getTachesIds());
+            project.setTaches(new HashSet<>(taches));  // Convert to Set
+        }
+
+
         return projectRepository.save(project);
     }
 
