@@ -35,7 +35,11 @@ public class TacheServiceImpl implements TacheService{
     public Tache createTache(TacheDto tacheDto) {
         Tache tache = new Tache();
         tache.setName(tacheDto.getName());
-
+        tache.setStartDate(tacheDto.getStartDate());
+        tache.setFinishDate(tacheDto.getFinishDate());
+        tache.setStatus(tacheDto.getStatus());
+        tache.setAdvancement(tacheDto.getAdvancement());
+        tache.setDescription(tacheDto.getDescription());
 
         if(tacheDto.getProjectId()!=null){
             Project project = projectRepository.findById(tacheDto.getProjectId())

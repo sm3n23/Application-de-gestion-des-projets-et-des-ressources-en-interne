@@ -9,7 +9,7 @@ import com.example.gestionprojets.Entity.Tache;
 import com.example.gestionprojets.Repositories.EmployeeRepository;
 import com.example.gestionprojets.Repositories.ProjectRepository;
 import com.example.gestionprojets.Repositories.TacheRepository;
-import com.example.gestionprojets.mappers.DtoMapper;
+
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,18 +27,14 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    private DtoMapper dtopMapper;
+
 
     @Autowired
     private ProjectRepository projectRepository;
 
     private TacheRepository tacheRepository;
 
-    public EmployeeDto getEmployeeById(Long id) {
-        Employee employee = employeeRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Employee not found"));
-        return dtopMapper.fromEmployee(employee);
-    }
+
 
     public Employee getEmployee(Long id) {
         Employee employee = employeeRepository.findById(id)
@@ -46,12 +42,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         return employee;
     }
 
-    public List<EmployeeDto> getAllEmployees() {
 
-        return employeeRepository.findAll().stream()
-                .map(employee -> dtopMapper.fromEmployee(employee))
-                .collect(Collectors.toList());
-    }
 
     public List<Employee> findEmployees() {
 
@@ -64,11 +55,21 @@ public class EmployeeServiceImpl implements EmployeeService{
     public Employee createEmployee(EmployeeDto employeeDto) {
         Employee employee = new Employee();
         employee.setName(employeeDto.getName());
-        employee.setRole(convertStringToRole(employeeDto.getRole()));
-        Project project = projectRepository.findById(employeeDto.getProjectId())
+        employee.setDescription(employeeDto.getDescription());
+        employee.setTitle(employeeDto.getTitle());
+        employee.setEmail(employeeDto.getEmail());
+        employee.setBirthDate(employeeDto.getBirthDate());
+        employee.setExperience(employeeDto.getExperience());
+        employee.setPhoneNumber(employeeDto.getPhoneNumber());
+        employee.setSkills(employeeDto.getSkills());
+        employee.setLocation(employeeDto.getLocation());
+
+
+        //employee.setRole(convertStringToRole(employeeDto.getRole()));
+        /*Project project = projectRepository.findById(employeeDto.getProjectId())
                 .orElseThrow(()->new NotFoundException("Project not found"));
         employee.setProject(project);
-        /*if(employeeDto.getTacheId()!=null){
+        if(employeeDto.getTacheId()!=null){
             Tache tache = tacheRepository.findById(employeeDto.getTacheId())
                     .orElseThrow(()->new NotFoundException("Tache not found with id: " + employeeDto.getTacheId()));
             employee.setTache(tache);
@@ -86,39 +87,35 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public Employee updateEmployee(Long id, EmployeeDto employeeDto) {
+        // Fetch the employee by ID or throw an exception if not found
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Employee not found"));
+
+
         employee.setName(employeeDto.getName());
+        employee.setDescription(employeeDto.getDescription());
+        employee.setTitle(employeeDto.getTitle());
+        employee.setEmail(employeeDto.getEmail());
+        employee.setBirthDate(employeeDto.getBirthDate());
+        employee.setExperience(employeeDto.getExperience());
+        employee.setPhoneNumber(employeeDto.getPhoneNumber());
+        employee.setSkills(employeeDto.getSkills());
+        employee.setLocation(employeeDto.getLocation());
 
-        Project project = projectRepository.findById(employeeDto.getProjectId())
-                .orElseThrow(()->new NotFoundException("Project not found"));
-        employee.setProject(project);
 
-        List<Tache> taches = tacheRepository.findAllById(employeeDto.getTachesIds());
-        employee.setTaches(new HashSet<>(taches) );
+        // Fetch the project by ID or throw an exception if not found
+        if(employeeDto.getProjectId()!=null) {
+            Project project = projectRepository.findById(employeeDto.getProjectId())
+                    .orElseThrow(() -> new NotFoundException("Project not found"));
 
-
-
-        /*if(employeeDto.getTacheId()!=null){
-            Tache tache = tacheRepository.findById(employeeDto.getTacheId())
-                    .orElseThrow(()->new NotFoundException("Tache not found with id: " + employeeDto.getTacheId()));
-            employee.setTache(tache);
-        }*/
-
-        /*if (employeeDto.getProjectIds() != null) {
-            Set<Project> projects = employeeDto.getProjectIds().stream()
-                    .map(ID-> projectRepository.findById(ID)
-                            .orElseThrow(()->new NotFoundException("Project not found")))
-                    .collect(Collectors.toSet());
-
-            projects.forEach(project -> {
-                employee.getProjects().add(project); // Add project to employee
-                project.getEmployees().add(employee); // Add employee to project
-            });
-            employee.setProjects(projects);
-
-        }*/
-
+            employee.setProject(project);
+        }
+        // Fetch the tasks by IDs and set them to the employee
+        if(employeeDto.getTachesIds()!= null) {
+            List<Tache> taches = tacheRepository.findAllById(employeeDto.getTachesIds());
+            employee.setTaches(new HashSet<>(taches));
+        }
+        // Save and return the updated employee
         return employeeRepository.save(employee);
     }
 

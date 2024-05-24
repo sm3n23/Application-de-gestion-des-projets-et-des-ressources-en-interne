@@ -47,14 +47,8 @@ public class ProjectServiceImpl implements ProjectService{
         project.setStatus(projectDto.getStatus());
         project.setStartDate(projectDto.getStartDate());
         project.setFinishDate(projectDto.getFinishDate());
-        /*Set<Employee> employees = projectDto.getEmployeesIds().stream()
-                .map(id -> employeeRepository.findById(id)
-                        .orElseThrow(() -> new NotFoundException("Employee not found with id: " + id)))
-                .collect(Collectors.toSet());
-
-        project.setEmployees(employees);
-        // Set the project reference in each employee
-        employees.forEach(employee -> employee.setProject(project));*/
+        project.setBudget(projectDto.getBudget());
+        project.setDescription(projectDto.getDescription());
 
         return projectRepository.save(project);
     }
@@ -68,8 +62,8 @@ public class ProjectServiceImpl implements ProjectService{
         project.setName(projectDto.getName());
         project.setStatus(projectDto.getStatus());
 
-        if (projectDto.getEmployeeIds() != null) {
-            List<Employee> employees = employeeRepository.findAllById(projectDto.getEmployeeIds());
+        if (projectDto.getEmployeesIds() != null) {
+            List<Employee> employees = employeeRepository.findAllById(projectDto.getEmployeesIds());
             project.setEmployees(new HashSet<>(employees));  // Convert to Set
         }
 

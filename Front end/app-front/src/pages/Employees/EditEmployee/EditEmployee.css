@@ -34,7 +34,7 @@
     width: 50%; /* Set to 50% of the viewport width or adjust based on your design needs */
     max-width: 400px; /* Maximum width so it doesn't get too large on big screens */
     min-width: 300px; /* Minimum width so it doesn't get too small */
-    background: #e96907;
+    background: #f8f7f6;
     padding: 20px;
     border-radius: 10px; /* Rounded corners for a smoother look */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
@@ -108,46 +108,61 @@
 
 /* Modal Content Styles */
 .modal-content {
-  width: 50%; /* Set to 50% of the viewport width or adjust based on your design needs */
+  width: 70%; /* Set to 50% of the viewport width or adjust based on your design needs */
   max-width: 400px; /* Maximum width so it doesn't get too large on big screens */
   min-width: 300px; /* Minimum width so it doesn't get too small */
-  background: #e96907;
+  background: #f8f6f5;
   padding: 20px;
   border-radius: 10px; /* Rounded corners for a smoother look */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   position: relative; /* Needed for positioning the close button absolutely */
 }
 
-/* Close Button inside Modal */
-.modal-close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  border: none;
-  background: none;
-  font-size: 1.5em;
-  cursor: pointer;
-  color: #666; /* Dark grey color for the close button */
-}
-.icon-button {
-  background: transparent;
-  border: none;
-  color: #ff8800; /* Blue color, adjust according to your theme */
-  cursor: pointer;
-  font-size: 12px; /* Make the icon larger */
-  padding: 1px 5px;
+/* Styles for the ReactTags component */
+.ReactTags__tags {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
 }
 
-.icon-button:hover {
-  color: #0056b3; /* A darker shade of blue for hover effect */
-}
-.btn-orange {
-background-color: orange;
-border-color: orange;
-color: white;
+.ReactTags__tagInput {
+  order: 1; 
 }
 
-.btn-orange:hover {
-background-color: darkorange;
-border-color: darkorange;
+.ReactTags__tagInput input {
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 6px 12px;
+  margin: 2px 0;
+}
+
+.ReactTags__tag {
+  display: inline-flex;
+  align-items: center;
+  background-color: #A9A9A9;
+  color: white;
+  border: 1px solid #ced4da;
+  border-radius: 20px;
+  padding: 6px 12px;
+  margin: 2px 0;
+  font-size: 14px;
+}
+
+.ReactTags__remove {
+  cursor: pointer;
+  margin-left: 5px;
+  padding-left: 8px;
+  padding-bottom: 3px;
+  
+  background-color: #f97714;
+  border-radius: 40px;
+  border: none;
+  
+}
+
+.button-group{
+  margin-bottom: 20px;
 }

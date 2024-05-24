@@ -1,9 +1,11 @@
 package com.example.gestionprojets.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,6 +20,13 @@ public class Tache {
 
     private String name;
 
+    private String description;
+    private LocalDate startDate;
+
+    private LocalDate finishDate;
+    private int advancement;
+    private String status;
+
 
 
     @ManyToMany
@@ -29,8 +38,9 @@ public class Tache {
     private Set<Employee> employees = new HashSet<>();
 
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "tache",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private Set<SousTache> sousTache =new HashSet<>();
+    private Set<SousTache> sousTaches =new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name= "project_id")

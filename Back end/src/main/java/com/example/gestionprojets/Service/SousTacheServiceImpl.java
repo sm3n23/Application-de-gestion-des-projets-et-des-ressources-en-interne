@@ -34,6 +34,7 @@ public class SousTacheServiceImpl implements SousTacheService{
     public SousTache createSousTache(SousTacheDto sousTacheDto) {
         SousTache sousTache = new SousTache();
         sousTache.setName(sousTacheDto.getName());
+        sousTache.setCompleted(sousTacheDto.isCompleted());
 
         Tache tache = tacheRepository.findById(sousTacheDto.getTacheId())
                 .orElseThrow(()->new NotFoundException("Tache not found"));
@@ -46,19 +47,13 @@ public class SousTacheServiceImpl implements SousTacheService{
         SousTache sousTache = sousTacheRepository.findById(id)
                 .orElseThrow(()->new NotFoundException("Sous tache not found"));
         sousTache.setName(sousTacheDto.getName());
-
+        sousTache.setCompleted(sousTacheDto.isCompleted());
+        
         Tache tache = tacheRepository.findById(sousTacheDto.getTacheId())
                 .orElseThrow(()->new NotFoundException("Tache not found"));
         sousTache.setTache(tache);
         return sousTacheRepository.save(sousTache);
 
-        /*if(tacheDto.getEmployeesIds()!=null){
-            Set<Employee> employees = tacheDto.getEmployeesIds().stream()
-                    .map(id->employeeRepository.findById(id).orElseThrow(
-                            ()->new NotFoundException("Employee not found")))
-                    .collect(Collectors.toSet());
-            tache.setEmployees(employees);
-        }*/
 
     }
 

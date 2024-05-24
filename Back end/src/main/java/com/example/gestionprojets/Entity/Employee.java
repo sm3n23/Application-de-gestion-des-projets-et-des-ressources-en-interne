@@ -5,6 +5,8 @@ import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 
@@ -20,6 +22,17 @@ public class Employee {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    private String title;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> skills;
+    private String description;
+    private LocalDate birthDate;
+    private int experience;
+    private int phoneNumber;
+    private String email;
+    private String location;
+
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name= "project_id")
     private Project project;
@@ -29,8 +42,7 @@ public class Employee {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Tache> taches;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private SousTache sousTache;
+
 
 
     /*@OneToOne(cascade = CascadeType.ALL)

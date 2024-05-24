@@ -9,10 +9,9 @@ public class SousTacheDto {
 
 
     private String name;
+    private boolean completed;
 
-    private Set<Long> employeesIds;
+
 
     private Long tacheId;
-
-    private Long projectId;
 }

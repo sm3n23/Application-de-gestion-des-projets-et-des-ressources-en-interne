@@ -20,22 +20,21 @@ public class SousTacheController {
     @Autowired
     private SousTacheService sousTacheService;
 
-    @GetMapping("/sousTaches")
+    @GetMapping("/soustaches")
     //@PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<List<SousTache>> getSousTaches(){
         List<SousTache> sousTaches = sousTacheService.getSousTaches();
         return ResponseEntity.ok(sousTaches);
     }
 
-    @PostMapping("/sousTache")
+    @PostMapping("/soustaches")
     //@PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<SousTache> createSousTache(@RequestBody SousTacheDto sousTacheDto){
         SousTache createdSousTache  = sousTacheService.createSousTache(sousTacheDto);
-
         return new ResponseEntity<>(createdSousTache, HttpStatus.CREATED);
     }
 
-    @PutMapping("/sousTache/{id}")
+    @PutMapping("/soustaches/{id}")
     public ResponseEntity<SousTache> updateSousTache(@PathVariable Long id, @RequestBody SousTacheDto sousTacheDto){
         SousTache updatedSousTache = sousTacheService.updateSousTache(id,sousTacheDto);
 
@@ -46,7 +45,7 @@ public class SousTacheController {
         }
     }
 
-    @DeleteMapping("/sousTache/{id}")
+    @DeleteMapping("/soustaches/{id}")
 
     public ResponseEntity<String> deleteSousTache(@PathVariable Long id){
          sousTacheService.deleteSousTache(id);

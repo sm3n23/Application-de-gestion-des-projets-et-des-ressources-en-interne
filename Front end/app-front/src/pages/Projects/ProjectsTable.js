@@ -7,23 +7,19 @@ import axios from "axios";
 const ProjectTable = ({ projects, setProjects }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState("");
+  
 
-  const darkColors = [
-    "#8B0000", // Dark Red
-    "#006400", // Dark Green
-    "#00008B", // Dark Blue
-    "#800080", // Dark Purple
-    "#FF8C00", // Dark Orange
-    "#2F4F4F", // Dark Slate Gray
-    "#8B008B", // Dark Magenta
-    "#9932CC", // Dark Orchid
-    "#8B4513", // Saddle Brown
-    "#556B2F", // Dark Olive Green
-  ];
+  const greyColors = ["#A9A9A9", "#808080", "#899499"];
+  const greenColors = ["#008000", "#228B22", "#4F7942"];
 
-  const getRandomCommonColor = () => {
-    const randomIndex = Math.floor(Math.random() * darkColors.length);
-    return darkColors[randomIndex];
+  const getRandomCommonColorGrey = () => {
+    const randomIndex = Math.floor(Math.random() * greyColors.length);
+    return greyColors[randomIndex];
+  };
+
+  const getRandomCommonColorGreen = () => {
+    const randomIndex = Math.floor(Math.random() * greenColors.length);
+    return greenColors[randomIndex];
   };
 
   const handleTaskClick = (taskName) => {
@@ -45,34 +41,54 @@ const ProjectTable = ({ projects, setProjects }) => {
 
   return (
     <div className="container">
-      <div className="table-container">
-        <table className="table table-striped table-hover">
-          <thead>
+      <div className="table-container ">
+        <table className="table  table-hover ">
+          <thead className="">
             <tr>
-              <th>Name</th>
-              <th>Country</th>
-              <th>Signup time</th>
-              <th>Collaborateur</th>
-              <th>Status</th>
-              <th>Taches</th>
-              <th>Balance, EUR</th>
-              <th>Actions</th>
+              <th className="p-4">Name</th>
+              
+              
+              <th className="p-4">Collaborateur</th>
+              <th className="p-4">Status</th>
+              <th className="p-4">Taches</th>
+              
+              <th className="p-4"></th>
             </tr>
           </thead>
           <tbody>
             {Array.isArray(projects) && projects.length > 0 ? (
               projects.map((project) => (
                 <tr key={project.id}>
-                  <td>{project.name}</td>
-                  <td>Germany</td>
-                  <td>May 14, 2020, 12:45:57</td>
-                  <td>
+                  <td className="p-4"> <strong>{project.name}</strong> </td>
+                  
+                  <td className="p-4">
                     <Link to="/employees/1">
-                  {Array.isArray(project.employees)&& project.employees.length > 0 ? project.employees.map((employee)=>(
-                                    <span key={employee.id} className="tag" style={{ backgroundColor: getRandomCommonColor() }}>{employee}</span>
-                                )): <span className="tag" style={{ backgroundColor: getRandomCommonColor() }}>{"No employees Assigned"}</span>} 
-                  </Link></td>
-                  <td>
+                      {Array.isArray(project.employees) &&
+                      project.employees.length > 0 ? (
+                        project.employees.map((employee) => (
+                          <span
+                            key={employee.id}
+                            className="tag"
+                            style={{
+                              backgroundColor: getRandomCommonColorGrey(),
+                            }}
+                          >
+                            {employee}
+                          </span>
+                        ))
+                      ) : (
+                        <span
+                          className="tag"
+                          style={{
+                            backgroundColor: getRandomCommonColorGrey(),
+                          }}
+                        >
+                          {"No employees Assigned"}
+                        </span>
+                      )}
+                    </Link>
+                  </td>
+                  <td className="p-4">
                     <span
                       className="status-circle"
                       style={{
@@ -86,34 +102,42 @@ const ProjectTable = ({ projects, setProjects }) => {
                     ></span>{" "}
                     {project.status}
                   </td>
-                  <td>
-                    {Array.isArray(project.tasks)&& project.tasks.length>0
-                      ? project.tasks.map((task, index) => (
-                          <span
-                            key={index}
-                            className="tag"
-                            style={{ backgroundColor: getRandomCommonColor() }}
-                            onClick={() => handleTaskClick(task)}
-                          >
-                            {task}
-                          </span>
-                        ))
-                      : (
-                          <span className="tag" style={{ backgroundColor: getRandomCommonColor() }}>
-                            {"No Tasks created"}
-                          </span>
-                        )}
+                  <td className="p-4">
+                    
+                    {Array.isArray(project.tasks) &&
+                    project.tasks.length > 0 ? (
+                      project.tasks.map((task, index) => (
+                        <span
+                          key={index}
+                          className="tag"
+                          style={{
+                            backgroundColor: getRandomCommonColorGreen(),
+                          }}
+                          onClick={() => handleTaskClick(task)}
+                        >
+                          {task}
+                        </span>
+                      ))
+                    ) : (
+                      <span
+                        className="tag"
+                        style={{ backgroundColor: getRandomCommonColorGreen() }}
+                      >
+                        {"No Tasks created"}
+                      </span>
+                    )}
                   </td>
-                  <td>23,255 $</td>
-                  <td>
+                  
+                  <td className="p-4 ">
+                  
                     <Link
-                      className="btn btn-sm btn-outline-info btn-orange-outline  mx-2 px-3"
+                      className="btn btn-sm  btn-orange-outline mx-4"
                       to={`/projects/edit/${project.id}`}
                     >
                       Edit
                     </Link>
-                    <button
-                      className="btn btn-sm btn-outline-danger"
+                    <button 
+                      className="btn btn-sm btn-orange-primary px-3"
                       onClick={() => deleteProject(project.id)}
                     >
                       Delete
@@ -132,7 +156,7 @@ const ProjectTable = ({ projects, setProjects }) => {
         </table>
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <div className="task-details">
-            <h4>Task Details</h4>
+            <h4>Task Details :</h4>
             <p>{selectedTask}</p>
           </div>
         </Modal>

@@ -1,0 +1,53 @@
+/* Close Button inside Modal */
+.modal-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #666; /* Dark grey color for the close button */
+  }
+  .icon-button {
+    background: transparent;
+    border: none;
+    color: #ff8800; /* Blue color, adjust according to your theme */
+    cursor: pointer;
+    font-size: 12px; /* Make the icon larger */
+    padding: 1px 5px;
+  }
+  
+  .icon-button:hover {
+    color: #0056b3; /* A darker shade of blue for hover effect */
+  }
+  .btn-orange {
+  background-color: orange;
+  border-color: orange;
+  color: white;
+  }
+  
+  .btn-orange:hover {
+  background-color: darkorange;
+  border-color: darkorange;
+  }
+  
+  .modal-add-button {
+    position: absolute;
+    
+    right: 30px;
+    border: none;
+    background: none;
+    font-size: 1.5  em;
+    cursor: pointer;
+    color: #666; /* Dark grey color for the close button */
+    font-size: x-large;
+  }
+  
+  .sous-tache-text{
+    font-size: x-large;
+  }
+
+  
+
+  

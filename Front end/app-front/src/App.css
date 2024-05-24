@@ -43,7 +43,7 @@
 
 .sidebar {
   width: 250px; /* Adjust width as needed */
-  background-color: #333; /* Dark background for the sidebar */
+  background-color: #f97714; /* Dark background for the sidebar */
   color: white;
   height: 100vh; /* Full-height */
   position: fixed; /* Fixed Sidebar (stay in place on scroll) */
@@ -51,20 +51,82 @@
   top: 0; /* Stay at the top */
   left: 0;
   overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 20px;
+  padding-top: 0px;
 }
 
-.sidebar-item {
-  padding: 6px 8px 6px 16px;
+.sidebar-profile {
+  display: flex;
+  flex-direction: column; /* Arrange children in a column */
+  align-items: center; /* Center the children horizontally */
+  text-align: center; /* Center the text */
+}
+
+.sidebar-profile img {
+  max-width:100%;
+  height: 70px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  justify-content: center;
+  margin-bottom: 0px;
+}
+
+.profile p {
+  text-align: center;
+  max-width: 100%;
+  margin-top: 0;
+  
+}
+.separator {
+  width: 70%;
+  height: 1px;
+  background-color: white;
+  margin: 35px ;
+}
+.menu {
+  display: flex;
+  flex-direction: column; /* Arrange menu items in a column */
+  padding-left: 20px; /* Ensure consistent padding from the left */
+}
+
+.menu-item {
+  position: relative;
+  bottom:5px;
+  width: 100%;
+  padding: 8px;
+  text-align: center;
+  color: white;
   text-decoration: none;
-  font-size: 18px; /* Increased font size */
-  color: #ff7300;
-  display: block;
-  transition: 0.3s;
+  display: flex;
+  align-items: center; /* Center items vertically */
+  margin: 5px 20px;
 }
 
-.sidebar-item:hover {
-  color: #f1f1f1; /* Light grey on hover */
+.menu-item i {
+  margin-right: 10px;
+}
+
+.menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.footer {
+  
+  text-align: center;
+  
+}
+
+.bottom-image {
+  position: absolute;
+  bottom:50px; /* Position at the bottom of the sidebar */
+  left: 45px;
+  width: 60%; /* Full width of the sidebar */
+  text-align: center; /* Center the image horizontally */
+}
+
+.bottom-image img {
+  max-width: 100%; /* Ensure the image fits within the container */
+  height: auto; /* Maintain aspect ratio */
+  padding-bottom: 10px; /* Add padding if needed to avoid touching the bottom */
 }
 
 @media screen and (max-height: 450px) {
@@ -83,9 +145,7 @@
   gap: 1rem;
 }
 
-.table-container {
-  /* Your styles for table container */
-}
+
 
 .piechart-container {
   width: 100%; /* or a specific size */

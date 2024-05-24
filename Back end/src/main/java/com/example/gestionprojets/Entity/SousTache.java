@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 @Entity
@@ -20,14 +21,12 @@ public class SousTache {
 
     private String name;
 
+    private LocalDate startDate;
+    private LocalDate finishDate;
+    private boolean completed;
 
-    @OneToMany(mappedBy = "sousTache", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference
-    private Set<Employee> employees= new HashSet<>();
-
-    @ManyToOne
     @JsonBackReference
+    @ManyToOne
     @JoinColumn(name = "tache_id")
-    @JsonIgnore
     private Tache tache;
 }

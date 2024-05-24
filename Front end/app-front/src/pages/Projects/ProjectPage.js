@@ -5,6 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import './project.css'
 export default function ProjectPage() {
     const [projects,setProjects] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
 
 
     useEffect(()=>{
@@ -30,16 +31,36 @@ export default function ProjectPage() {
       setProjects(processedProjects);
     }
 
-    console.log(projects)
+    console.log(projects) 
     
+    const handleSearchChange = (e) =>{
+      setSearchTerm(e.target.value)
+    }
+
+    const filteredProjects = projects.filter((project)=>
+      project.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+
   return (
     <div className='container'>
-      <div className="d-flex justify-content-end my-1">
+      <div className='row'>
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Search by name"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          className="form-control my-3"
+        />
+      </div>
+      </div>
+      
+      <div className="d-flex justify-content-end">
         <Link to="/projects/add" className="btn btn-primary btn-orange mx-3" >
         <i className="fas fa-circle-plus"></i> Add Project
         </Link>
       </div>
-      <ProjectsTable projects={projects} setProjects={setProjects}/>
+      <ProjectsTable projects={filteredProjects} setProjects={setProjects}/>
     </div>
   )
 }

@@ -9,7 +9,16 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 export default function EditProject() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [project, setProject] = useState({ employees: [], taches: [] });
+  const [project, setProject] = useState({
+    name: '',
+    status: '',
+    startDate: '',
+    finishDate: '',
+    budget: '',
+    description: "",
+    employees: [],
+    taches: []
+  });
   const [allEmployees, setAllEmployees] = useState([]);
   const [isTaskModalOpen, setTaskModalOpen] = useState(false);
   const [isEmployeeModalOpen, setEmployeeModalOpen] = useState(false);
@@ -72,16 +81,15 @@ export default function EditProject() {
     }
   };
 
-  const addNewTask = async (taskName) => {
+  const addNewTask = async (taskData) => {
     try {
         const newTask = {
-            name: taskName,
+            ...taskData,
             projectId: id 
         };
 
         const response = await axios.post("http://localhost:8085/taches", newTask);
         if (response.status === 201) { // Check if the task was created successfully
-            console.log("Task created successfully:", response.data);
             setProject(prev => ({
                 ...prev,
                 taches: [...prev.taches, response.data] // Add the new task to the current list
@@ -94,8 +102,7 @@ export default function EditProject() {
         console.error("Error creating task:", error);
         alert("Failed to create task. Please try again.");
     }
-};
-
+  };
 
   // Delete task by ID
   const handleDeleteTask = async (taskId) => {
@@ -113,44 +120,73 @@ export default function EditProject() {
     }
   };
 
-  
+  const greyColors = ["#A9A9A9", "#808080", "#899499"];
+  const greenColors = ["#008000", "#228B22", "#4F7942"];
 
-  // Generate random color for tags
-  const randomColor = () => `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, "0")}`;
+  const getRandomCommonColorGrey = () => {
+    const randomIndex = Math.floor(Math.random() * greyColors.length);
+    return greyColors[randomIndex];
+  };
+
+  const getRandomCommonColorGreen = () => {
+    const randomIndex = Math.floor(Math.random() * greenColors.length);
+    return greenColors[randomIndex];
+  };
 
   return (
     <div className="container">
-      <form onSubmit={handleSubmit}>
-        <InputField label="Project Name:" name="name" value={project.name} onChange={handleChange} />
-        <SelectField label="Status:" name="status" value={project.status} options={["On Going", "Not Started", "Finished"]} onChange={handleChange} />
-        <EmployeeList employees={project.employees} onAddClick={() => setEmployeeModalOpen(true)} randomColor={randomColor} />
-        <TaskList tasks={project.taches} onDeleteTask={handleDeleteTask} onAddTask={() => setTaskModalOpen(true)} randomColor={randomColor} />
-        <FormActions />
-      </form>
+      <div className="form-box p-5">
+        <form onSubmit={handleSubmit}>
+          <div className="flex-container">
+            <InputField label="Project Name:" name="name" value={project.name} onChange={handleChange} required />
+            <SelectField label="Status:" name="status" value={project.status} options={["On Going", "Not Started", "Finished"]} onChange={handleChange} required />
+          </div>
+          <div className="flex-container">
+          <InputField label="Start Date:" name="startDate" type="date" value={project.startDate} onChange={handleChange} required />
+          <InputField label="Finish Date:" name="finishDate" type="date" value={project.finishDate} onChange={handleChange} required />
+          <InputField label="Budget:" name="budget" type="number" value={project.budget} onChange={handleChange} required />
+          </div>
+          
+          
+          <TextAreaField label="Description:" name="description" value={project.description} onChange={handleChange} required />
+          <EmployeeList employees={project.employees} onAddClick={() => setEmployeeModalOpen(true)} randomColor={getRandomCommonColorGrey} />
+          <TaskList tasks={project.taches} onDeleteTask={handleDeleteTask} onAddTask={() => setTaskModalOpen(true)} randomColor={getRandomCommonColorGreen} />
+          <FormActions />
+        </form>
+      </div>
       <TaskModal isOpen={isTaskModalOpen} onClose={() => setTaskModalOpen(false)} onSave={addNewTask} />
       <EmployeeModal isOpen={isEmployeeModalOpen} onClose={() => setEmployeeModalOpen(false)} employees={allEmployees} addEmployee={addEmployeeToProject} />
     </div>
   );
 }
 
-function InputField({ label, name, value, onChange }) {
+function InputField({ label, name, value, onChange, type = 'text', required }) {
   return (
     <div className="form-group">
       <label className="form-label">{label}</label>
-      <input type="text" className="form-control" name={name} value={value} onChange={onChange} />
+      <input type={type} className="form-control" name={name} value={value} onChange={onChange} required={required} />
     </div>
   );
 }
 
-function SelectField({ label, name, value, options, onChange }) {
+function SelectField({ label, name, value, options, onChange, required }) {
   return (
     <div className="form-group">
       <label className="form-label">{label}</label>
-      <select name={name} className="form-control" value={value} onChange={onChange}>
+      <select name={name} className="form-control" value={value} onChange={onChange} required={required}>
         {options.map((option, index) => (
           <option key={index} value={option}>{option}</option>
         ))}
       </select>
+    </div>
+  );
+}
+
+function TextAreaField({ label, name, value, onChange, required }) {
+  return (
+    <div className="form-group">
+      <label className="form-label">{label}</label>
+      <textarea className="form-control" name={name} value={value} onChange={onChange} rows="4" required={required}></textarea>
     </div>
   );
 }
@@ -189,8 +225,9 @@ function TaskList({ tasks, onDeleteTask, onAddTask, randomColor }) {
 function FormActions() {
   return (
     <div className="form-actions my-3">
-      <button type="submit" className="btn btn-primary m-3">Save Changes</button>
-      <Link to="/projects" className="btn btn-danger">Cancel</Link>
+      <button type="submit" className="btn  btn-orange-primary-edit px-3">Save Changes</button>
+      <Link to="/projects" className="btn  btn-orange-outline mx-4">Cancel</Link>
     </div>
   );
 }
+

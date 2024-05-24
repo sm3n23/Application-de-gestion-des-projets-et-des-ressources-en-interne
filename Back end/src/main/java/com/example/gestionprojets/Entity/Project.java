@@ -25,6 +25,8 @@ public class Project {
     private LocalDate startDate;
 
     private LocalDate finishDate;
+    private String description;
+    private int budget;
 
     @OneToMany(mappedBy = "project")
     private Set<Employee> employees = new HashSet<>();

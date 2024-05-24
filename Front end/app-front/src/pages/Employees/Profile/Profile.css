@@ -38,11 +38,9 @@
 .profile {
     display: flex;
     flex-grow: 1;
-    gap: 20px;
+    gap: 40px;
 }
-.profile-left h2 {
-    margin: 0; /* Ensure no margin below the heading */
-}
+
 .profile-left {
     flex: 1;
     background-color: #f8f9fa;
@@ -51,46 +49,51 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    
 }
 
 .profile-left img {
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    display: block;
-    margin: 0 auto;
+    
+    margin: 0px auto 20px;
 }
 
 .profile-left h2 {
-    margin: 10px 0;
     font-size: 24px;
-    color: #333;
+    color: rgb(72, 72, 205);
     text-align: center;
+    font-weight: 600;
+
 }
 
 .profile-left p {
     color: #555;
     text-align: center;
+    font-size: large;
 }
 
 .profile-left .description {
-    margin: 20px 0;
+    margin: 20px ;
     color: #666;
     font-size: 14px;
     text-align: center;
 }
 
 .profile-left .skills {
-    margin: 20px 0;
-    text-align: center;
+    margin:  20px 0px;
+    text-align: left;
+    font-size: large;
+    font-weight: 600;
 }
 
 .profile-left .skills button {
-    background-color: #e0e7ff;
-    border: none;
+    background-color: #eaedf6;
+    border: rgb(189, 187, 187) 1px solid;
+    box-shadow: #333;
     border-radius: 20px;
-    padding: 5px 10px;
+    padding: 5px 15px;
     margin: 5px;
     color: #3b82f6;
     cursor: default;
@@ -152,7 +155,9 @@
 .profile-right .basic-info .info-item {
     font-size: 15px;
     display: flex;
-    justify-content: space-between;
+    justify-content: left;
+    text-align: left;
+    margin-left: 0;
 }
 
 .profile-right .basic-info .info-item p {

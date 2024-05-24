@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Example</title>
+    <style>
+        body {
+            background-color: #f7f7f7;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .table-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin: auto;
+            width: 90%;
+            max-width: 1000px;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            background-color: white;
+        }
+        th {
+            background-color: white;
+            border-bottom: 2px solid #f3f3f3;
+        }
+        tr {
+            border-bottom: 1px solid #f3f3f3;
+        }
+        .status {
+            color: white;
+            background-color: green;
+            border-radius: 5px;
+            padding: 5px 10px;
+            display: inline-block;
+        }
+        .action-button {
+            color: #ff7e1b;
+            border: 2px solid #ff7e1b;
+            border-radius: 5px;
+            padding: 5px 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .action-button:hover {
+            background-color: #ff7e1b;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Collaborateur</th>
+                    <th>Statut</th>
+                    <th>Emploi</th>
+                    <th>RDV</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Mohamed Tibari</td>
+                    <td><span class="status">Évalué</span></td>
+                    <td>CCPRO11<br><small>Tenue de poste</small></td>
+                    <td>14:30<br><small>29 - 06 - 2022</small></td>
+                    <td><a href="#" class="action-button">CHANGER RDV</a></td>
+                    <td><a href="#" class="action-button">ÉVALUER</a></td>
+                </tr>
+                <tr>
+                    <td>Ahmed Taoufik</td>
+                    <td><span class="status">Évalué</span></td>
+                    <td>CCPARTA1<br><small>Tenue de poste</small></td>
+                    <td>14:30<br><small>29 - 06 - 2022</small></td>
+                    <td><a href="#" class="action-button">CHANGER RDV</a></td>
+                    <td><a href="#" class="action-button">ÉVALUER</a></td>
+                </tr>
+                <tr>
+                    <td>Samia Ouchen</td>
+                    <td><span class="status">Évalué</span></td>
+                    <td>DA11<br><small>Tenue de poste</small></td>
+                    <td>14:30<br><small>29 - 06 - 2022</small></td>
+                    <td><a href="#" class="action-button">CHANGER RDV</a></td>
+                    <td><a href="#" class="action-button">ÉVALUER</a></td>
+                </tr>
+                <tr>
+                    <td>Nouaaman Laajaj</td>
+                    <td><span class="status">Évalué</span></td>
+                    <td>DA1<br><small>Tenue de poste</small></td>
+                    <td>14:30<br><small>29 - 06 - 2022</small></td>
+                    <td><a href="#" class="action-button">CHANGER RDV</a></td>
+                    <td><a href="#" class="action-button">ÉVALUER</a></td>
+                </tr>
+                <tr>
+                    <td>Amine Tifaoui</td>
+                    <td><span class="status">Évalué</span></td>
+                    <td>RA11<br><small>Tenue de poste</small></td>
+                    <td>14:30<br><small>29 - 06 - 2022</small></td>
+                    <td><a href="#" class="action-button">CHANGER RDV</a></td>
+                    <td><a href="#" class="action-button">ÉVALUER</a></td>
+                </tr>
+                <tr>
+                    <td>Robert Johnstons</td>
+                    <td><span class="status">Évalué</span></td>
+                    <td>SA11<br><small>Tenue de poste</small></td>
+                    <td>14:30<br><small>29 - 06 - 2022</small></td>
+                    <td><a href="#" class="action-button">CHANGER RDV</a></td>
+                    <td><a href="#" class="action-button">ÉVALUER</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

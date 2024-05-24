@@ -1,0 +1,13 @@
+.bottom-image {
+    position: absolute;
+    bottom: 0; /* Position at the bottom of the sidebar */
+    left: 0;
+    width: 100%; /* Full width of the sidebar */
+    text-align: center; /* Center the image horizontally */
+  }
+  
+  .bottom-image img {
+    max-width: 100%; /* Ensure the image fits within the container */
+    height: auto; /* Maintain aspect ratio */
+    padding-bottom: 10px; /* Add padding if needed to avoid touching the bottom */
+  }

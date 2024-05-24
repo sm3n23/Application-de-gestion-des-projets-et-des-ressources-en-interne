@@ -1,27 +1,30 @@
-package com.example.gestionprojets.mappers;
-
 import com.example.gestionprojets.Dto.EmployeeDto;
 import com.example.gestionprojets.Entity.Employee;
-import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Service;
+import com.example.gestionprojets.Entity.Project;
+import com.example.gestionprojets.Entity.Tache;
 
-@Service
+import java.util.Set;
+import java.util.stream.Collectors;
+
 public class DtoMapper {
-    public EmployeeDto fromEmployee(Employee employee){
-        EmployeeDto employeeDto = new EmployeeDto();
-        BeanUtils.copyProperties(employee, employeeDto);
-        /*if (employee.getProjects() != null) {
-            Set<Long> projectIds = employee.getProjects().stream()
-                    .map(Project::getId)
-                    .collect(Collectors.toSet());
-            employeeDto.setProjectIds(projectIds);
-        }*/
-        return employeeDto;
+
+    public static EmployeeDto toEmployeeDto(Employee employee) {
+        EmployeeDto dto = new EmployeeDto();
+        dto.setName(employee.getName());
+
+        dto.setProjectId(employee.getProject().getId());  // Single project ID
+        dto.setTachesIds(employee.getTaches().stream().map(Tache::getId).collect(Collectors.toSet()));
+        return dto;
     }
 
-    public Employee fromEmployeeDto(EmployeeDto employeeDto){
+    public static Employee toEmployee(EmployeeDto dto, Project project, Set<Tache> taches) {
         Employee employee = new Employee();
-        BeanUtils.copyProperties(employeeDto,employee);
+        employee.setName(dto.getName());
+
+        employee.setProject(project);
+        employee.setTaches(taches);
         return employee;
     }
+
+    // Other mappings for Project and Tache
 }

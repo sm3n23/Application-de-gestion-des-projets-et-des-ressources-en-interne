@@ -4,24 +4,18 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 const EmployeeTable = ({ employees, setEmployees }) => {
-  const darkColors = [
-    "#8B0000", // Dark Red
-    "#006400", // Dark Green
-    "#00008B", // Dark Blue
-    "#800080", // Dark Purple
-    "#FF8C00", // Dark Orange
-    "#2F4F4F", // Dark Slate Gray
-    "#8B008B", // Dark Magenta
-    "#9932CC", // Dark Orchid
-    "#8B4513", // Saddle Brown
-    "#556B2F", // Dark Olive Green
-  ];
+  const greyColors = ["#808080"];
+  const greenColors = ["#008000", "#228B22", "#4F7942"];
 
-  const getRandomCommonColor = () => {
-    const randomIndex = Math.floor(Math.random() * darkColors.length);
-    return darkColors[randomIndex];
+  const getRandomCommonColorGrey = () => {
+    const randomIndex = Math.floor(Math.random() * greyColors.length);
+    return greyColors[randomIndex];
   };
 
+  const getRandomCommonColorGreen = () => {
+    const randomIndex = Math.floor(Math.random() * greenColors.length);
+    return greenColors[randomIndex];
+  };
   const deleteEmployee = async (id) => {
     try {
       axios.delete(`http://localhost:8085/employees/${id}`);
@@ -35,46 +29,36 @@ const EmployeeTable = ({ employees, setEmployees }) => {
   return (
     <div className="container">
       <div className="table-container">
-        <table className="table table-striped table-hover">
+        <table className="table table-hover">
           <thead>
             <tr>
-              <th>Email</th>
-              <th>Country</th>
-              <th>Signup time</th>
-              <th>Affiliate</th>
-              <th>Status</th>
-              <th>Tags</th>
-              <th>Balance, EUR</th>
+              <th className="p-4">Collaborateur</th>
+              <th className="p-4">Projet</th>
+              
+              <th className="p-4">Taches</th>
             </tr>
           </thead>
           <tbody>
             {Array.isArray(employees) &&employees.length>0 ? (employees.map((employee) => (
               <tr key={employee.id}>
-                <td>{employee.name}</td>
-                <td>
+                <td className="p-4"> <strong> {employee.name}</strong></td>
+                <td className="p-4">
                   <span
                     className="tag"
-                    style={{ backgroundColor: getRandomCommonColor() }}
+                    style={{ backgroundColor: getRandomCommonColorGrey() }}
                   >
                     {employee.projectName}{" "}
                   </span>
                 </td>
-                <td>May 14, 2020, 12:45:57</td>
-                <td>Rens Erkens</td>
-                <td>
-                  <span
-                    className="status-circle"
-                    style={{ backgroundColor: "red" }}
-                  ></span>{" "}
-                  Declined
-                </td>
-                <td>
+                
+                
+                <td className="p-4">
                   {Array.isArray(employee.tasks) ? (
                     employee.tasks.map((task, index) => (
                       <span
                         key={index}
                         className="tag"
-                        style={{ backgroundColor: getRandomCommonColor() }}
+                        style={{ backgroundColor: getRandomCommonColorGreen() }}
                       >
                         {task}
                       </span>
@@ -82,21 +66,27 @@ const EmployeeTable = ({ employees, setEmployees }) => {
                   ) : (
                     <span
                       className="tag"
-                      style={{ backgroundColor: getRandomCommonColor() }}
+                      style={{ backgroundColor: getRandomCommonColorGreen() }}
                     >
                       {"No Tasks Assigned"}
                     </span>
                   )}
                 </td>
-                <td>
+                <td className="p-4">
+                <Link
+                    className="btn-orange-view btn btn-sm"
+                    to={`/collaborateur/view/${employee.id}`}
+                  >
+                    <i class="fa-solid fa-eye"></i>
+                  </Link>
                   <Link
-                    className="btn btn-sm btn-outline-info mx-2 px-3"
+                    className="btn btn-sm  btn-orange-outline mx-4"
                     to={`/collaborateur/edit/${employee.id}`}
                   >
                     Edit
                   </Link>
                   <button
-                    className="btn btn-sm btn-outline-danger "
+                    className="btn btn-sm btn-orange-primary px-3"
                     onClick={() => deleteEmployee(employee.id)}
                   >
                     Delete

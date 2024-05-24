@@ -17,7 +17,9 @@ public class ProjectDto {
     private String status;
     private LocalDate startDate;
     private LocalDate finishDate;
+    private int budget;
+    private String description;
 
-    private List<Long> employeeIds;
+    private List<Long> employeesIds;
     private List<Long> tachesIds;
 }

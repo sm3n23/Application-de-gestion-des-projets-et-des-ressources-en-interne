@@ -25,7 +25,7 @@ th {
     font-size: 0.75em; /* Smaller font size */
     padding: 12px 15px;
     border-bottom: 1px solid #ddd;
-    border-right: 1px solid #ddd;
+    border-right: none;
     color: #840e0e; 
 }
 
@@ -36,7 +36,8 @@ th:last-child {
 td {
     padding: 12px 15px;
     border-bottom: 1px solid #ddd;
-    border-right: 1px solid #ddd;
+    border-right: none;
+    
 }
 
 td:last-child {
@@ -76,18 +77,57 @@ tr:hover {
     background-color: #555; /* Default color for general tasks */
 }
 
-.task-vip {
-    background-color: #007bff; /* Blue for VIP tasks */
-}
 
-.task-closed {
-    background-color: #dc3545; /* Red for closed tasks */
-}
-
-.task-promo {
-    background-color: #ffc107; /* Yellow for promotional tasks */
-}
 .table-container table thead th {
     font-size: 0.75em;
     color: #aaa;
 }
+
+
+.search-bar {
+    display: flex;
+    justify-content: left;
+    margin-bottom: 20px;
+    margin-left: 20px;
+  }
+  
+  .search-bar input {
+    width: 30%;
+    height: 50px;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 0 5px  5px 0  ;
+    
+    outline: none;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border 0.3s ease;
+    position: relative;
+  }
+  
+  .search-bar input:focus {
+    border-color: #f0ad4e; /* Orange border color when focused */
+  }
+  
+  .search-bar input::placeholder {
+    color: #aaa;
+  }
+  
+  .search-bar::before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 50px;
+    background-color: #f97714; /* Orange left border */
+    left:290px;
+    top: 72px;
+    z-index:-1;
+    border-radius: 5px 0 0 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .search-bar-wrapper {
+    position: relative;
+    width: 100%;
+  }
+  
+  

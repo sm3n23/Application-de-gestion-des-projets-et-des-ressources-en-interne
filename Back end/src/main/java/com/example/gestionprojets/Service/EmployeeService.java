@@ -7,12 +7,12 @@ import java.util.List;
 
 public interface EmployeeService {
 
-    EmployeeDto getEmployeeById(Long id);
 
-    public Employee getEmployee(Long id);
+
+    Employee getEmployee(Long id);
 
     List<Employee> findEmployees();
-    List<EmployeeDto> getAllEmployees();
+
     Employee createEmployee(EmployeeDto employeeDto);
 
     Employee updateEmployee(Long id, EmployeeDto employeeDto);
