@@ -5,8 +5,8 @@ import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const Profile = () => {
-    const {id} = useParams();
-    const [employee,setEmployee] = useState({
+    const { id } = useParams();
+    const [employee, setEmployee] = useState({
         name: '',
         title: '',
         skills: [],
@@ -16,28 +16,50 @@ const Profile = () => {
         phoneNumber: '',
         email: '',
         location: '',
+        picture: '',
         projectId: null,
         tachesIds: []
     });
-    useEffect(()=>{
+
+    useEffect(() => {
         loadEmployee();
-    },[]);
+    }, [id]);
 
-    const loadEmployee = async ()=>{
-        const res = await axios.get(`http://localhost:8085/employees/${id}`);
-        setEmployee(res.data);
-    }
+    const loadEmployee = async () => {
+        try {
+            const res = await axios.get(`http://localhost:8085/employees/${id}`);
+            setEmployee(res.data);
+        } catch (error) {
+            console.error("Error loading employee data:", error);
+        }
+    };
 
+    console.log(employee)
 
+    const handleImageError = (e) => {
+        e.target.src = '/images/fallback.png'; // Set your fallback image path here
+    };
+
+    const calculateAge = (birthDate) => {
+        const today = new Date();
+        const birthDateObj = new Date(birthDate);
+        let age = today.getFullYear() - birthDateObj.getFullYear();
+        const monthDifference = today.getMonth() - birthDateObj.getMonth();
+        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDateObj.getDate())) {
+            age--;
+        }
+        return age;
+    };
 
     return (
         <div className="container-p profile-page">
             <div className="header">
                 <Link to="/collaborateur"><i className="fa fa-arrow-left"></i> Back</Link>
+                <Link to={`/collaborateur/edit/${employee.id}`}><i className="fa-solid fa-pen-to-square"></i></Link>
             </div>
             <div className="profile">
                 <div className="profile-left">
-                    <img src="/images/profile.png" alt="Profile of Ananya Grover" />
+                    <img src={`../../${employee.picture}`} alt="Profile"  />
                     <h2 className=''>{employee.name}</h2>
                     <p>{employee.title}</p>
                     <p className="description">
@@ -46,31 +68,24 @@ const Profile = () => {
                     <div className="skills">
                         <span className='mx-2'>Skills</span>
                         <div>
-                        {employee.skills.map((skill)=>
-                            <button>{skill}</button>
-                        )}
+                            {employee.skills.map((skill, index) =>
+                                <button key={index}>{skill}</button>
+                            )}
                         </div>
-                        
                     </div>
-                
                 </div>
                 <div className="profile-right">
                     <div className="section basic-info row">
                         <h3>Basic Information</h3>
                         <div className="info-item mb-4">
-                            <p className='col-lg-4'><strong>AGE <span>{}</span></strong></p>
+                            <p className='col-lg-4'><strong>AGE <span>{calculateAge(employee.birthDate)}</span></strong></p>
                             <p className='col-lg-4'><strong>YEARS OF EXPERIENCE <span>{employee.experience}</span></strong></p>
                             <p className='col-lg-4'><strong>PHONE <span>{employee.phoneNumber}</span></strong></p>
-                            
-
                         </div>
                         <div className="info-item">
                             <p className='col-lg-4'><strong>LOCATION <span>{employee.location}</span></strong></p>
                             <p className='col-lg-4'><strong>EMAIL <span>{employee.email}</span></strong></p>
-                            
                         </div>
-                        
-                        
                     </div>
                     <div className="section experience">
                         <h3>Experience</h3>
@@ -101,7 +116,6 @@ const Profile = () => {
                             </li>
                         </ul>
                     </div>
-                    
                 </div>
             </div>
         </div>

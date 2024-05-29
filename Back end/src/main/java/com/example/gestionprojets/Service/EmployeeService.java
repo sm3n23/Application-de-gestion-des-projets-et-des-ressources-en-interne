@@ -2,6 +2,7 @@ package com.example.gestionprojets.Service;
 
 import com.example.gestionprojets.Dto.EmployeeDto;
 import com.example.gestionprojets.Entity.Employee;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 

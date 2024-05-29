@@ -8,7 +8,6 @@ import java.util.Set;
 @Data
 public class TacheDto {
 
-    private Long id;
 
     private String name;
     private String description;
@@ -16,9 +15,9 @@ public class TacheDto {
 
     private LocalDate finishDate;
     private int advancement;
-    private String status;
 
-    private Set<Long> employeesIds;
+
+
 
     private Long projectId;
 }

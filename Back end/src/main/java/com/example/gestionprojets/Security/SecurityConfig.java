@@ -25,8 +25,8 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 
 import java.util.*;
 
-//@Configuration
-//@EnableWebSecurity
+@Configuration
+@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 

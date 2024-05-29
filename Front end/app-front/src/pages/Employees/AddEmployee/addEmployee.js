@@ -16,6 +16,7 @@ export default function AddEmployee() {
     phoneNumber: '',
     email: '',
     location: '',
+    picture:''
   });
 
   const handleChange = ({ target: { name, value } }) => {
@@ -97,6 +98,7 @@ export default function AddEmployee() {
           <div className="flex-container">
             <InputField required label="Phone Number:" name="phoneNumber" type="tel" value={employee.phoneNumber} onChange={handleChange} />
             <InputField required label="Location:" name="location" value={employee.location} onChange={handleChange} />
+            <InputField required label="Picture:" name="picture" value={employee.picture} onChange={handleChange} />
           </div>
         
           <FormActions />

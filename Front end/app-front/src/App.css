@@ -161,9 +161,7 @@
   }
 }
 .employee-list-container {
-  max-height: 200px; /* Adjust the height as needed */
   overflow-y: auto; /* Enables vertical scrolling */
-  background-color: #f8f9fa; /* Light grey background, adjust as needed */
   padding: 10px; /* Padding inside the container */
   border-radius: 5px; /* Optional: rounds the corners of the scrollable area */
 }
@@ -172,6 +170,9 @@
   padding: 10px 0; /* Adds padding to the top and bottom of each item, 0 padding on the left and right */
   margin: 0 10px; /* Optional: Adds margin to the left and right of each item */
   border-bottom: 1px solid #e9ecef; /* Light grey border for separating items */
+  background-color: #fffcf5;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
 }
 
 .employee-item:last-child {
@@ -181,6 +182,8 @@
 .employee-name {
   font-size: 16px; /* Adjust the font size as needed */
   color: #495057; /* Dark grey text, adjust as needed */
+  text-decoration: none;
+  color: inherit; 
 }
 
 .employee-role {

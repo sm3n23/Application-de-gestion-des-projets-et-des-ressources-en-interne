@@ -37,7 +37,7 @@ public class TacheServiceImpl implements TacheService{
         tache.setName(tacheDto.getName());
         tache.setStartDate(tacheDto.getStartDate());
         tache.setFinishDate(tacheDto.getFinishDate());
-        tache.setStatus(tacheDto.getStatus());
+
         tache.setAdvancement(tacheDto.getAdvancement());
         tache.setDescription(tacheDto.getDescription());
 
@@ -54,21 +54,15 @@ public class TacheServiceImpl implements TacheService{
         Tache tache = tacheRepository.findById(id)
                 .orElseThrow(()->new NotFoundException("tache not found"));
         tache.setName(tacheDto.getName());
+        tache.setStartDate(tacheDto.getStartDate());
+        tache.setFinishDate(tacheDto.getFinishDate());
+        tache.setAdvancement(tacheDto.getAdvancement());
+        tache.setDescription(tacheDto.getDescription());
 
-        Project project = projectRepository.findById(tacheDto.getProjectId())
-                .orElseThrow(()->new NotFoundException("project not found"));
-        tache.setProject(project);
-
-        List<Employee> employees = employeeRepository.findAllById(tacheDto.getEmployeesIds());
-        tache.setEmployees(new HashSet<>(employees));
-
-            /*Set<Employee> employees = tacheDto.getEmployeesIds().stream()
-                    .map(EmployeeId->employeeRepository.findById(EmployeeId).orElseThrow(
-                            ()->new NotFoundException("Employee not found")))
-                    .collect(Collectors.toSet());
-            tache.setEmployees(employees);*/
-
-
+        if(tacheDto.getProjectId()!=null){
+            Project project = projectRepository.findById(tacheDto.getProjectId())
+                    .orElseThrow(()->new NotFoundException("project not found"));
+            tache.setProject(project);}
 
 
         return tacheRepository.save(tache);

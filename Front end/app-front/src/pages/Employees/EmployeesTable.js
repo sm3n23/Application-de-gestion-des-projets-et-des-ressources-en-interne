@@ -32,6 +32,7 @@ const EmployeeTable = ({ employees, setEmployees }) => {
         <table className="table table-hover">
           <thead>
             <tr>
+              <th></th>
               <th className="p-4">Collaborateur</th>
               <th className="p-4">Projet</th>
               
@@ -41,6 +42,7 @@ const EmployeeTable = ({ employees, setEmployees }) => {
           <tbody>
             {Array.isArray(employees) &&employees.length>0 ? (employees.map((employee) => (
               <tr key={employee.id}>
+                <td><img className='picture-home mx-3' src={employee.picture} alt="Profile picture" /></td>
                 <td className="p-4"> <strong> {employee.name}</strong></td>
                 <td className="p-4">
                   <span

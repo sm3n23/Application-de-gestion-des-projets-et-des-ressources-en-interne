@@ -10,17 +10,17 @@ const PieChart = ({ projectData }) => {
         label: 'Project Status',
         data: projectData,  
         backgroundColor: [
-          'rgba(34,139,34 , 0.6)',
-          'rgba(245, 125, 31, 0.6)',
-          'rgba(0,0,0, 0.6)',
+          'rgb(255, 68, 51)',
+          'rgb(255, 172, 28)',
+          'rgb(0, 128, 0)',
         ],
         borderColor: [
-          'rgba(34,139,34 , 1)',
-          'rgba(245, 125, 31, 1)',
-          'rgba(0,0,0, 1)',
+          'rgb(255, 68, 51)',
+          'rgb(255, 172, 28)',
+          'rgb(0, 128, 0)',
         ],
         borderWidth: 1,
-        cutout: '40%',
+        cutout: '50%',
       },
     ],
   };
@@ -38,7 +38,7 @@ const PieChart = ({ projectData }) => {
     },
     layout: {
       padding: {
-        right: 20  // Ensures there is no cut-off on the right side due to the close legend
+        right: 10  // Ensures there is no cut-off on the right side due to the close legend
       }
     },
     maintainAspectRatio: false,

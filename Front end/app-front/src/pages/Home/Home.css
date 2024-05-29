@@ -1,0 +1,51 @@
+.employee-list-container {
+  height: 250px;
+  overflow-y: auto; /* Enables vertical scrolling */
+  padding: 10px; /* Padding inside the container */
+  border-radius: 5px; /* Optional: rounds the corners of the scrollable area */
+}
+
+.home-container {
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+.PieChart-container {
+    height: 300px;
+    width: 40%; 
+    border-radius: 10px;
+    padding: 20px ;
+    padding-right: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding-bottom: 50px;
+    
+    
+}
+.emloyees-container {
+  width: 50%;
+  border-radius: 10px;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.picture-home{
+  height: 50px;
+}
+.view-all-link {
+  text-decoration: none;
+  color: orange;
+  font-weight: bold;
+  
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+.header-txt{
+  color: rgb(114, 113, 113);
+  margin: 0 10px;
+}

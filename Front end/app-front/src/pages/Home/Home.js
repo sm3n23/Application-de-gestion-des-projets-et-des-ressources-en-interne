@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import PieChart from "./PieChart"; 
 import EmployeeList from "./employeeList";
 import ProjectsTable from "../Projects/ProjectsTable";
+import "./Home.css"
 
 export default function Home() {
   const [projects, setProjects] = useState([]);
@@ -65,22 +66,26 @@ export default function Home() {
     }
   };
 
-  const deleteProject = async (id) => {
-    await axios.delete(`http://localhost:8085/projects/${id}`);
-    loadProjects();
-  };
+  
 
   return (
     <div className="container m-2">
       <div className="py-4">
-      
-      <ProjectsTable projects={projects} setProjects={setProjects}/>
-        <div className="row my-5">
+        <div className="home-container">
+            <div className='header'>
+                <h5 className='header-txt'></h5>
+                <Link to="/projects" className="view-all-link">View All</Link>
+
+            </div>
+          <ProjectsTable projects={projects} setProjects={setProjects}/>
+        </div>
+        <div className="row my-3">
           
-          <div className=" col-lg-6 col-md-6 px-3">
+          <div className=" col-lg-6 col-md-6 px-3 mx-4 PieChart-container">
+            
             <PieChart projectData={projectStatusData} />
           </div>
-          <div className="col-lg-6 col-md-6 px-3">
+          <div className="col-lg-6 col-md-6 px-3  emloyees-container">
             <EmployeeList employees={employees} />
           </div>
         </div>

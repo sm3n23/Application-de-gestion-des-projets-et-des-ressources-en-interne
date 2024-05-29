@@ -86,7 +86,7 @@ tr {
     background: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     position: relative;
 }
 
@@ -138,7 +138,18 @@ tr {
     background-color: darkorange;
     border-color: darkorange;
 }
+.btn-orange-st-primary {
+    background-color: orange;
+    border-color: darkorange;
+    width: 180px;
+    color: white;
+    font-weight:500;
 
+}
+.btn-orange-st-primary:hover {
+    background-color: darkorange;
+    border-color: darkorange;
+}
 .btn-orange-view {
     background-color: orange;
     border-color: darkorange;
@@ -167,6 +178,7 @@ tr {
     border-color: #A9A9A9;
     color: white;
     border: #A9A9A9 2px solid;
+    margin-bottom: 0;
 }
 
 .toggle-btn:hover {

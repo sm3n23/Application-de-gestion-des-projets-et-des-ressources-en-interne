@@ -39,9 +39,9 @@ function TaskModal({ isOpen, onClose, onSave }) {
         <div className="modal-overlay">
             <div className="modal-content">
                 
-                <span className="modal-close-button" onClick={onClose}>&times;</span>
-                <div className="container">
-                    <div className="form-box">
+                <span className="modal-close-button" onClick={onClose}><i className=" fa-sharp fa-solid fa-circle-xmark"></i></span>
+                <div className="">
+                    <div className="form-box-modal">
                         <form onSubmit={handleSubmit}>
                         <div className="flex-container">
                             <div className="form-group">

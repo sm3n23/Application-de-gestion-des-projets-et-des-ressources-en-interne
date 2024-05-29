@@ -45,9 +45,56 @@
   }
   
   .sous-tache-text{
-    font-size: x-large;
+    font-size: bold;
   }
 
+  .sous-taches-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+  }
   
+  .checkbox{
+    height: 30px;
+    width: 30px;
+    margin: 10px;
+  }
 
+  .checkbox-text{
+    margin: 5px;
+    font-size: large;
+  }
+
+  .containerCheckbox:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+
+  .containerCheckbox {
+    display: flex;
+    align-items: center; /* Align items vertically center */
+    margin-bottom: 10px; /* Add space between items */
+    width: auto;
+  }
   
+  .soustache-details {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px; /* Adjust the margin as needed */
+  }
+  
+  .st-span {
+    font-size: 0.9em; /* Optional: adjust the font size */
+    color: #555; /* Optional: change the text color */
+  }
+  
+  .separator-st {
+    margin-top: 0; /* Add space between the span and the separator */
+    border-top: 1px solid orange; /* Optional: style for the separator */
+    height: 1px; /* Set the height of the separator */
+    margin-bottom: 5px;
+  }
+  
+  
+  
+ 

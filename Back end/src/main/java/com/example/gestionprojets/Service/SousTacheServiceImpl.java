@@ -35,6 +35,8 @@ public class SousTacheServiceImpl implements SousTacheService{
         SousTache sousTache = new SousTache();
         sousTache.setName(sousTacheDto.getName());
         sousTache.setCompleted(sousTacheDto.isCompleted());
+        sousTache.setStartDate(sousTacheDto.getStartDate());
+        sousTache.setFinishDate(sousTacheDto.getFinishDate());
 
         Tache tache = tacheRepository.findById(sousTacheDto.getTacheId())
                 .orElseThrow(()->new NotFoundException("Tache not found"));
@@ -48,6 +50,8 @@ public class SousTacheServiceImpl implements SousTacheService{
                 .orElseThrow(()->new NotFoundException("Sous tache not found"));
         sousTache.setName(sousTacheDto.getName());
         sousTache.setCompleted(sousTacheDto.isCompleted());
+        sousTache.setStartDate(sousTacheDto.getStartDate());
+        sousTache.setFinishDate(sousTacheDto.getFinishDate());
         
         Tache tache = tacheRepository.findById(sousTacheDto.getTacheId())
                 .orElseThrow(()->new NotFoundException("Tache not found"));
@@ -60,6 +64,6 @@ public class SousTacheServiceImpl implements SousTacheService{
     @Override
     public void deleteSousTache(Long id) {
 
-        tacheRepository.deleteById(id);
+        sousTacheRepository.deleteById(id);
     }
 }

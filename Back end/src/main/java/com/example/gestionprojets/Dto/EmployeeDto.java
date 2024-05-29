@@ -24,6 +24,8 @@ public class EmployeeDto {
     private String location;
 
     private Long projectId;
+    private String picture;
+
 
     private Set<Long> tachesIds;
 

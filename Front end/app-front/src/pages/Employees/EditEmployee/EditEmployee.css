@@ -22,7 +22,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Dark overlay to focus on modal */
+    background-color: rgba(52, 52, 52, 0.3); /* Dark overlay to focus on modal */
     display: flex;
     align-items: center; /* Center modal vertically */
     justify-content: center; /* Center modal horizontally */
@@ -165,4 +165,55 @@
 
 .button-group{
   margin-bottom: 20px;
+}
+
+
+.range-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.sous-tache-container {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  width: 100%;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.range-input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.range-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.range-label-center {
+  text-align: center;
+  flex: 1;
+}
+.separator-st{
+  width: 70%;
+  height: 0.5px;
+  background-color: rgb(2, 2, 2);
+  margin: 0 10px;
+  
+}
+
+.st-span{
+  font-size:1em;
+  display: flex;
+  flex-direction: column;
 }

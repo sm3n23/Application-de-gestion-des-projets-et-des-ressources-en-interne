@@ -13,11 +13,13 @@ import com.example.gestionprojets.Repositories.TacheRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -63,6 +65,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         employee.setPhoneNumber(employeeDto.getPhoneNumber());
         employee.setSkills(employeeDto.getSkills());
         employee.setLocation(employeeDto.getLocation());
+        employee.setPicture(employeeDto.getPicture());
 
 
         //employee.setRole(convertStringToRole(employeeDto.getRole()));
@@ -101,6 +104,12 @@ public class EmployeeServiceImpl implements EmployeeService{
         employee.setPhoneNumber(employeeDto.getPhoneNumber());
         employee.setSkills(employeeDto.getSkills());
         employee.setLocation(employeeDto.getLocation());
+        employee.setPicture(employeeDto.getPicture());
+
+
+
+
+
 
 
         // Fetch the project by ID or throw an exception if not found

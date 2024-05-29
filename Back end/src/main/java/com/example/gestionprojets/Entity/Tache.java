@@ -25,7 +25,6 @@ public class Tache {
 
     private LocalDate finishDate;
     private int advancement;
-    private String status;
 
 
 
