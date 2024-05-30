@@ -45,7 +45,7 @@ function TaskModal({ isOpen, onClose, onSave }) {
                         <form onSubmit={handleSubmit}>
                         <div className="flex-container">
                             <div className="form-group">
-                            <label className="form-label" for="name">Task Name:</label>
+                            <label className="form-label" for="name">Nom du tâche:</label>
                             <input
                                 id="name"
                                 name="name"
@@ -74,7 +74,7 @@ function TaskModal({ isOpen, onClose, onSave }) {
                         </div>
                         <div className="flex-container my-3">
                             <div className="form-group">
-                                <label className="form-label" for="startDate">Start Date:</label>
+                                <label className="form-label" for="startDate">Date De début:</label>
                                 <input
                                     id="startDate"
                                     name="startDate"
@@ -86,7 +86,7 @@ function TaskModal({ isOpen, onClose, onSave }) {
                                 />
                             </div>
                             <div className="form-group">
-                                <label className="form-label" for="finishDate">Finish Date:</label>
+                                <label className="form-label" for="finishDate">Date de Fin:</label>
                                 <input
                                     id="finishDate"
                                     name="finishDate"
@@ -99,7 +99,7 @@ function TaskModal({ isOpen, onClose, onSave }) {
                             </div>
                         </div>
                         
-                            <button className="btn  btn-orange-primary-edit px-5 my-4" type="submit">Add Task</button>
+                            <button className="btn  btn-orange-primary-edit px-5 my-4" type="submit">Ajouter tâche</button>
                         </form>
                         </div>
                         </div>

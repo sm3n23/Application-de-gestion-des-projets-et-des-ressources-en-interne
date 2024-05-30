@@ -45,12 +45,12 @@ const ProjectTable = ({ projects, setProjects }) => {
         <table className="table  table-hover ">
           <thead className="">
             <tr>
-              <th className="p-4">Name</th>
+              <th className="p-4">Nom</th>
               
               
               <th className="p-4">Collaborateur</th>
               <th className="p-4">Status</th>
-              <th className="p-4">Taches</th>
+              <th className="p-4">Tâches</th>
               
               <th className="p-4"></th>
             </tr>
@@ -140,7 +140,7 @@ const ProjectTable = ({ projects, setProjects }) => {
                       className="btn btn-sm btn-orange-primary px-3"
                       onClick={() => deleteProject(project.id)}
                     >
-                      Delete
+                      Supprimer
                     </button>
                   </td>
                 </tr>
@@ -148,7 +148,7 @@ const ProjectTable = ({ projects, setProjects }) => {
             ) : (
               <tr>
                 <td colSpan="8" className="text-center">
-                  No projects available.
+                Pas de projets disponibles.
                 </td>
               </tr>
             )}
@@ -156,7 +156,7 @@ const ProjectTable = ({ projects, setProjects }) => {
         </table>
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <div className="task-details">
-            <h4>Task Details :</h4>
+            <h4>Détails de la tâche:</h4>
             <p>{selectedTask}</p>
           </div>
         </Modal>
