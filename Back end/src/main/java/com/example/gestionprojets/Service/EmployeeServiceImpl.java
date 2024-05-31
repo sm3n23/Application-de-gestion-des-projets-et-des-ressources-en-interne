@@ -66,17 +66,9 @@ public class EmployeeServiceImpl implements EmployeeService{
         employee.setSkills(employeeDto.getSkills());
         employee.setLocation(employeeDto.getLocation());
         employee.setPicture(employeeDto.getPicture());
+        employee.setRoles(employeeDto.getRoles());
 
 
-        //employee.setRole(convertStringToRole(employeeDto.getRole()));
-        /*Project project = projectRepository.findById(employeeDto.getProjectId())
-                .orElseThrow(()->new NotFoundException("Project not found"));
-        employee.setProject(project);
-        if(employeeDto.getTacheId()!=null){
-            Tache tache = tacheRepository.findById(employeeDto.getTacheId())
-                    .orElseThrow(()->new NotFoundException("Tache not found with id: " + employeeDto.getTacheId()));
-            employee.setTache(tache);
-        }*/
         return employeeRepository.save(employee);
     }
 
@@ -105,7 +97,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         employee.setSkills(employeeDto.getSkills());
         employee.setLocation(employeeDto.getLocation());
         employee.setPicture(employeeDto.getPicture());
-
+        employee.setRoles(employeeDto.getRoles());
 
 
 
@@ -132,4 +124,15 @@ public class EmployeeServiceImpl implements EmployeeService{
     public void deleteEmployee(Long id) {
         employeeRepository.deleteById(id);
     }
+
+
+    @Override
+    public Employee findByEmail(String email) {
+        return employeeRepository.findByEmail(email);
+    }
+
+
+
 }
+
+

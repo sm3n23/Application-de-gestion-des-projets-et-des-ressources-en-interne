@@ -2,6 +2,8 @@
 package com.example.gestionprojets.Security;
 
 
+import com.example.gestionprojets.Entity.Employee;
+import com.example.gestionprojets.Service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,10 +15,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.oauth2.client.oidc.web.logout.OidcClientInitiatedLogoutSuccessHandler;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
@@ -24,6 +28,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Configuration
 @EnableWebSecurity
@@ -32,6 +37,12 @@ public class SecurityConfig {
 
     @Autowired
     private ClientRegistrationRepository clientRegistrationRepository;
+
+    @Autowired
+    private EmployeeService employeeService;
+
+    @Autowired
+    private CustomOidcUserService customOidcUserService;
 
 
     @Bean
@@ -47,30 +58,29 @@ public class SecurityConfig {
                         })
                 )
                 //.csrf(Customizer.withDefaults())
-                .csrf(csrf -> csrf
-                        .disable()) 
-                .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(jwt -> jwt
-                                .jwtAuthenticationConverter(jwtAuthenticationConverter())
+                .csrf(csrf -> csrf.disable())
+                .oauth2Login(oauth2 -> oauth2
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .oidcUserService(customOidcUserService)
                         )
                 )
 
                 // Start with authorizing requests
                 .authorizeRequests(authorize -> authorize
 
-                        .antMatchers("/**", "/css/**").permitAll()
-                        //.antMatchers(HttpMethod.PUT, "/tache/**").hasAuthority("ADMIN")
-                        //.antMatchers(HttpMethod.DELETE, "/tache/**").hasAuthority("ADMIN")
-                        //.antMatchers(HttpMethod.POST, "/tache").hasAuthority("ADMIN")
-                        .antMatchers(HttpMethod.POST,"/**").permitAll()
+                        .antMatchers( "/**").permitAll()
+                        /*.antMatchers(HttpMethod.POST,"/**").permitAll()
                         .antMatchers(HttpMethod.PUT,"/**").permitAll()
-                        .antMatchers(HttpMethod.DELETE,"/**").permitAll()
-                        //.antMatchers("/taches").hasAuthority("ADMIN")
+                        .antMatchers(HttpMethod.DELETE,"/**").permitAll()*/
 
                         .anyRequest().authenticated()
                 )
-                // Configure OAuth2 login
-                .oauth2Login(Customizer.withDefaults())
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .jwt(jwt -> jwt
+                                .jwtAuthenticationConverter(jwtAuthenticationConverter())
+                        )
+                )
+
                 // Configure logout behavior
                 .logout((logout) -> logout
                         .logoutSuccessHandler(oidcLogoutSuccessHandler())
@@ -89,14 +99,21 @@ public class SecurityConfig {
 
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
-        JwtGrantedAuthoritiesConverter converter = new JwtGrantedAuthoritiesConverter();
-        converter.setAuthorityPrefix("ROLE_"); // Spring Security expects roles to be prefixed by "ROLE_"
-        converter.setAuthoritiesClaimName("roles"); // Ensure this matches the claim name in Keycloak tokens
-
-        JwtAuthenticationConverter jwtConverter = new JwtAuthenticationConverter();
-        jwtConverter.setJwtGrantedAuthoritiesConverter(converter);
-        return jwtConverter;
+        return new JwtAuthenticationConverter() {
+            @Override
+            protected Collection<GrantedAuthority> extractAuthorities(Jwt jwt) {
+                Collection<GrantedAuthority> authorities = new ArrayList<>(super.extractAuthorities(jwt));
+                Employee employee = employeeService.findByEmail(jwt.getClaimAsString("email"));
+                if (employee != null) {
+                    authorities.addAll(employee.getRoles().stream()
+                            .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toUpperCase().replace(" ", "_")))
+                            .collect(Collectors.toList()));
+                }
+                return authorities;
+            }
+        };
     }
+
 
     private OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler() {
         final OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler =
@@ -105,27 +122,5 @@ public class SecurityConfig {
         return oidcLogoutSuccessHandler;
     }
 
-    @Bean
-    public GrantedAuthoritiesMapper userAuthoritiesMapper() {
-        return (authorities) -> {
-            final Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
-            authorities.forEach((authority) -> {
-                if (authority instanceof OidcUserAuthority oidcUserAuthority) {
-                    mappedAuthorities.addAll(mapAuthorities(oidcUserAuthority.getIdToken().getClaims()));
-                    System.out.println(oidcUserAuthority.getAttributes());
-                } else if (authority instanceof OAuth2UserAuthority oauth2Auth) {
-                    mappedAuthorities.addAll(mapAuthorities(oauth2Auth.getAttributes()));
-                }
-            });
-            return mappedAuthorities;
-        };
-    }
-    private List<SimpleGrantedAuthority> mapAuthorities(final Map<String, Object> attributes) {
-        final Map<String, Object> realmAccess = ((Map<String, Object>)attributes.getOrDefault("realm_access", Collections.emptyMap()));
-        final Collection<String> roles = ((Collection<String>)realmAccess.getOrDefault("roles", Collections.emptyList()));
-        return roles.stream()
-                .map((role) -> new SimpleGrantedAuthority(role))
-                .toList();
-    }
-}
 
+}

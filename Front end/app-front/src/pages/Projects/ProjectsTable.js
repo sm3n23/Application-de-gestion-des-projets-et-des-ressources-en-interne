@@ -59,7 +59,6 @@ const ProjectTable = ({ projects, setProjects }) => {
                     <strong>{project.name}</strong>
                   </td>
                   <td className="p-4">
-                    <Link to="/employees/1">
                       {Array.isArray(project.employees) &&
                       project.employees.length > 0 ? (
                         project.employees.map((employee, index) => (
@@ -83,7 +82,6 @@ const ProjectTable = ({ projects, setProjects }) => {
                           {"No employees Assigned"}
                         </span>
                       )}
-                    </Link>
                   </td>
                   <td className="p-4">
                     <span

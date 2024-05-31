@@ -20,7 +20,7 @@ public class TacheController {
     private TacheService tacheService;
 
     @GetMapping("/taches")
-    //@PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('CHEF_DE_PROJET')")
     public ResponseEntity<List<Tache>> getTaches(){
         List<Tache> taches = tacheService.getTaches();
         return ResponseEntity.ok(taches);

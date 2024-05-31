@@ -113,7 +113,7 @@ function TaskModal({ isOpen, onClose, task }) {
         startDate: updatedTask.startDate,
         finishDate: updatedTask.finishDate,
         advancement: updatedTask.advancement,
-        projectId: id,
+        projectId: updatedTask.id,
       };
       const response = await axios.put(
         `http://localhost:8085/taches/${updatedTask.id}`,
