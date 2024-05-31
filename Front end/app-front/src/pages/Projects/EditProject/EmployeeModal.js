@@ -1,5 +1,6 @@
 import React from "react";
 import Modal from "../Modal"; // Ensure you have a Modal component
+import { Link } from "react-router-dom";
 
 const EmployeeModal = ({ isOpen, onClose, employees, addEmployee }) => {
   const handleAddEmployee = (employee) => {
@@ -9,14 +10,22 @@ const EmployeeModal = ({ isOpen, onClose, employees, addEmployee }) => {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <h4>Choose an Employee</h4>
-      <ul>
-        {employees.map((employee) => (
-          <li key={employee.id} onClick={() => handleAddEmployee(employee)}>
-            {employee.name}
-          </li>
-        ))}
-      </ul>
+      
+      
+      <div className="employee-list-container">
+            <div className='header'>
+                <h5 className='header-txt'>Collaborateurs</h5>
+            </div>
+            {employees.map((employee, index) => (
+            <div key={index} className="employee-item" onClick={() => handleAddEmployee(employee)}>
+                    
+                <div className="employee-name"><img className='picture-home mx-3' src={`../../${employee.picture}`} alt="Profile picture" />
+                    {employee.name}
+                </div>
+                    
+            </div>
+            ))}
+        </div>
     </Modal>
   );
 };

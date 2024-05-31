@@ -15,10 +15,10 @@ const Sidebar = () => {
           <i className="fas fa-home"></i>Home
         </Link>
         <Link to="/projects" className="menu-item">
-          <i className="fa-solid fa-hammer"></i>Projects
+          <i className="fa-solid fa-hammer"></i>Projets
         </Link>
         <Link to="/collaborateur" className="menu-item">
-          <i className="fa-solid fa-user"></i>collaborateur
+          <i className="fa-solid fa-user"></i>collaborateurs
         </Link>
       </div>
       <div class="footer">

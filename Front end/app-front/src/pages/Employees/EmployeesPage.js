@@ -13,6 +13,7 @@ const processProjects = (projects) => {
 
       employees.push({
         id: employee.id,
+        picture:employee.picture,
         name: employee.name,
         projectName: project.name,
         tasks: tasks.length > 0 ? tasks : ["No Tasks Assigned"],

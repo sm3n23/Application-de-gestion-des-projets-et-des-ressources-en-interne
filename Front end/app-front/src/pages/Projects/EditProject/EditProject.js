@@ -194,7 +194,7 @@ function TextAreaField({ label, name, value, onChange, required }) {
 function EmployeeList({ employees, onAddClick, randomColor }) {
   return (
     <div className="form-group">
-      <label className="form-label">Employees:</label>
+      <label className="form-label">Collaborateurs:</label>
       <div className="form-control my-2">
         {employees.map((employee) => (
           <div key={employee.id} className="tag my-3" style={{ backgroundColor: randomColor() }}>{employee.name}</div>
@@ -208,7 +208,7 @@ function EmployeeList({ employees, onAddClick, randomColor }) {
 function TaskList({ tasks, onDeleteTask, onAddTask, randomColor }) {
   return (
     <div className="form-group">
-      <label className="form-label">Tasks:</label>
+      <label className="form-label">Tâches:</label>
       <div className="form-control my-2">
         {tasks.map((task) => (
           <div key={task.id} className="tag my-3" style={{ backgroundColor: randomColor() }}>
@@ -216,7 +216,7 @@ function TaskList({ tasks, onDeleteTask, onAddTask, randomColor }) {
             <button type="button" onClick={() => onDeleteTask(task.id)} className="icon-button"><i className="fa-sharp fa-solid fa-circle-xmark"></i></button>
           </div>
         ))}
-        <button type="button" onClick={onAddTask} className="icon-button"><i className="fas fa-circle-plus"></i> Ajouter une tache</button>
+        <button type="button" onClick={onAddTask} className="icon-button"><i className="fas fa-circle-plus"></i> Ajouter une tâche</button>
       </div>
     </div>
   );
@@ -225,8 +225,8 @@ function TaskList({ tasks, onDeleteTask, onAddTask, randomColor }) {
 function FormActions() {
   return (
     <div className="form-actions my-3">
-      <button type="submit" className="btn  btn-orange-primary-edit px-3">Save Changes</button>
-      <Link to="/projects" className="btn  btn-orange-outline mx-4">Cancel</Link>
+      <button type="submit" className="btn  btn-orange-primary-edit px-3">Enregistrer les changements </button>
+      <Link to="/projects" className="btn  btn-orange-outline mx-4">Annuler</Link>
     </div>
   );
 }

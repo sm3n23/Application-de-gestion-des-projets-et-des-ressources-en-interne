@@ -26,6 +26,9 @@ const EmployeeTable = ({ employees, setEmployees }) => {
       alert("Failed to delete employee. Please try again.");
     }
   };
+  employees.map((employee)=>{
+    console.log(employee)
+  })
   return (
     <div className="container">
       <div className="table-container">
@@ -36,7 +39,7 @@ const EmployeeTable = ({ employees, setEmployees }) => {
               <th className="p-4">Collaborateur</th>
               <th className="p-4">Projet</th>
               
-              <th className="p-4">Taches</th>
+              <th className="p-4">Tâches</th>
             </tr>
           </thead>
           <tbody>
@@ -85,20 +88,20 @@ const EmployeeTable = ({ employees, setEmployees }) => {
                     className="btn btn-sm  btn-orange-outline mx-4"
                     to={`/collaborateur/edit/${employee.id}`}
                   >
-                    Edit
+                    Modifier
                   </Link>
                   <button
                     className="btn btn-sm btn-orange-primary px-3"
                     onClick={() => deleteEmployee(employee.id)}
                   >
-                    Delete
+                    Supprimer
                   </button>
                 </td>
               </tr>
             ))):(
                 <tr>
                   <td colSpan="8" className="text-center">
-                    No employees available.
+                  Pas de projets disponibles.
                   </td>
                 </tr>
               )}

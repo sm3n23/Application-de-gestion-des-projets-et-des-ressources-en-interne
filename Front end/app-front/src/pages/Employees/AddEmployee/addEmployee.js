@@ -68,7 +68,7 @@ export default function AddEmployee() {
           <div className="flex-container my-3">
             
             <div className="form-group">
-              <label className="form-label">Skills:</label>
+              <label className="form-label">tâches:</label>
               <div className="form-control">
                 <ReactTags
                   
@@ -129,8 +129,8 @@ function TextAreaField({ label, name, value, onChange, rows = 4, required }) {
 function FormActions() {
   return (
     <div className="form-actions my-3">
-      <button type="submit" className="btn  btn-orange-primary-edit px-3">Save Changes</button>
-      <Link to="/collaborateur" className="btn  btn-orange-outline mx-4">Cancel</Link>
+      <button type="submit" className="btn  btn-orange-primary-edit px-3">Enregistrer les modifications </button>
+      <Link to="/collaborateur" className="btn  btn-orange-outline mx-4">Annuler</Link>
     </div>
   );
 }

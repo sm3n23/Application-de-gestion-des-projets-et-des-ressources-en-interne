@@ -72,20 +72,15 @@ export default function Home() {
     <div className="container m-2">
       <div className="py-4">
         <div className="home-container">
-            <div className='header'>
-                <h5 className='header-txt'></h5>
-                <Link to="/projects" className="view-all-link">View All</Link>
-
-            </div>
           <ProjectsTable projects={projects} setProjects={setProjects}/>
         </div>
-        <div className="row my-3">
+        <div className="row">
           
-          <div className=" col-lg-6 col-md-6 px-3 mx-4 PieChart-container">
+          <div className=" col-lg-6 col-md-6  my-3 px-3 mx-4 PieChart-container">
             
             <PieChart projectData={projectStatusData} />
           </div>
-          <div className="col-lg-6 col-md-6 px-3  emloyees-container">
+          <div className="col-lg-6 col-md-6 px-3  my-3  emloyees-container">
             <EmployeeList employees={employees} />
           </div>
         </div>
