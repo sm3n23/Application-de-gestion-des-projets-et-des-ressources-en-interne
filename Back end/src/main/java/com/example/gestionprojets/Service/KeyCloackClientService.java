@@ -1,3 +1,4 @@
+/*
 package com.example.gestionprojets.Service;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
@@ -7,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.ws.rs.core.Response;
 import java.util.Collections;
-@Service
+//@Service
 public class KeyCloackClientService {
     public void createUserInKeycloak(String username, String password) {
         Keycloak keycloak = KeycloakBuilder.builder()
@@ -44,3 +45,4 @@ public class KeyCloackClientService {
         response.close();
     }
 }
+*/

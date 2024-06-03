@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./project.css";
+import "../Projects/project.css";
 import { Link } from "react-router-dom";
-import Modal from "./Modal";
+import Modal from "../Projects/Modal";
 import axios from "axios";
 
 const ProjectTable = ({ projects, setProjects }) => {
@@ -45,10 +45,10 @@ const ProjectTable = ({ projects, setProjects }) => {
           <thead>
             <tr>
               <th className="p-4">Name</th>
-              <th className="p-4">Collaborateur</th>
+              <th className="p-4">Date debut</th>
+              <th className="p-4">Date fin</th>
               <th className="p-4">Status</th>
-              <th className="p-4">Taches</th>
-              <th className="p-4"></th>
+              <th className="p-4">Budget</th>
             </tr>
           </thead>
           <tbody>
@@ -59,29 +59,10 @@ const ProjectTable = ({ projects, setProjects }) => {
                     <strong>{project.name}</strong>
                   </td>
                   <td className="p-4 tache-column">
-                      {Array.isArray(project.employees) &&
-                      project.employees.length > 0 ? (
-                        project.employees.map((employee, index) => (
-                          <span
-                            key={index}
-                            className="tag m-1 employee-column"
-                            style={{
-                              backgroundColor: getRandomCommonColorGrey(),
-                            }}
-                          >
-                            {employee}
-                          </span>
-                        ))
-                      ) : (
-                        <span
-                          className="tag"
-                          style={{
-                            backgroundColor: getRandomCommonColorGrey(),
-                          }}
-                        >
-                          {"No employees Assigned"}
-                        </span>
-                      )}
+                      {project.startDate}
+                  </td>
+                  <td className="p-4 tache-column">
+                      {project.finishDate}
                   </td>
                   <td className="p-4">
                     <span
@@ -97,44 +78,10 @@ const ProjectTable = ({ projects, setProjects }) => {
                     ></span>{" "}
                     {project.status}
                   </td>
-                  <td className="p-4 tache-column">
-                    {Array.isArray(project.taches) &&
-                    project.taches.length > 0 ? (
-                      project.taches.map((task) => (
-                        <span
-                          key={task.id}
-                          className="tag  m-1"
-                          style={{
-                            backgroundColor: getRandomCommonColorGreen(),
-                          }}
-                          onClick={() => handleTaskClick(task)}
-                        >
-                          {task.name}
-                        </span>
-                      ))
-                    ) : (
-                      <span
-                        className="tag"
-                        style={{ backgroundColor: getRandomCommonColorGreen() }}
-                      >
-                        {"No Tasks created"}
-                      </span>
-                    )}
+                  <td className="p-4">
+                    {project.budget} MAD
                   </td>
-                  <td className=" py-4 tache-column">
-                    <Link
-                      className="btn btn-sm btn-orange-outline-table m-1"
-                      to={`/projects/edit/${project.id}`}
-                    >
-                      Edit
-                    </Link>
-                    <button
-                      className="btn btn-sm btn-orange-primary-table px-3"
-                      onClick={() => deleteProject(project.id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
+                  
                 </tr>
               ))
             ) : (

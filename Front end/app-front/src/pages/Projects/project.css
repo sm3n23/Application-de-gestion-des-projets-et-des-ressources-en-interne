@@ -7,6 +7,7 @@
 .table-container {
     overflow-x: auto;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    
 }
 
 table {
@@ -198,4 +199,48 @@ tr {
 .toggle-btn-outline:hover {
     background-color: #A9A9A9;
     border-color: #A9A9A9;
+}
+
+.name-column {
+    white-space: normal;
+    word-wrap: break-word;
+    max-width: 300px; 
+}
+
+.tache-column {
+    
+    max-width: 250px; 
+}
+
+.employee-column {
+    
+    max-width: 150px; 
+}
+
+
+.btn-orange-outline-table {
+    background-color: transparent;
+    border-color: orange;
+    color: orange;
+    width: 70px;
+    border: orange 2px solid;
+    font-weight:500;
+}
+
+.btn-orange-outline-table:hover {
+    background-color: darkorange;
+    border-color: darkorange;
+}
+
+.btn-orange-primary-table {
+    background-color: orange;
+    border-color: darkorange;
+    width: 70px;
+    color: white;
+    font-weight:500;
+
+}
+.btn-orange-primary-table:hover {
+    background-color: darkorange;
+    border-color: darkorange;
 }

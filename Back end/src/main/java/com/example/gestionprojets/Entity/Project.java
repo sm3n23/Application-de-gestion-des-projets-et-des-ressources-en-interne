@@ -25,6 +25,8 @@ public class Project {
     private LocalDate startDate;
 
     private LocalDate finishDate;
+
+    @Column(length = 1000)
     private String description;
     private int budget;
 

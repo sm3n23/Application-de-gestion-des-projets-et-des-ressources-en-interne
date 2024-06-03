@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import PieChart from "./PieChart"; 
 import EmployeeList from "./employeeList";
-import ProjectsTable from "../Projects/ProjectsTable";
+import HomeProject from "./HomeProjects";
 import "./Home.css"
 
 export default function Home() {
@@ -72,7 +72,7 @@ export default function Home() {
     <div className="container m-2">
       <div className="py-4">
         <div className="home-container">
-          <ProjectsTable projects={projects} setProjects={setProjects}/>
+          <HomeProject projects={projects} setProjects={setProjects}/>
         </div>
         <div className="row">
           

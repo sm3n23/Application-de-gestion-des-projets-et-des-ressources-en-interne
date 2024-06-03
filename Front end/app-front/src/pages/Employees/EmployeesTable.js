@@ -47,7 +47,7 @@ const EmployeeTable = ({ employees, setEmployees }) => {
               <tr key={employee.id}>
                 <td><img className='picture-home mx-3' src={employee.picture} alt="Profile picture" /></td>
                 <td className="p-4"> <strong> {employee.name}</strong></td>
-                <td className="p-4">
+                <td className="p-4 name-column ">
                   <span
                     className="tag"
                     style={{ backgroundColor: getRandomCommonColorGrey() }}
@@ -62,7 +62,7 @@ const EmployeeTable = ({ employees, setEmployees }) => {
                     employee.tasks.map((task, index) => (
                       <span
                         key={index}
-                        className="tag"
+                        className="tag m-1"
                         style={{ backgroundColor: getRandomCommonColorGreen() }}
                       >
                         {task}
@@ -85,7 +85,7 @@ const EmployeeTable = ({ employees, setEmployees }) => {
                     <i class="fa-solid fa-eye"></i>
                   </Link>
                   <Link
-                    className="btn btn-sm  btn-orange-outline mx-4"
+                    className="btn btn-sm  btn-orange-outline mx-1"
                     to={`/collaborateur/edit/${employee.id}`}
                   >
                     Modifier

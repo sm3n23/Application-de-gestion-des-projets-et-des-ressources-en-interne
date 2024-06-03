@@ -20,6 +20,7 @@ public class Tache {
 
     private String name;
 
+    @Column(length = 2000)
     private String description;
     private LocalDate startDate;
 

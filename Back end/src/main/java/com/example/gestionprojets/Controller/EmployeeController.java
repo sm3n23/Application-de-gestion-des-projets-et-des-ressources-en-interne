@@ -3,7 +3,6 @@ package com.example.gestionprojets.Controller;
 import com.example.gestionprojets.Dto.EmployeeDto;
 import com.example.gestionprojets.Entity.Employee;
 import com.example.gestionprojets.Service.EmployeeService;
-import com.example.gestionprojets.Service.KeyCloackClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +22,7 @@ public class EmployeeController {
 
 
 
-    @Autowired
-    private KeyCloackClientService keyCloackClientService;
+
     @GetMapping("/employees/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
         return ResponseEntity.ok(employeeService.getEmployee(id));
