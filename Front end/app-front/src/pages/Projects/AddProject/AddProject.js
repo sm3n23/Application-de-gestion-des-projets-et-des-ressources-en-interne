@@ -129,7 +129,7 @@ const AddProject = () => {
 
 function InputField({ label, name, value, onChange, type = 'text', required }) {
   return (
-    <div className="form-group">
+    <div className="form-group m-1">
       <label className="form-label">{label}</label>
       <input type={type} className="form-control" name={name} value={value} onChange={onChange} required={required} />
     </div>
@@ -138,7 +138,7 @@ function InputField({ label, name, value, onChange, type = 'text', required }) {
 
 function SelectField({ label, name, value, options, onChange, required }) {
   return (
-    <div className="form-group">
+    <div className="form-group m-1">
       <label className="form-label">{label}</label>
       <select name={name} className="form-control" value={value} onChange={onChange} required={required}>
         {options.map((option, index) => (
@@ -151,7 +151,7 @@ function SelectField({ label, name, value, options, onChange, required }) {
 
 function TextAreaField({ label, name, value, onChange, required }) {
   return (
-    <div className="form-group">
+    <div className="form-group m-1">
       <label className="form-label">{label}</label>
       <textarea className="form-control" name={name} value={value} onChange={onChange} rows="4" required={required}></textarea>
     </div>
@@ -160,7 +160,7 @@ function TextAreaField({ label, name, value, onChange, required }) {
 
 function EmployeeList({ employees, onAddClick, randomColor }) {
   return (
-    <div className="form-group">
+    <div className="form-group m-1">
       <label className="form-label">Collaborateurs:</label>
       <div className="form-control my-2">
         {employees.map((employee) => (
@@ -174,7 +174,7 @@ function EmployeeList({ employees, onAddClick, randomColor }) {
 
 function TaskList({ tasks, onDeleteTask, onAddTask, randomColor }) {
   return (
-    <div className="form-group">
+    <div className="form-group m-1">
       <label className="form-label">Tasks:</label>
       <div className="form-control my-2">
         {tasks.map((task) => (

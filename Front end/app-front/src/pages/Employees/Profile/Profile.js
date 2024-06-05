@@ -55,7 +55,7 @@ const Profile = () => {
         <div className="container-p profile-page">
             <div className="header">
                 <Link to="/collaborateur"><i className="fa fa-arrow-left"></i> Back</Link>
-                <Link to={`/collaborateur/edit/${employee.id}`}><i className="fa-solid fa-pen-to-square"></i></Link>
+                <Link to={`/collaborateur/modifierdetails/${employee.id}`}><i className="fa-solid fa-pen-to-square"></i></Link>
             </div>
             <div className="profile">
                 <div className="profile-left">

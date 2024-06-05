@@ -60,6 +60,20 @@
     font-size: 12px; /* Make the icon larger */
     padding: 1px 5px;
 }
+.edit-employee-remove-btn {
+  
+  border: none;
+  color: #ff8800; /* Blue color, adjust according to your theme */
+  cursor: pointer;
+  font-size: 12px; /* Make the icon larger */
+  padding: 1px 5px;
+  display: inline-flex;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-right: 5px;
+  font-size: 12px;
+  font-weight: bold;
+}
 
 .icon-button:hover {
     color: #0056b3; /* A darker shade of blue for hover effect */

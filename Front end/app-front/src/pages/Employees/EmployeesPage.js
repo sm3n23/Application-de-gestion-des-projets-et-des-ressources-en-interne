@@ -73,7 +73,7 @@ const EmployeePage = () => {
         
         <input
           type="text"
-          placeholder="Search by name"
+          placeholder="recherche"
           value={searchTerm}
           onChange={handleSearchChange}
           className="form-control my-3"

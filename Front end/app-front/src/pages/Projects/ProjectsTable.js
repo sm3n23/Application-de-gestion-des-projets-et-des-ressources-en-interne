@@ -44,7 +44,7 @@ const ProjectTable = ({ projects, setProjects }) => {
         <table className="table table-hover">
           <thead>
             <tr>
-              <th className="p-4">Name</th>
+              <th className="p-4">Projet</th>
               <th className="p-4">Collaborateur</th>
               <th className="p-4">Status</th>
               <th className="p-4">Taches</th>
@@ -126,13 +126,13 @@ const ProjectTable = ({ projects, setProjects }) => {
                       className="btn btn-sm btn-orange-outline-table m-1"
                       to={`/projects/edit/${project.id}`}
                     >
-                      Edit
+                      <i class="fa-solid fa-pen-to-square"></i>
                     </Link>
                     <button
-                      className="btn btn-sm btn-orange-primary-table px-3"
+                      className="btn btn-sm btn-orange-primary-table"
                       onClick={() => deleteProject(project.id)}
                     >
-                      Delete
+                      <i className="fa-solid fa-trash"></i>
                     </button>
                   </td>
                 </tr>
@@ -140,7 +140,7 @@ const ProjectTable = ({ projects, setProjects }) => {
             ) : (
               <tr>
                 <td colSpan="8" className="text-center">
-                  No projects available.
+                Pas de projets disponibles.
                 </td>
               </tr>
             )}

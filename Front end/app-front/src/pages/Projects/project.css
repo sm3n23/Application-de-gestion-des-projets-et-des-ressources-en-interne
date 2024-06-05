@@ -222,7 +222,7 @@ tr {
     background-color: transparent;
     border-color: orange;
     color: orange;
-    width: 70px;
+    width: 40px;
     border: orange 2px solid;
     font-weight:500;
 }
@@ -235,9 +235,8 @@ tr {
 .btn-orange-primary-table {
     background-color: orange;
     border-color: darkorange;
-    width: 70px;
+    width: 40px;
     color: white;
-    font-weight:500;
 
 }
 .btn-orange-primary-table:hover {

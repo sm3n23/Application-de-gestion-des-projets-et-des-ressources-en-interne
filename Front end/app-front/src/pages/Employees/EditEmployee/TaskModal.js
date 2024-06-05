@@ -134,7 +134,7 @@ function TaskModal({ isOpen, onClose, task }) {
         <div className="flex-container">
           <div className="form-group">
             <label className="form-label" htmlFor="name">
-              Task Name:
+              Tache:
             </label>
             <input
               id="name"
@@ -151,21 +151,22 @@ function TaskModal({ isOpen, onClose, task }) {
             <label className="form-label" htmlFor="description">
               Description:
             </label>
-            <input
+            <textarea
+              rows={2}
               id="description"
               name="description"
               type="text"
               className="form-control"
               value={updatedTask.description || ""}
               disabled
-              required
+              
             />
           </div>
         </div>
         <div className="flex-container my-3">
           <div className="form-group">
             <label className="form-label" htmlFor="startDate">
-              Start Date:
+              Date debut:
             </label>
             <input
               id="startDate"
@@ -178,7 +179,7 @@ function TaskModal({ isOpen, onClose, task }) {
           </div>
           <div className="form-group">
             <label className="form-label" htmlFor="finishDate">
-              Finish Date:
+              Date fin:
             </label>
             <input
               id="finishDate"
@@ -260,7 +261,7 @@ function TaskModal({ isOpen, onClose, task }) {
           <div className="flex-container">
             <div className="form-group">
               <label className="form-label" htmlFor="name">
-                Task Name:
+                Sous Tache nom:
               </label>
               <input
                 id="name"
@@ -276,7 +277,7 @@ function TaskModal({ isOpen, onClose, task }) {
           <div className="flex-container my-3">
             <div className="form-group">
               <label className="form-label" htmlFor="startDate">
-                Start Date:
+                Date debut:
               </label>
               <input
                 id="startDate"
@@ -290,7 +291,7 @@ function TaskModal({ isOpen, onClose, task }) {
             </div>
             <div className="form-group">
               <label className="form-label" htmlFor="finishDate">
-                Finish Date:
+                Date fin:
               </label>
               <input
                 id="finishDate"
@@ -338,7 +339,7 @@ function TaskModal({ isOpen, onClose, task }) {
               }`}
               onClick={() => setActiveTab("details")}
             >
-              Task Details
+              Tache details
             </button>
             <button
               className={`btn ${

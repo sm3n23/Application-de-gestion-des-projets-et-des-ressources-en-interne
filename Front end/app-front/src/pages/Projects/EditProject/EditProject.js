@@ -138,12 +138,12 @@ export default function EditProject() {
       <div className="form-box p-5">
         <form onSubmit={handleSubmit}>
           <div className="flex-container">
-            <InputField label="Project Name:" name="name" value={project.name} onChange={handleChange} required />
+            <InputField label="Projet :" name="name" value={project.name} onChange={handleChange} required />
             <SelectField label="Status:" name="status" value={project.status} options={["On Going", "Not Started", "Finished"]} onChange={handleChange} required />
           </div>
           <div className="flex-container">
-          <InputField label="Start Date:" name="startDate" type="date" value={project.startDate} onChange={handleChange} required />
-          <InputField label="Finish Date:" name="finishDate" type="date" value={project.finishDate} onChange={handleChange} required />
+          <InputField label="Date debut:" name="startDate" type="date" value={project.startDate} onChange={handleChange} required />
+          <InputField label="Date fin:" name="finishDate" type="date" value={project.finishDate} onChange={handleChange} required />
           <InputField label="Budget:" name="budget" type="number" value={project.budget} onChange={handleChange} required />
           </div>
           
@@ -162,7 +162,7 @@ export default function EditProject() {
 
 function InputField({ label, name, value, onChange, type = 'text', required }) {
   return (
-    <div className="form-group">
+    <div className="form-group m-1">
       <label className="form-label">{label}</label>
       <input type={type} className="form-control" name={name} value={value} onChange={onChange} required={required} />
     </div>
@@ -171,7 +171,7 @@ function InputField({ label, name, value, onChange, type = 'text', required }) {
 
 function SelectField({ label, name, value, options, onChange, required }) {
   return (
-    <div className="form-group">
+    <div className="form-group m-1">
       <label className="form-label">{label}</label>
       <select name={name} className="form-control" value={value} onChange={onChange} required={required}>
         {options.map((option, index) => (
@@ -184,7 +184,7 @@ function SelectField({ label, name, value, options, onChange, required }) {
 
 function TextAreaField({ label, name, value, onChange, required }) {
   return (
-    <div className="form-group">
+    <div className="form-group m-1">
       <label className="form-label">{label}</label>
       <textarea className="form-control" name={name} value={value} onChange={onChange} rows="4" required={required}></textarea>
     </div>
@@ -193,7 +193,7 @@ function TextAreaField({ label, name, value, onChange, required }) {
 
 function EmployeeList({ employees, onAddClick, randomColor }) {
   return (
-    <div className="form-group">
+    <div className="form-group m-1">
       <label className="form-label">Collaborateurs:</label>
       <div className="form-control my-2">
         {employees.map((employee) => (
@@ -207,7 +207,7 @@ function EmployeeList({ employees, onAddClick, randomColor }) {
 
 function TaskList({ tasks, onDeleteTask, onAddTask, randomColor }) {
   return (
-    <div className="form-group">
+    <div className="form-group m-1">
       <label className="form-label">Tâches:</label>
       <div className="form-control my-2">
         {tasks.map((task) => (
@@ -224,7 +224,7 @@ function TaskList({ tasks, onDeleteTask, onAddTask, randomColor }) {
 
 function FormActions() {
   return (
-    <div className="form-actions my-3">
+    <div className="form-actions my-3 mx-1">
       <button type="submit" className="btn  btn-orange-primary-edit px-3">Enregistrer les changements </button>
       <Link to="/projects" className="btn  btn-orange-outline mx-4">Annuler</Link>
     </div>

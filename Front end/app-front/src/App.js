@@ -4,6 +4,7 @@ import Home from "./pages/Home/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AddEmployee from "./pages/Employees/AddEmployee/addEmployee";
 import EditEmployee from "./pages/Employees/EditEmployee/EditEmployee";
+import EditEmployeeDetails from "./pages/Employees/EditEmployee/EditEmployeeDetails";
 import Sidebar from "./layout/sidebar";
 import EmployeePage from "./pages/Employees/EmployeesPage";
 import ProjectPage from "./pages/Projects/ProjectPage";
@@ -25,6 +26,7 @@ function App() {
           <Route exact path="/collaborateur" element={<EmployeePage/>}></Route>
           <Route exact path="/projects" element={<ProjectPage/>}></Route>
           <Route exact path="/collaborateur/edit/:id" element={<EditEmployee />}></Route>
+          <Route exact path="/collaborateur/modifierdetails/:id" element={<EditEmployeeDetails />}></Route>
           <Route exact path="/addemployee" element={<AddEmployee />}></Route>
           <Route exact path="/projects/edit/:id" element={<EditProject />}></Route>
           <Route exact path="/projects/add" element={<AddProject />}></Route>

@@ -49,7 +49,7 @@ const EmployeeTable = ({ employees, setEmployees }) => {
                 <td className="p-4"> <strong> {employee.name}</strong></td>
                 <td className="p-4 name-column ">
                   <span
-                    className="tag"
+                    className="tag p-2"
                     style={{ backgroundColor: getRandomCommonColorGrey() }}
                   >
                     {employee.projectName}{" "}
@@ -62,7 +62,7 @@ const EmployeeTable = ({ employees, setEmployees }) => {
                     employee.tasks.map((task, index) => (
                       <span
                         key={index}
-                        className="tag m-1"
+                        className="tag m-1 p-1"
                         style={{ backgroundColor: getRandomCommonColorGreen() }}
                       >
                         {task}
@@ -79,29 +79,29 @@ const EmployeeTable = ({ employees, setEmployees }) => {
                 </td>
                 <td className="p-4">
                 <Link
-                    className="btn-orange-view btn btn-sm"
+                    className="btn-orange-outline-table btn btn-sm"
                     to={`/collaborateur/view/${employee.id}`}
                   >
                     <i class="fa-solid fa-eye"></i>
                   </Link>
                   <Link
-                    className="btn btn-sm  btn-orange-outline mx-1"
+                    className="btn btn-sm  btn-orange-outline-table mx-2"
                     to={`/collaborateur/edit/${employee.id}`}
                   >
-                    Modifier
+                    <i class="fa-solid fa-pen-to-square"></i>
                   </Link>
                   <button
-                    className="btn btn-sm btn-orange-primary px-3"
+                    className="btn btn-sm btn-orange-primary-table"
                     onClick={() => deleteEmployee(employee.id)}
                   >
-                    Supprimer
+                    <i className="fa-solid fa-trash"></i>
                   </button>
                 </td>
               </tr>
             ))):(
                 <tr>
                   <td colSpan="8" className="text-center">
-                  Pas de projets disponibles.
+                  Pas des collaborateurs disponibles.
                   </td>
                 </tr>
               )}

@@ -44,7 +44,7 @@ const ProjectTable = ({ projects, setProjects }) => {
         <table className="table table-hover">
           <thead>
             <tr>
-              <th className="p-4">Name</th>
+              <th className="p-4">Projet</th>
               <th className="p-4">Date debut</th>
               <th className="p-4">Date fin</th>
               <th className="p-4">Status</th>
