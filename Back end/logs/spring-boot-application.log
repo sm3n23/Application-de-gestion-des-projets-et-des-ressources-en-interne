@@ -1,0 +1,43 @@
+2024-06-05 14:35:26.192  INFO 608 --- [main] ojetsEtDesRessourcesEnInterneApplication : Starting ApplicationDeGestionDesProjetsEtDesRessourcesEnInterneApplication using Java 17.0.9 on Ismail with PID 608 (D:\Application de gestion des projets et des ressources en interne\Back end\target\classes started by forcy in D:\Application de gestion des projets et des ressources en interne\Back end)
+2024-06-05 14:35:26.194 DEBUG 608 --- [main] ojetsEtDesRessourcesEnInterneApplication : Running with Spring Boot v2.6.7, Spring v5.3.19
+2024-06-05 14:35:26.195  INFO 608 --- [main] ojetsEtDesRessourcesEnInterneApplication : No active profile set, falling back to 1 default profile: "default"
+2024-06-05 14:35:26.958  INFO 608 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-06-05 14:35:27.008  INFO 608 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 43 ms. Found 5 JPA repository interfaces.
+2024-06-05 14:35:27.511  INFO 608 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8085 (http)
+2024-06-05 14:35:27.518  INFO 608 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-06-05 14:35:27.518  INFO 608 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.62]
+2024-06-05 14:35:27.618  INFO 608 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-06-05 14:35:27.619  INFO 608 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1373 ms
+2024-06-05 14:35:27.761  WARN 608 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-06-05 14:35:27.840  INFO 608 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-06-05 14:35:27.880  INFO 608 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.8.Final
+2024-06-05 14:35:28.009  INFO 608 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-06-05 14:35:28.095  INFO 608 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-06-05 14:35:28.224  INFO 608 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-06-05 14:35:28.240  INFO 608 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2024-06-05 14:35:28.966  INFO 608 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-06-05 14:35:28.982  INFO 608 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-06-05 14:35:29.644  INFO 608 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@ce8b59e, org.springframework.security.web.context.SecurityContextPersistenceFilter@20ad64c, org.springframework.security.web.header.HeaderWriterFilter@e21d73, org.springframework.web.filter.CorsFilter@5aa5b3af, org.keycloak.adapters.springsecurity.filter.KeycloakPreAuthActionsFilter@219a2203, org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticationProcessingFilter@b75f3f4, org.springframework.security.web.authentication.logout.LogoutFilter@53fd59d4, org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationFilter@3f3a529f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4db45d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@ad6448e, org.keycloak.adapters.springsecurity.filter.KeycloakSecurityContextRequestFilter@32e7df65, org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticatedActionsFilter@421d7900, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@344cf00f, org.springframework.security.web.session.SessionManagementFilter@600b3bee, org.springframework.security.web.access.ExceptionTranslationFilter@46ab8e4b, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5b1cedfd]
+2024-06-05 14:35:29.735 DEBUG 608 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-06-05 14:35:29.785 DEBUG 608 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 26 mappings in 'requestMappingHandlerMapping'
+2024-06-05 14:35:29.808 DEBUG 608 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-06-05 14:35:29.815 DEBUG 608 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-06-05 14:35:29.840  WARN 608 --- [main] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2024-06-05 14:35:30.050  INFO 608 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2024-06-05 14:35:30.093  INFO 608 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8085 (http) with context path ''
+2024-06-05 14:35:30.109  INFO 608 --- [main] ojetsEtDesRessourcesEnInterneApplication : Started ApplicationDeGestionDesProjetsEtDesRessourcesEnInterneApplication in 4.304 seconds (JVM running for 4.946)
+2024-06-05 14:35:30.359  INFO 608 --- [RMI TCP Connection(1)-172.16.29.231] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-06-05 14:35:30.359  INFO 608 --- [RMI TCP Connection(1)-172.16.29.231] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-06-05 14:35:30.359 DEBUG 608 --- [RMI TCP Connection(1)-172.16.29.231] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2024-06-05 14:35:30.359 DEBUG 608 --- [RMI TCP Connection(1)-172.16.29.231] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2024-06-05 14:35:30.359 DEBUG 608 --- [RMI TCP Connection(1)-172.16.29.231] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2024-06-05 14:35:30.360 DEBUG 608 --- [RMI TCP Connection(1)-172.16.29.231] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@3dfaa1e4
+2024-06-05 14:35:30.360 DEBUG 608 --- [RMI TCP Connection(1)-172.16.29.231] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@6662974a
+2024-06-05 14:35:30.360 DEBUG 608 --- [RMI TCP Connection(1)-172.16.29.231] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-06-05 14:35:30.361  INFO 608 --- [RMI TCP Connection(1)-172.16.29.231] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-06-05 14:36:15.720  INFO 608 --- [http-nio-8085-exec-1] o.keycloak.adapters.KeycloakDeployment   : Loaded URLs from http://localhost:8080/realms/projects-ressources-realm/.well-known/openid-configuration
+2024-06-05 14:36:15.782 ERROR 608 --- [http-nio-8085-exec-1] o.k.a.rotation.AdapterTokenVerifier      : Didn't find publicKey for kid: tSNwJVXPsmw8dILZo2iO4cItWoexCSJnpN6df08ff68
+2024-06-05 14:36:15.792 ERROR 608 --- [http-nio-8085-exec-1] o.k.a.rotation.AdapterTokenVerifier      : Didn't find publicKey for kid: tSNwJVXPsmw8dILZo2iO4cItWoexCSJnpN6df08ff68
+2024-06-05 14:37:08.842  INFO 608 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-06-05 14:37:08.843  INFO 608 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-06-05 14:37:08.845  INFO 608 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

@@ -13,11 +13,22 @@ import com.example.gestionprojets.Repositories.TacheRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.client.RestTemplate;
+import org.json.JSONArray;
+import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.http.*;
+import org.json.JSONObject;
 
 import javax.transaction.Transactional;
-import java.io.IOException;
-import java.util.Base64;
+
 import java.util.HashSet;
 import java.util.List;
 
@@ -38,7 +49,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 
 
 
-    public Employee getEmployee(Long id) {
+    public Employee getEmployee(String id) {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Employee not found"));
         return employee;
@@ -56,6 +67,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Override
     public Employee createEmployee(EmployeeDto employeeDto) {
         Employee employee = new Employee();
+        employee.setMatricule(employeeDto.getMatricule());
         employee.setName(employeeDto.getName());
         employee.setDescription(employeeDto.getDescription());
         employee.setTitle(employeeDto.getTitle());
@@ -81,7 +93,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public Employee updateEmployee(Long id, EmployeeDto employeeDto) {
+    public Employee updateEmployee(String id, EmployeeDto employeeDto) {
         // Fetch the employee by ID or throw an exception if not found
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Employee not found"));
@@ -121,7 +133,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public void deleteEmployee(Long id) {
+    public void deleteEmployee(String id) {
         employeeRepository.deleteById(id);
     }
 
@@ -133,6 +145,49 @@ public class EmployeeServiceImpl implements EmployeeService{
 
 
 
+
+    private final String keycloakBaseUrl = "http://localhost:8080";
+    private final String adminRealm = "master";
+    private final String realm = "Tarification-app";
+
+    public String getKeycloakAdminToken() {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> map= new LinkedMultiValueMap<>();
+        map.add("grant_type", "password");
+        map.add("client_id", "admin-cli");
+        map.add("username", "admin");
+        map.add("password", "admin");
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
+
+        ResponseEntity<String> response = restTemplate.postForEntity(keycloakBaseUrl + "/realms/" + adminRealm + "/protocol/openid-connect/token", request, String.class);
+        JSONObject jsonObject = new JSONObject(response.getBody());
+        return jsonObject.getString("access_token");
+    }
+
+    public void createUserInKeycloak(String username, String password) {
+        String token = getKeycloakAdminToken();
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(token);
+
+        JSONObject userObject = new JSONObject();
+        userObject.put("username", username);
+        userObject.put("enabled", true);
+        userObject.put("credentials", new JSONArray().put(new JSONObject().put("type", "password").put("value", password).put("temporary", false)));
+
+        HttpEntity<String> entity = new HttpEntity<>(userObject.toString(), headers);
+        restTemplate.postForEntity(keycloakBaseUrl + "/admin/realms/" + realm + "/users", entity, String.class);
+    }
+
+    public Employee save(@NonNull Employee employee) {
+        return employeeRepository.save(employee);
+    }
 }
 
 

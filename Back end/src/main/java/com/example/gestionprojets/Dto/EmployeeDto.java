@@ -13,6 +13,7 @@ import java.util.Set;
 public class EmployeeDto {
 
     private String name;
+    private String matricule;
 
     private String title;
     private List<String> skills;

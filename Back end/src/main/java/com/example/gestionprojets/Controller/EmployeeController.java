@@ -24,9 +24,11 @@ public class EmployeeController {
 
 
     @GetMapping("/employees/{id}")
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable String id) {
         return ResponseEntity.ok(employeeService.getEmployee(id));
     }
+
+
 
     @GetMapping("/employees")
     public ResponseEntity<List<Employee>> getAllEmployees() {
@@ -37,14 +39,14 @@ public class EmployeeController {
     @PostMapping("/employees")
     public ResponseEntity<Employee> createEmployee(@RequestBody EmployeeDto employeeDto){
         Employee createdEmployee = employeeService.createEmployee(employeeDto);
-        //keyCloackClientService.createUserInKeycloak(createdEmployee.getName(), "defaultPassword");
+        //employeeService.createUserInKeycloak(employeeDto.getMatricule(), password);
 
         return new ResponseEntity<>(createdEmployee, HttpStatus.CREATED);
     }
 
     @PutMapping("/employees/{id}")
     public ResponseEntity<Employee> updateEmployee(
-            @PathVariable Long id,
+            @PathVariable String id,
             @RequestBody EmployeeDto employeeDto) {
 
 
@@ -59,7 +61,7 @@ public class EmployeeController {
 
 
     @DeleteMapping("/employees/{id}")
-    public ResponseEntity<String> deleteEmployee(@PathVariable Long id){
+    public ResponseEntity<String> deleteEmployee(@PathVariable String id){
         employeeService.deleteEmployee(id);
         return ResponseEntity.ok("Employee deleted");
     }

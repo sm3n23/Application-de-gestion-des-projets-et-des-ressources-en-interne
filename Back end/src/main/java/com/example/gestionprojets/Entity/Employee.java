@@ -16,10 +16,11 @@ import java.util.Set;
 @Setter@Getter
 public class Employee {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "matricule", updatable = false, nullable = false)
+    private String matricule;
 
     private String name;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -48,11 +49,4 @@ public class Employee {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Tache> taches;
-
-
-
-
-    /*@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Address" , referencedColumnName = "id")
-    private Address address;*/
 }

@@ -1,4 +1,4 @@
-package com.example.gestionprojets.Security; // Adjust this to your actual package
+package com.example.gestionprojets.Security;
 
 import com.example.gestionprojets.Entity.Employee;
 import com.example.gestionprojets.Service.EmployeeService;
@@ -28,8 +28,7 @@ public class CustomOidcUserService extends OidcUserService {
         String email = oidcUser.getAttribute("email");
         Employee employee = employeeService.findByEmail(email);
 
-        Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
-        mappedAuthorities.addAll(oidcUser.getAuthorities());
+        Set<GrantedAuthority> mappedAuthorities = new HashSet<>(oidcUser.getAuthorities());
         if (employee != null) {
             mappedAuthorities.addAll(employee.getRoles().stream()
                     .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toUpperCase().replace(" ", "_")))
