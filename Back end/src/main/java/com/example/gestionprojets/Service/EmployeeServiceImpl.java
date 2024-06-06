@@ -67,8 +67,9 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Override
     public Employee createEmployee(EmployeeDto employeeDto) {
         Employee employee = new Employee();
-        employee.setMatricule(employeeDto.getMatricule());
+        employee.setUsername(employeeDto.getUsername());
         employee.setName(employeeDto.getName());
+        employee.setRole(employeeDto.getRole());
         employee.setDescription(employeeDto.getDescription());
         employee.setTitle(employeeDto.getTitle());
         employee.setEmail(employeeDto.getEmail());
@@ -78,7 +79,6 @@ public class EmployeeServiceImpl implements EmployeeService{
         employee.setSkills(employeeDto.getSkills());
         employee.setLocation(employeeDto.getLocation());
         employee.setPicture(employeeDto.getPicture());
-        employee.setRoles(employeeDto.getRoles());
 
 
         return employeeRepository.save(employee);
@@ -100,6 +100,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 
 
         employee.setName(employeeDto.getName());
+        employee.setUsername(employeeDto.getUsername());
         employee.setDescription(employeeDto.getDescription());
         employee.setTitle(employeeDto.getTitle());
         employee.setEmail(employeeDto.getEmail());
@@ -109,7 +110,6 @@ public class EmployeeServiceImpl implements EmployeeService{
         employee.setSkills(employeeDto.getSkills());
         employee.setLocation(employeeDto.getLocation());
         employee.setPicture(employeeDto.getPicture());
-        employee.setRoles(employeeDto.getRoles());
 
 
 

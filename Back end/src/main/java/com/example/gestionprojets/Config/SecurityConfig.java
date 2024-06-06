@@ -80,6 +80,8 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .cors().and()
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/**").permitAll()
+
                 .antMatchers("/custom-login-handler", "/api/public/**").permitAll()
                 .anyRequest().authenticated()
                 .and()

@@ -16,8 +16,8 @@ import java.util.Set;
 @Setter@Getter
 public class Employee {
     @Id
-    @Column(name = "matricule", updatable = false, nullable = false)
-    private String matricule;
+    @Column(name = "username", updatable = false, nullable = false)
+    private String username;
 
     private String name;
 
@@ -35,10 +35,7 @@ public class Employee {
     private String location;
     private String picture;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "employee_roles", joinColumns = @JoinColumn(name = "employee_id"))
-    @Column(name = "role")
-    private Set<String> roles = new HashSet<>();
+
 
 
     @ManyToOne(fetch = FetchType.EAGER)

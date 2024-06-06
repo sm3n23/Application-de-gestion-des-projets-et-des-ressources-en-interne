@@ -1,5 +1,6 @@
 package com.example.gestionprojets.Dto;
 
+import com.example.gestionprojets.Entity.Role;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,8 +14,8 @@ import java.util.Set;
 public class EmployeeDto {
 
     private String name;
-    private String matricule;
-
+    private String username;
+    private Role role;
     private String title;
     private List<String> skills;
     private String description;
@@ -26,7 +27,6 @@ public class EmployeeDto {
 
     private Long projectId;
     private String picture;
-    private Set<String> roles;
 
     private Set<Long> tachesIds;
 
