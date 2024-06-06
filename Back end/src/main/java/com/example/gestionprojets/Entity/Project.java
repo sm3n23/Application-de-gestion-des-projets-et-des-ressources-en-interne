@@ -30,17 +30,11 @@ public class Project {
     private String description;
     private int budget;
 
-    @OneToMany(mappedBy = "project")
+    @ManyToMany(mappedBy = "projects", fetch = FetchType.EAGER)
     private Set<Employee> employees = new HashSet<>();
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Tache> taches = new HashSet<>();
 
-    /*@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<RisqueProject> risqueProjects = new HashSet<>();
-
-
-    @OneToMany
-    private Set<Rapport> rapports = new HashSet<>();*/
 
 }

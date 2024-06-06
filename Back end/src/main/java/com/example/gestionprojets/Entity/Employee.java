@@ -1,19 +1,17 @@
 package com.example.gestionprojets.Entity;
 
 import javax.persistence.*;
-
 import lombok.Getter;
 import lombok.Setter;
-
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-
 @Entity
 @Table
-@Setter@Getter
+@Getter
+@Setter
 public class Employee {
     @Id
     @Column(name = "username", updatable = false, nullable = false)
@@ -36,13 +34,13 @@ public class Employee {
     private String picture;
 
 
-
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name= "project_id")
-    private Project project;
-
-
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "employee_projects",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "project_id")
+    )
+    private Set<Project> projects = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Tache> taches;

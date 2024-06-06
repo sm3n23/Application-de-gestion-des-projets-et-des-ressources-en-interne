@@ -19,24 +19,24 @@ function App() {
     <div>
       <Router>
       
-      <Sidebar />
-      <div className="main-content">
-        <Routes>
-          <Route exact path="/" element={<Home />}></Route>
-          <Route exact path="/collaborateur" element={<EmployeePage/>}></Route>
-          <Route exact path="/projects" element={<ProjectPage/>}></Route>
-          <Route exact path="/collaborateur/edit/:id" element={<EditEmployee />}></Route>
-          <Route exact path="/collaborateur/modifierdetails/:id" element={<EditEmployeeDetails />}></Route>
-          <Route exact path="/addemployee" element={<AddEmployee />}></Route>
-          <Route exact path="/projects/edit/:id" element={<EditProject />}></Route>
-          <Route exact path="/projects/add" element={<AddProject />}></Route>
-          <Route exact path="/collaborateur/view/:id" element={<Profile></Profile>}></Route>
-          <Route exact path="/collaborateur/add" element={<AddEmployee></AddEmployee>}></Route>
-          <Route exact path="/testTable" element={<Test></Test>}></Route>
-          
-          
-        </Routes>
-      </div>
+        <Sidebar />
+        <div className="main-content">
+          <Routes>
+            <Route exact path="/" element={<Home />}></Route>
+            <Route exact path="/collaborateur" element={<EmployeePage/>}></Route>
+            <Route exact path="/projects" element={<ProjectPage/>}></Route>
+            <Route exact path="/collaborateur/edit/:id" element={<EditEmployee />}></Route>
+            <Route exact path="/collaborateur/modifierdetails/:id" element={<EditEmployeeDetails />}></Route>
+            <Route exact path="/addemployee" element={<AddEmployee />}></Route>
+            <Route exact path="/projects/edit/:id" element={<EditProject />}></Route>
+            <Route exact path="/projects/add" element={<AddProject />}></Route>
+            <Route exact path="/collaborateur/view/:id" element={<Profile></Profile>}></Route>
+            <Route exact path="/collaborateur/add" element={<AddEmployee></AddEmployee>}></Route>
+            <Route exact path="/testTable" element={<Test></Test>}></Route>
+            
+            
+          </Routes>
+        </div>
       </Router>
     </div>
   )

@@ -10,6 +10,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.example.gestionprojets.Entity.Role;
+
+
 @Getter@Setter
 public class EmployeeDto {
 
@@ -25,7 +28,7 @@ public class EmployeeDto {
     private String email;
     private String location;
 
-    private Long projectId;
+    private Set<Long> projectsIds;
     private String picture;
 
     private Set<Long> tachesIds;

@@ -18,8 +18,7 @@ import org.json.JSONArray;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -29,7 +28,6 @@ import org.json.JSONObject;
 
 import javax.transaction.Transactional;
 
-import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -80,6 +78,8 @@ public class EmployeeServiceImpl implements EmployeeService{
         employee.setLocation(employeeDto.getLocation());
         employee.setPicture(employeeDto.getPicture());
 
+        employee.setRole(employeeDto.getRole());
+
 
         return employeeRepository.save(employee);
     }
@@ -110,19 +110,18 @@ public class EmployeeServiceImpl implements EmployeeService{
         employee.setSkills(employeeDto.getSkills());
         employee.setLocation(employeeDto.getLocation());
         employee.setPicture(employeeDto.getPicture());
+        employee.setRole(employeeDto.getRole());
 
 
 
 
 
 
-        // Fetch the project by ID or throw an exception if not found
-        if(employeeDto.getProjectId()!=null) {
-            Project project = projectRepository.findById(employeeDto.getProjectId())
-                    .orElseThrow(() -> new NotFoundException("Project not found"));
-
-            employee.setProject(project);
+        if (employeeDto.getProjectsIds() != null && !employeeDto.getProjectsIds().isEmpty()) {
+            Set<Project> projects = new HashSet<>(projectRepository.findAllById(employeeDto.getProjectsIds()));
+            employee.setProjects(projects);
         }
+
         // Fetch the tasks by IDs and set them to the employee
         if(employeeDto.getTachesIds()!= null) {
             List<Tache> taches = tacheRepository.findAllById(employeeDto.getTachesIds());

@@ -45,7 +45,7 @@ public class CustomLoginController {
         this.userDetailsService = userDetailsService;
     }
 
-    @PostMapping("/custom-login-handler")
+    @PostMapping("/login")
     public ResponseEntity<?> handleCustomLogin(@RequestParam String username, @RequestParam String password) {
         logger.info("Received login request for username: {}", username);
 
