@@ -9,6 +9,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.example.gestionprojets.Entity.Role;
+
+
 @Getter@Setter
 public class EmployeeDto {
 
@@ -26,7 +29,7 @@ public class EmployeeDto {
 
     private Long projectId;
     private String picture;
-    private Set<String> roles;
+    private Role role;
 
     private Set<Long> tachesIds;
 

@@ -78,7 +78,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         employee.setSkills(employeeDto.getSkills());
         employee.setLocation(employeeDto.getLocation());
         employee.setPicture(employeeDto.getPicture());
-        employee.setRoles(employeeDto.getRoles());
+        employee.setRole(employeeDto.getRole());
 
 
         return employeeRepository.save(employee);
@@ -109,7 +109,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         employee.setSkills(employeeDto.getSkills());
         employee.setLocation(employeeDto.getLocation());
         employee.setPicture(employeeDto.getPicture());
-        employee.setRoles(employeeDto.getRoles());
+        employee.setRole(employeeDto.getRole());
 
 
 
