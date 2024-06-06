@@ -22,7 +22,7 @@ public interface EmployeeService {
     void deleteEmployee(String id);
 
     Employee findByEmail(String email);
-
+    Employee findByUsername(String username);
 
     String getKeycloakAdminToken();
 

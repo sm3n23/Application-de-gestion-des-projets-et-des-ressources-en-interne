@@ -1,17 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Sidebar = () => {
+const Sidebar = ({ employee }) => {
   return (
     <div className="sidebar">
       <div className="sidebar-profile my-5">
-          <p><img src="/images/profile.png" alt="Profile picture" /></p>
-          <p>Salim BENANI</p>
+        {employee && (
+          <>
+            <p>
+              <img src={employee.picture || "/images/profile.png"} alt="Profile picture" />
+            </p>
+            <p>{employee.name}</p>
+          </>
+        )}
       </div>
-      <div class="separator"></div>
-      <div class="menu my-5">
+      <div className="separator"></div>
+      <div className="menu my-5">
         <Link to="/" className="menu-item">
-          {" "}
           <i className="fas fa-home"></i>Home
         </Link>
         <Link to="/projects" className="menu-item">
@@ -21,7 +26,7 @@ const Sidebar = () => {
           <i className="fa-solid fa-user"></i>collaborateurs
         </Link>
       </div>
-      <div class="footer">
+      <div className="footer">
         <div className="bottom-image">
           <img src="/images/bplogo.png" alt="Banque Populaire logo" />
         </div>
