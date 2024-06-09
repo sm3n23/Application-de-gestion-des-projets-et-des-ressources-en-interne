@@ -20,6 +20,7 @@ public class ProjectDto {
     private int budget;
     private String description;
 
-    private List<String> employeesIds;
+    private List<Long> employeesIds;
+
     private List<Long> tachesIds;
 }

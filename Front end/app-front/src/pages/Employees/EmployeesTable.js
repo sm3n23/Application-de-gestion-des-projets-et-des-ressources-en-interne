@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Table.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from "../../context/AuthContext";
 
 const EmployeeTable = ({ employees, setEmployees }) => {
+  const {AuthenticatedEmployee} = useContext(AuthContext);
   const greyColors = ["#808080"];
   const greenColors = ["#008000", "#228B22", "#4F7942"];
 
@@ -84,18 +86,22 @@ const EmployeeTable = ({ employees, setEmployees }) => {
                   >
                     <i class="fa-solid fa-eye"></i>
                   </Link>
+                  {AuthenticatedEmployee && (AuthenticatedEmployee.role === "ChefDeProjet" || AuthenticatedEmployee.role === "Collaborateur") && (
                   <Link
                     className="btn btn-sm  btn-orange-outline-table mx-2"
                     to={`/collaborateur/edit/${employee.id}`}
                   >
                     <i class="fa-solid fa-pen-to-square"></i>
                   </Link>
+                  )}
+                  {AuthenticatedEmployee && AuthenticatedEmployee.role === "RH" && (
                   <button
                     className="btn btn-sm btn-orange-primary-table"
                     onClick={() => deleteEmployee(employee.id)}
                   >
                     <i className="fa-solid fa-trash"></i>
                   </button>
+                  )}
                 </td>
               </tr>
             ))):(

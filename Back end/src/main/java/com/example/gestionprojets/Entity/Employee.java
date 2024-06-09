@@ -14,6 +14,9 @@ import java.util.Set;
 @Setter
 public class Employee {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(name = "username", updatable = false, nullable = false)
     private String username;
 
@@ -34,13 +37,8 @@ public class Employee {
     private String picture;
 
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "employee_projects",
-            joinColumns = @JoinColumn(name = "employee_id"),
-            inverseJoinColumns = @JoinColumn(name = "project_id")
-    )
-    private Set<Project> projects = new HashSet<>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Project project;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Tache> taches;

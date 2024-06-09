@@ -28,7 +28,7 @@ public class EmployeeDto {
     private String email;
     private String location;
 
-    private Set<Long> projectsIds;
+    private Long projectId;
     private String picture;
 
     private Set<Long> tachesIds;

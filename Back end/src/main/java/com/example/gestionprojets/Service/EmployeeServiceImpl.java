@@ -47,13 +47,16 @@ public class EmployeeServiceImpl implements EmployeeService{
 
 
 
-    public Employee getEmployee(String id) {
+    public Employee getEmployee(Long id) {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Employee not found"));
         return employee;
     }
 
-
+    public Employee findbyUsername(String username){
+        Employee employee = employeeRepository.findByUsername(username);
+        return employee;
+    }
 
     public List<Employee> findEmployees() {
 
@@ -93,7 +96,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public Employee updateEmployee(String id, EmployeeDto employeeDto) {
+    public Employee updateEmployee(Long id, EmployeeDto employeeDto) {
         // Fetch the employee by ID or throw an exception if not found
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Employee not found"));
@@ -112,14 +115,10 @@ public class EmployeeServiceImpl implements EmployeeService{
         employee.setPicture(employeeDto.getPicture());
         employee.setRole(employeeDto.getRole());
 
-
-
-
-
-
-        if (employeeDto.getProjectsIds() != null && !employeeDto.getProjectsIds().isEmpty()) {
-            Set<Project> projects = new HashSet<>(projectRepository.findAllById(employeeDto.getProjectsIds()));
-            employee.setProjects(projects);
+        if (employeeDto.getProjectId() != null) {
+            Project project = projectRepository.findById(employeeDto.getProjectId())
+                    .orElseThrow(()->new NotFoundException("Project note found"));
+            employee.setProject(project);
         }
 
         // Fetch the tasks by IDs and set them to the employee
@@ -132,7 +131,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public void deleteEmployee(String id) {
+    public void deleteEmployee(Long id) {
         employeeRepository.deleteById(id);
     }
 
@@ -147,7 +146,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     private final String keycloakBaseUrl = "http://localhost:8080";
     private final String adminRealm = "master";
-    private final String realm = "Tarification-app";
+    private final String realm = "projects-ressources-realm";
 
     public String getKeycloakAdminToken() {
         RestTemplate restTemplate = new RestTemplate();
@@ -178,7 +177,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         JSONObject userObject = new JSONObject();
         userObject.put("username", username);
         userObject.put("enabled", true);
-        userObject.put("credentials", new JSONArray().put(new JSONObject().put("type", "password").put("value", password).put("temporary", false)));
+        userObject.put("credentials", new JSONArray().put(new JSONObject().put("type", "password").put("value", 1234).put("temporary", false)));
 
         HttpEntity<String> entity = new HttpEntity<>(userObject.toString(), headers);
         restTemplate.postForEntity(keycloakBaseUrl + "/admin/realms/" + realm + "/users", entity, String.class);

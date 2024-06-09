@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./project.css";
 import { Link } from "react-router-dom";
 import Modal from "./Modal";
 import axios from "axios";
+import { AuthContext } from '../../context/AuthContext';
 
 const ProjectTable = ({ projects, setProjects }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
+  const { AuthenticatedEmployee } = useContext(AuthContext);
 
   const greyColors = ["#A9A9A9", "#808080", "#899499"];
   const greenColors = ["#008000", "#228B22", "#4F7942"];
@@ -121,6 +123,7 @@ const ProjectTable = ({ projects, setProjects }) => {
                       </span>
                     )}
                   </td>
+                  {AuthenticatedEmployee && AuthenticatedEmployee.role === "ChefDeProjet" &&(
                   <td className=" py-4 tache-column">
                     <Link
                       className="btn btn-sm btn-orange-outline-table m-1"
@@ -135,6 +138,7 @@ const ProjectTable = ({ projects, setProjects }) => {
                       <i className="fa-solid fa-trash"></i>
                     </button>
                   </td>
+                  )}
                 </tr>
               ))
             ) : (

@@ -22,12 +22,16 @@ public class EmployeeController {
 
 
 
-
     @GetMapping("/employees/{id}")
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable String id) {
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
         return ResponseEntity.ok(employeeService.getEmployee(id));
     }
 
+
+    @GetMapping("/employees/user/{username}")
+    public ResponseEntity<Employee> getEmployeeByUsername(@PathVariable String username) {
+        return ResponseEntity.ok(employeeService.findbyUsername(username));
+    }
 
 
     @GetMapping("/employees")
@@ -39,14 +43,14 @@ public class EmployeeController {
     @PostMapping("/employees")
     public ResponseEntity<Employee> createEmployee(@RequestBody EmployeeDto employeeDto){
         Employee createdEmployee = employeeService.createEmployee(employeeDto);
-        //employeeService.createUserInKeycloak(employeeDto.getMatricule(), password);
+        employeeService.createUserInKeycloak(employeeDto.getUsername(), "1234");
 
         return new ResponseEntity<>(createdEmployee, HttpStatus.CREATED);
     }
 
     @PutMapping("/employees/{id}")
     public ResponseEntity<Employee> updateEmployee(
-            @PathVariable String id,
+            @PathVariable Long id,
             @RequestBody EmployeeDto employeeDto) {
 
 
@@ -61,7 +65,7 @@ public class EmployeeController {
 
 
     @DeleteMapping("/employees/{id}")
-    public ResponseEntity<String> deleteEmployee(@PathVariable String id){
+    public ResponseEntity<String> deleteEmployee(@PathVariable Long id){
         employeeService.deleteEmployee(id);
         return ResponseEntity.ok("Employee deleted");
     }

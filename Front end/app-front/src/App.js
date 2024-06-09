@@ -1,3 +1,4 @@
+// App.js
 import "./App.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Home from "./pages/Home/Home";
@@ -11,35 +12,44 @@ import ProjectPage from "./pages/Projects/ProjectPage";
 import EditProject from "./pages/Projects/EditProject/EditProject";
 import AddProject from "./pages/Projects/AddProject/AddProject";
 import Profile from "./pages/Employees/Profile/Profile";
-import Test from "./pages/Testhtml/Test";
+import Login from "./pages/Login/LoginPage";
+import { AuthProvider, AuthContext } from "./context/AuthContext";
+import ProtectedRoute from "./context/ProtectedRoute";
+import { useContext } from "react";
 
 function App() {
   return (
-    
-    <div>
-      <Router>
-      
-        <Sidebar />
-        <div className="main-content">
-          <Routes>
-            <Route exact path="/" element={<Home />}></Route>
-            <Route exact path="/collaborateur" element={<EmployeePage/>}></Route>
-            <Route exact path="/projects" element={<ProjectPage/>}></Route>
-            <Route exact path="/collaborateur/edit/:id" element={<EditEmployee />}></Route>
-            <Route exact path="/collaborateur/modifierdetails/:id" element={<EditEmployeeDetails />}></Route>
-            <Route exact path="/addemployee" element={<AddEmployee />}></Route>
-            <Route exact path="/projects/edit/:id" element={<EditProject />}></Route>
-            <Route exact path="/projects/add" element={<AddProject />}></Route>
-            <Route exact path="/collaborateur/view/:id" element={<Profile></Profile>}></Route>
-            <Route exact path="/collaborateur/add" element={<AddEmployee></AddEmployee>}></Route>
-            <Route exact path="/testTable" element={<Test></Test>}></Route>
-            
-            
-          </Routes>
-        </div>
-      </Router>
-    </div>
-  )
+    <Router>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </Router>
+  );
 }
+
+const AppContent = () => {
+  const { user } = useContext(AuthContext);
+
+  return (
+    <>
+      {user && <Sidebar />}
+      <div className="main-content">
+        <Routes>
+          <Route exact path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+          <Route exact path="/collaborateur" element={<ProtectedRoute><EmployeePage /></ProtectedRoute>} />
+          <Route exact path="/projects" element={<ProtectedRoute><ProjectPage /></ProtectedRoute>} />
+          <Route exact path="/collaborateur/edit/:id" element={<ProtectedRoute><EditEmployee /></ProtectedRoute>} />
+          <Route exact path="/collaborateur/modifierdetails/:id" element={<ProtectedRoute><EditEmployeeDetails /></ProtectedRoute>} />
+          <Route exact path="/addemployee" element={<ProtectedRoute><AddEmployee /></ProtectedRoute>} />
+          <Route exact path="/projects/edit/:id" element={<ProtectedRoute><EditProject /></ProtectedRoute>} />
+          <Route exact path="/projects/add" element={<ProtectedRoute><AddProject /></ProtectedRoute>} />
+          <Route exact path="/collaborateur/view/:id" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route exact path="/collaborateur/add" element={<ProtectedRoute><AddEmployee /></ProtectedRoute>} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </div>
+    </>
+  );
+};
 
 export default App;

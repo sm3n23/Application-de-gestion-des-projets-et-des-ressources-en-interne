@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import "./EditEmployee.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { WithContext as ReactTags } from "react-tag-input";
 import TaskModal from "./TaskModal"; // Adjust the path as necessary
+import { AuthContext } from "../../../context/AuthContext";
 
 export default function EditEmployee() {
   const { id } = useParams();
@@ -28,7 +29,7 @@ export default function EditEmployee() {
   });
   const [selectedTask, setSelectedTask] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [section, setSection] = useState("details");
+  const {AuthenticatedEmployee} = useContext(AuthContext);
 
   useEffect(() => {
     loadEmployee();
@@ -76,7 +77,7 @@ export default function EditEmployee() {
     }
   };
 
-  
+  console.log(employee)
 
   const handleTaskSelection = (task) => {
     setEmployee((prev) => {
@@ -142,6 +143,7 @@ export default function EditEmployee() {
               )}
               {tasks.length > 0 && (
                 <TaskList
+                  AuthenticatedEmployee={AuthenticatedEmployee}
                   tasks={tasks}
                   selectedTaskIds={new Set(employee.tachesIds)}
                   onTaskSelection={handleTaskSelection}
@@ -159,6 +161,7 @@ export default function EditEmployee() {
                       
                     >
                       <span onClick={() => handleTaskClick(task)}>{task.name}</span>
+                      {AuthenticatedEmployee && AuthenticatedEmployee.role === "ChefDeProjet" && (
                       <button
                         type="button"
                         onClick={() => handleTaskSelection(task)}
@@ -166,6 +169,7 @@ export default function EditEmployee() {
                       >
                         <i className="fas fa-minus-circle"></i>
                       </button>
+                      )}
                     </div>
                   ))}
                   
@@ -187,7 +191,7 @@ export default function EditEmployee() {
 
 
 
-function TaskList({ tasks, selectedTaskIds, onTaskSelection, getRandomCommonColorGreen }) {
+function TaskList({ tasks, selectedTaskIds, onTaskSelection, getRandomCommonColorGreen, AuthenticatedEmployee }) {
   return (
     <div className="form-group m-1 my-2">
       <label className="form-label">Tâches de projet:</label>
@@ -199,6 +203,7 @@ function TaskList({ tasks, selectedTaskIds, onTaskSelection, getRandomCommonColo
             style={{ backgroundColor: getRandomCommonColorGreen() }}
           >
             {task.name}
+            {AuthenticatedEmployee && AuthenticatedEmployee.role === "ChefDeProjet" && (
             <button
               type="button"
               onClick={() => onTaskSelection(task)}
@@ -210,6 +215,7 @@ function TaskList({ tasks, selectedTaskIds, onTaskSelection, getRandomCommonColo
                 <i className="fas fa-plus-circle"></i>
               )}
             </button>
+            )}
           </div>
         ))}
       </div>

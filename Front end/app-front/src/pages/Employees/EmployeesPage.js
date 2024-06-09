@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import EmployeeTable from "./EmployeesTable";
 import { Link } from 'react-router-dom';
+import { AuthContext } from "../../context/AuthContext";
 
 
 const processProjects = (projects) => {
@@ -25,6 +26,7 @@ const processProjects = (projects) => {
 };
 
 const EmployeePage = () => {
+  const {AuthenticatedEmployee} = useContext(AuthContext);
   const [employees, setEmployees] = useState([]);
   const [projects, setProjects] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -79,11 +81,13 @@ const EmployeePage = () => {
           className="form-control my-3"
         />
       </div>
+      {AuthenticatedEmployee && AuthenticatedEmployee.role === "RH" && (
       <div className="d-flex justify-content-end">
         <Link to="/Collaborateur/add" className="btn btn-primary btn-orange mx-3" >
         <i className="fas fa-circle-plus"></i> Ajouter Collaborateur
         </Link>
       </div>
+      )}
       <EmployeeTable employees={filteredEmployees} setEmployees={setEmployees} />
     </div>
   );

@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { WithContext as ReactTags } from 'react-tag-input';
+import { AuthContext } from "../../../context/AuthContext";
 
 export default function AddEmployee() {
   const navigate = useNavigate();
+  const {Authenticatedemployee} = useContext(AuthContext);
   const [employee, setEmployee] = useState({
     name: '',
     title: '',

@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Modal from "../../Projects/Modal";
 import axios from "axios";
 import "./TaskModal.css";
 import { useParams } from "react-router-dom";
+import { AuthContext } from "../../../context/AuthContext";
 
 function TaskModal({ isOpen, onClose, task }) {
   const [subTask, setSubTask] = useState({
@@ -15,6 +16,7 @@ function TaskModal({ isOpen, onClose, task }) {
   const [sousTaches, setSousTaches] = useState(task ? task.sousTaches : []);
   const [activeTab, setActiveTab] = useState("details");
   const { id } = useParams();
+  const {AuthenticatedEmployee} = useContext(AuthContext);
 
   useEffect(() => {
     if (task) {
@@ -204,6 +206,7 @@ function TaskModal({ isOpen, onClose, task }) {
             id="customRange2"
             value={updatedTask.advancement || 0}
             onChange={handleAvancementChange}
+            disabled={AuthenticatedEmployee.role !== "Collaborateur"}
           />
           <div className="range-labels">
             <span className="range-label">Not Started</span>
@@ -211,6 +214,7 @@ function TaskModal({ isOpen, onClose, task }) {
             <span className="range-label">Finished</span>
           </div>
         </div>
+        {AuthenticatedEmployee && AuthenticatedEmployee.role === "Collaborateur" && (
         <button
           type="button"
           className="btn btn-orange-primary  px-3 my-3"
@@ -218,6 +222,7 @@ function TaskModal({ isOpen, onClose, task }) {
         >
           Valider
         </button>
+        )}
       </div>
     );
 
@@ -243,6 +248,7 @@ function TaskModal({ isOpen, onClose, task }) {
                     );
                     toggleSubTaskCompletion(soustache.id);
                   }}
+                  disabled={AuthenticatedEmployee.role !== "Collaborateur"}
                 />
                 <div className="soustache-details">
                   <span>{soustache.name}</span>
@@ -304,6 +310,7 @@ function TaskModal({ isOpen, onClose, task }) {
               />
             </div>
           </div>
+          
           <button
             type="button"
             onClick={handleAddSubTask}
@@ -313,7 +320,8 @@ function TaskModal({ isOpen, onClose, task }) {
           </button>
         </div>
       )}
-      {!isAddingSubTask && (
+      
+      {!isAddingSubTask && AuthenticatedEmployee && AuthenticatedEmployee.role === "Collaborateur" && (
         <button
           type="button"
           className="btn btn-orange-st-primary my-3"

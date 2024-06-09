@@ -11,18 +11,19 @@ public interface EmployeeService {
 
 
 
-    Employee getEmployee(String id);
+    Employee getEmployee(Long id);
 
     List<Employee> findEmployees();
 
     Employee createEmployee(EmployeeDto employeeDto);
 
-    Employee updateEmployee(String id, EmployeeDto employeeDto);
+    Employee updateEmployee(Long id, EmployeeDto employeeDto);
 
-    void deleteEmployee(String id);
+    void deleteEmployee(Long id);
 
     Employee findByEmail(String email);
 
+    Employee findbyUsername(String username);
 
     String getKeycloakAdminToken();
 

@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const EmployeeList = ({ employees }) => {
-    console.log(employees)
     return (
         <div className="employee-list-container">
             <div className='header'>
