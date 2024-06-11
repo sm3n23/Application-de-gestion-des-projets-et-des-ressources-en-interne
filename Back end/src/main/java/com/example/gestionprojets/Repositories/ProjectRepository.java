@@ -1,4 +1,5 @@
 package com.example.gestionprojets.Repositories;
+import com.example.gestionprojets.Entity.Employee;
 import com.example.gestionprojets.Entity.Project;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,4 +21,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     List<Project> findByStartDateBetween(Date startDate, Date endDate);
     List<Project> findByFinishDateBetween(Date startDate, Date endDate);
 
+
+    List<Project> findByCreatedBy(String username);
 }

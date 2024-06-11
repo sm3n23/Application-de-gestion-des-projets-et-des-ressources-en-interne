@@ -30,7 +30,7 @@ export default function Home() {
 
   const loadProjects = async () => {
     try {
-      const result = await axios.get("http://localhost:8085/projects");
+      const result = await axios.get("http://localhost:8085/allprojects");
       const processedProjects = processProjects(result.data);
       setProjects(processedProjects);
 

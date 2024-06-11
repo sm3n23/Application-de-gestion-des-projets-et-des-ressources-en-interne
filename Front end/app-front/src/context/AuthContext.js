@@ -7,6 +7,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [AuthenticatedEmployee, setAuthenticatedEmployee] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,6 +18,7 @@ export const AuthProvider = ({ children }) => {
       setUser({ token, username });
       fetchAuthenticatedEmployee(username, token);
     }
+    setIsLoading(false);
   }, []);
 
   const fetchAuthenticatedEmployee = async (username, token) => {
@@ -50,6 +52,10 @@ export const AuthProvider = ({ children }) => {
     setAuthenticatedEmployee(null);
     navigate("/login");
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Or a loading spinner
+  }
 
   return (
     <AuthContext.Provider value={{ user, AuthenticatedEmployee, login, logout }}>

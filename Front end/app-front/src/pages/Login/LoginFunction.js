@@ -2,8 +2,8 @@
 import axios from "axios";
 
 export const login = async (username, password) => {
-  const clientId = "projects-ressources-client"; // Replace with your Keycloak client ID
-  const clientSecret = "xDsCIfwuu1hJhjbbMngJgO6zCX1gkyEe"; // Replace with your Keycloak client secret
+  const clientId = "projects-ressources-client"; 
+  const clientSecret = "xDsCIfwuu1hJhjbbMngJgO6zCX1gkyEe"; 
   const authServerUrl = "http://localhost:8080/realms/projects-ressources-realm/protocol/openid-connect/token";
 
   const data = new URLSearchParams();

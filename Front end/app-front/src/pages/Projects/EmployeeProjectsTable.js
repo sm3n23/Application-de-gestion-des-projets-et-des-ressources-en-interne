@@ -5,7 +5,7 @@ import Modal from "./Modal";
 import axios from "axios";
 import { AuthContext } from '../../context/AuthContext';
 
-const ProjectTable = ({ projects, setProjects }) => {
+const EmployeeProjectsTable = ({ projects, setProjects }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
   const { AuthenticatedEmployee } = useContext(AuthContext);
@@ -50,6 +50,8 @@ const ProjectTable = ({ projects, setProjects }) => {
               <th className="p-4">Collaborateur</th>
               <th className="p-4">Status</th>
               <th className="p-4">Taches</th>
+              
+              <th className="p-4"></th>
               
             </tr>
           </thead>
@@ -123,7 +125,22 @@ const ProjectTable = ({ projects, setProjects }) => {
                       </span>
                     )}
                   </td>
-                  
+                  {AuthenticatedEmployee && AuthenticatedEmployee.role === "ChefDeProjet" &&(
+                  <td className=" py-4 tache-column">
+                    <Link
+                      className="btn btn-sm btn-orange-outline-table m-1"
+                      to={`/projects/edit/${project.id}`}
+                    >
+                      <i class="fa-solid fa-pen-to-square"></i>
+                    </Link>
+                    <button
+                      className="btn btn-sm btn-orange-primary-table"
+                      onClick={() => deleteProject(project.id)}
+                    >
+                      <i className="fa-solid fa-trash"></i>
+                    </button>
+                  </td>
+                  )}
                 </tr>
               ))
             ) : (
@@ -210,4 +227,4 @@ const ProjectTable = ({ projects, setProjects }) => {
   );
 };
 
-export default ProjectTable;
+export default EmployeeProjectsTable;

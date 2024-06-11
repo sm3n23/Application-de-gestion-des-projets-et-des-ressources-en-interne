@@ -66,6 +66,19 @@
 .icon-button:hover {
     color: #f6f7f9; /* A darker shade of blue for hover effect */
 }
+
+.icon-button-brown {
+  background: transparent;
+  border: none;
+  color: #5C4033; /* Blue color, adjust according to your theme */
+  cursor: pointer;
+  font-size: 12px; /* Make the icon larger */
+  padding: 1px 5px;
+}
+
+.icon-button-brown:hover {
+  color: #f6f7f9; /* A darker shade of blue for hover effect */
+}
 .btn-orange {
   background-color: orange;
   border-color: orange;

@@ -45,7 +45,7 @@ const EmployeeTable = ({ employees, setEmployees }) => {
             </tr>
           </thead>
           <tbody>
-            {Array.isArray(employees) &&employees.length>0 ? (employees.map((employee) => (
+            {Array.isArray(employees) && employees.length >0 ? (employees.map((employee) => (
               <tr key={employee.id}>
                 <td><img className='picture-home mx-3' src={employee.picture} alt="Profile picture" /></td>
                 <td className="p-4"> <strong> {employee.name}</strong></td>
@@ -86,14 +86,7 @@ const EmployeeTable = ({ employees, setEmployees }) => {
                   >
                     <i class="fa-solid fa-eye"></i>
                   </Link>
-                  {AuthenticatedEmployee && (AuthenticatedEmployee.role === "ChefDeProjet" || AuthenticatedEmployee.role === "Collaborateur") && (
-                  <Link
-                    className="btn btn-sm  btn-orange-outline-table mx-2"
-                    to={`/collaborateur/edit/${employee.id}`}
-                  >
-                    <i class="fa-solid fa-pen-to-square"></i>
-                  </Link>
-                  )}
+                  
                   {AuthenticatedEmployee && AuthenticatedEmployee.role === "RH" && (
                   <button
                     className="btn btn-sm btn-orange-primary-table"

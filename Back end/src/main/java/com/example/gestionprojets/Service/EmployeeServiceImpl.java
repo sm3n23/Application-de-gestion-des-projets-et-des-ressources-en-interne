@@ -53,8 +53,11 @@ public class EmployeeServiceImpl implements EmployeeService{
         return employee;
     }
 
-    public Employee findbyUsername(String username){
+    public Employee findbyUsername(String username) {
         Employee employee = employeeRepository.findByUsername(username);
+        if (employee == null) {
+            throw new NotFoundException("User not found with username: " + username);
+        }
         return employee;
     }
 
@@ -81,8 +84,9 @@ public class EmployeeServiceImpl implements EmployeeService{
         employee.setLocation(employeeDto.getLocation());
         employee.setPicture(employeeDto.getPicture());
 
-        employee.setRole(employeeDto.getRole());
-
+        if(employeeDto.getRole() != null) {
+            employee.setRole(employeeDto.getRole());
+        }
 
         return employeeRepository.save(employee);
     }
@@ -113,7 +117,10 @@ public class EmployeeServiceImpl implements EmployeeService{
         employee.setSkills(employeeDto.getSkills());
         employee.setLocation(employeeDto.getLocation());
         employee.setPicture(employeeDto.getPicture());
-        employee.setRole(employeeDto.getRole());
+
+        if(employeeDto.getRole() != null) {
+            employee.setRole(employeeDto.getRole());
+        }
 
         if (employeeDto.getProjectId() != null) {
             Project project = projectRepository.findById(employeeDto.getProjectId())

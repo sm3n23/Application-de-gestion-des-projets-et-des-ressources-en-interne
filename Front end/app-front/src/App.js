@@ -1,6 +1,8 @@
 // App.js
 import "./App.css";
-import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+
 import Home from "./pages/Home/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AddEmployee from "./pages/Employees/AddEmployee/addEmployee";
@@ -9,6 +11,7 @@ import EditEmployeeDetails from "./pages/Employees/EditEmployee/EditEmployeeDeta
 import Sidebar from "./layout/sidebar";
 import EmployeePage from "./pages/Employees/EmployeesPage";
 import ProjectPage from "./pages/Projects/ProjectPage";
+import EmployeeProjects from "./pages/Projects/EmployeeProjects";
 import EditProject from "./pages/Projects/EditProject/EditProject";
 import AddProject from "./pages/Projects/AddProject/AddProject";
 import Profile from "./pages/Employees/Profile/Profile";
@@ -30,6 +33,8 @@ function App() {
 const AppContent = () => {
   const { user } = useContext(AuthContext);
 
+  
+
   return (
     <>
       {user && <Sidebar />}
@@ -37,7 +42,8 @@ const AppContent = () => {
         <Routes>
           <Route exact path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route exact path="/collaborateur" element={<ProtectedRoute><EmployeePage /></ProtectedRoute>} />
-          <Route exact path="/projects" element={<ProtectedRoute><ProjectPage /></ProtectedRoute>} />
+          <Route exact path="/allprojects" element={<ProtectedRoute><ProjectPage /></ProtectedRoute>} />
+          <Route exact path="/projects" element={<ProtectedRoute><EmployeeProjects /></ProtectedRoute>} />
           <Route exact path="/collaborateur/edit/:id" element={<ProtectedRoute><EditEmployee /></ProtectedRoute>} />
           <Route exact path="/collaborateur/modifierdetails/:id" element={<ProtectedRoute><EditEmployeeDetails /></ProtectedRoute>} />
           <Route exact path="/addemployee" element={<ProtectedRoute><AddEmployee /></ProtectedRoute>} />

@@ -33,7 +33,7 @@ const EmployeeModal = ({ isOpen, onClose, employees, addEmployee }) => {
       
       <div className="employee-project-list-container">
             <div className='header'>
-                <h5 className='header-txt'>Collaborateurs</h5>
+                <h5 className='header-txt'>Ajouter Collaborateurs</h5>
             </div>
             {filteredEmployees.map((employee, index) => (
             <div key={index} className="employee-item" onClick={() => handleAddEmployee(employee)}>

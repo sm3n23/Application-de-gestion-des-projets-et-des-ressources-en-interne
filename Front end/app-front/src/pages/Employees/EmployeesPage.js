@@ -39,7 +39,7 @@ const EmployeePage = () => {
     try {
       const [employeesResponse, projectsResponse] = await Promise.all([
         axios.get("http://localhost:8085/employees"),
-        axios.get("http://localhost:8085/projects"),
+        axios.get("http://localhost:8085/allprojects"),
       ]);
 
       const allEmployees = employeesResponse.data;
@@ -85,6 +85,13 @@ const EmployeePage = () => {
       <div className="d-flex justify-content-end">
         <Link to="/Collaborateur/add" className="btn btn-primary btn-orange mx-3" >
         <i className="fas fa-circle-plus"></i> Ajouter Collaborateur
+        </Link>
+      </div>
+      )}
+      {AuthenticatedEmployee && AuthenticatedEmployee.role === "Collaborateur" && (
+      <div className="d-flex justify-content-end">
+        <Link to={`/collaborateur/edit/${AuthenticatedEmployee.id}`} className="btn btn-primary btn-orange mx-3" >
+          Mes Taches
         </Link>
       </div>
       )}

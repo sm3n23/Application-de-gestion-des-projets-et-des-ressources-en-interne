@@ -39,6 +39,10 @@ public class ProjectServiceImpl implements ProjectService{
         return project;
     }
 
+    @Override
+    public List<Project> getProjectsByCreator(Employee creator) {
+        return projectRepository.findByCreatedBy(creator.getUsername());
+    }
 
     @Override
     public Project createProject(ProjectDto projectDto) {
@@ -49,7 +53,9 @@ public class ProjectServiceImpl implements ProjectService{
         project.setFinishDate(projectDto.getFinishDate());
         project.setBudget(projectDto.getBudget());
         project.setDescription(projectDto.getDescription());
-
+        if(projectDto.getCreatedBy()!= null) {
+            project.setCreatedBy(projectDto.getCreatedBy());
+        }
         return projectRepository.save(project);
     }
 

@@ -23,4 +23,6 @@ public class ProjectDto {
     private List<Long> employeesIds;
 
     private List<Long> tachesIds;
+
+    private String createdBy;
 }

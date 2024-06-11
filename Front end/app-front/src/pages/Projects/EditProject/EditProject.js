@@ -197,7 +197,9 @@ function EmployeeList({ employees, onAddClick, randomColor }) {
       <label className="form-label">Collaborateurs:</label>
       <div className="form-control my-2">
         {employees.map((employee) => (
-          <div key={employee.id} className="tag my-3" style={{ backgroundColor: randomColor() }}>{employee.name}</div>
+          <Link to={`/collaborateur/edit/${employee.id}`} key={employee.id} className="tag p-2 m-1" style={{ backgroundColor: randomColor() }}>
+            {employee.name} <span className="icon-button-brown"><i class="fa-solid fa-pen-to-square"></i></span>
+          </Link>
         ))}
         <button type="button" onClick={onAddClick} className="icon-button"><i className="fas fa-circle-plus"></i> Ajouter un(e) Collaborateur</button>
       </div>

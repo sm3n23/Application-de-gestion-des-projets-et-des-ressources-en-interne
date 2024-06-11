@@ -4,6 +4,7 @@ import ProjectsTable from './ProjectsTable';
 import { useNavigate, Link } from 'react-router-dom';
 import './project.css';
 import { AuthContext } from '../../context/AuthContext';
+import EmployeeProjectsTable from './EmployeeProjectsTable';
 
 export default function ProjectPage() {
   const [projects, setProjects] = useState([]);
@@ -11,8 +12,10 @@ export default function ProjectPage() {
   const { AuthenticatedEmployee } = useContext(AuthContext);
 
   useEffect(() => {
-    loadProjects();
-  }, []);
+    if (AuthenticatedEmployee) {
+      loadProjects();
+    }
+  }, [AuthenticatedEmployee]);
 
   const processProjects = (projects) => {
     return projects.map(project => {
@@ -31,7 +34,7 @@ export default function ProjectPage() {
       if (!AuthenticatedEmployee) {
         throw new Error('AuthenticatedEmployee is null');
       }
-      const result = await axios.get(`http://localhost:8085/allprojects`);
+      const result = await axios.get(`http://localhost:8085/projects/?username=${AuthenticatedEmployee.username}`);
       const processedProjects = processProjects(result.data);
       setProjects(processedProjects);
     } catch (error) {
@@ -64,13 +67,12 @@ export default function ProjectPage() {
 
       {AuthenticatedEmployee && AuthenticatedEmployee.role === "ChefDeProjet" && (
         <div className="d-flex justify-content-end">
-          <Link to="/projects" className="btn btn-primary btn-orange mx-3">
-              Mes Projets
+          <Link to="/projects/add" className="btn btn-primary btn-orange mx-3">
+            <i className="fas fa-circle-plus"></i> Ajouter Projet
           </Link>
-          
         </div>
       )}
-      <ProjectsTable projects={filteredProjects} setProjects={setProjects} />
+      <EmployeeProjectsTable projects={filteredProjects} setProjects={setProjects} />
     </div>
   );
 }

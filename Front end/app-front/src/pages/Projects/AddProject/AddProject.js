@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import TaskModal from '../EditProject/TaskModal';
 import EmployeeModal from '../EditProject/EmployeeModal';
 import '../EditProject/EditProject.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import { AuthContext } from '../../../context/AuthContext'; // Make sure to import AuthContext
 
 const AddProject = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const AddProject = () => {
   const [allEmployees, setAllEmployees] = useState([]);
   const [isTaskModalOpen, setTaskModalOpen] = useState(false);
   const [isEmployeeModalOpen, setEmployeeModalOpen] = useState(false);
+  const { AuthenticatedEmployee } = useContext(AuthContext); // Use AuthContext to get authenticated user
 
   useEffect(() => {
     loadEmployees();
@@ -41,12 +43,17 @@ const AddProject = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!AuthenticatedEmployee) {
+      alert('You need to be logged in to create a project.');
+      return;
+    }
     try {
-      // Step 1: Create the project and get its ID
-      const projectResponse = await axios.post('http://localhost:8085/projects', project);
+      const projectResponse = await axios.post(
+        `http://localhost:8085/projects?username=${AuthenticatedEmployee.username}`,
+        project
+      );
       const newProjectId = projectResponse.data.id;
 
-      // Step 2: Create tasks associated with the new project ID
       await Promise.all(project.taches.map(task => createTaskForProject(task, newProjectId)));
 
       navigate('/projects');

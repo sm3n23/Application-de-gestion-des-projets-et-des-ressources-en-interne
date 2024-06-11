@@ -1,12 +1,16 @@
 package com.example.gestionprojets.Controller;
 
 import com.example.gestionprojets.Dto.ProjectDto;
+import com.example.gestionprojets.Entity.Employee;
 import com.example.gestionprojets.Entity.Project;
+import com.example.gestionprojets.Service.EmployeeService;
 import com.example.gestionprojets.Service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -19,12 +23,14 @@ public class ProjectController {
     private ProjectService projectService;
 
     @Autowired
+    private EmployeeService employeeService;
+    @Autowired
     public ProjectController(ProjectService projectService){
         this.projectService= projectService;
     }
 
 
-    @GetMapping("/projects")
+    @GetMapping("/allprojects")
     //@PreAuthorize("hasAnyAuthority('USER')")
     public ResponseEntity<List<Project>> getProjects(){
         List<Project> projects = projectService.findProjects();
@@ -42,8 +48,20 @@ public class ProjectController {
         }
     }
 
+    @GetMapping("/projects")
+    public ResponseEntity<List<Project>> getMyProjects(@RequestParam String username) {
+        Employee employee = employeeService.findbyUsername(username);
+        if (employee == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        List<Project> projects = projectService.getProjectsByCreator(employee);
+        return ResponseEntity.ok(projects);
+    }
+
     @PostMapping("/projects")
-    public ResponseEntity<Project> createProject(@RequestBody ProjectDto projectDto){
+    public ResponseEntity<Project> createProject(@RequestBody ProjectDto projectDto, @RequestParam String username){
+        Employee employee = employeeService.findbyUsername(username);
+        projectDto.setCreatedBy(username); // Set the createdBy field to username
         Project createdProject = projectService.createProject(projectDto);
         return new ResponseEntity<>(createdProject, HttpStatus.CREATED);
     }

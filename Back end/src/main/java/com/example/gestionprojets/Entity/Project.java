@@ -36,5 +36,6 @@ public class Project {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Tache> taches = new HashSet<>();
 
+    private String createdBy;
 
 }

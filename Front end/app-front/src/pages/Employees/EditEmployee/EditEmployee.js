@@ -153,14 +153,15 @@ export default function EditEmployee() {
               <div className="form-group">
                 <label className="form-label">Tâches de collaborateur:</label>
                 <div className="form-control my-2">
-                  {employee.employeeTasks.map((task) => (
+
+                  {Array.isArray(employee.employeeTasks) && employee.employeeTasks.length > 0 ?( employee.employeeTasks.map((task) => (
                     <div
                       key={task.id}
                       className="tag my-3"
                       style={{ backgroundColor: getRandomCommonColorGrey() }}
                       
                     >
-                      <span onClick={() => handleTaskClick(task)}>{task.name}</span>
+                      <span  onClick={() => handleTaskClick(task)}>{task.name} {AuthenticatedEmployee && AuthenticatedEmployee.role === "Collaborateur" && (<i  class="fa-solid fa-pen-to-square icon-button"></i>)}</span>
                       {AuthenticatedEmployee && AuthenticatedEmployee.role === "ChefDeProjet" && (
                       <button
                         type="button"
@@ -171,7 +172,13 @@ export default function EditEmployee() {
                       </button>
                       )}
                     </div>
-                  ))}
+                  ))):(
+                    <tr>
+                        <td colSpan="8" className="text-center">
+                          aucune tâche assignée.
+                        </td>
+                    </tr>
+                  )}
                   
                 </div>
               </div>

@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 
 @Service
@@ -22,7 +21,14 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Employee employee = employeeRepository.findByUsername(username);
+        if (employee == null) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
+        }
 
+        // Vérifier si le rôle de l'employé est null
+        if (employee.getRole() == null) {
+            throw new IllegalStateException("User " + username + " does not have a role assigned");
+        }
 
         return new User(username, "", true, true, true, true,
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + employee.getRole().name())));
