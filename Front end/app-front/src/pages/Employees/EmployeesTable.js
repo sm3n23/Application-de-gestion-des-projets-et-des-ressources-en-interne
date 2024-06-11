@@ -81,7 +81,7 @@ const EmployeeTable = ({ employees, setEmployees }) => {
                 </td>
                 <td className="p-4">
                 <Link
-                    className="btn-orange-outline-table btn btn-sm"
+                    className="btn-orange-outline-table btn btn-sm mx-2"
                     to={`/collaborateur/view/${employee.id}`}
                   >
                     <i class="fa-solid fa-eye"></i>

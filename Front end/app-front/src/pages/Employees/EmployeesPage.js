@@ -88,13 +88,7 @@ const EmployeePage = () => {
         </Link>
       </div>
       )}
-      {AuthenticatedEmployee && AuthenticatedEmployee.role === "Collaborateur" && (
-      <div className="d-flex justify-content-end">
-        <Link to={`/collaborateur/edit/${AuthenticatedEmployee.id}`} className="btn btn-primary btn-orange mx-3" >
-          Mes Taches
-        </Link>
-      </div>
-      )}
+      
       <EmployeeTable employees={filteredEmployees} setEmployees={setEmployees} />
     </div>
   );

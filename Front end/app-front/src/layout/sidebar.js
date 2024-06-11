@@ -34,7 +34,7 @@ const Sidebar = () => {
         <Link to="/collaborateur" className="menu-item">
           <i className="fa-solid fa-user"></i> Collaborateurs
         </Link>
-        <div className="btn-group menu-item">
+        <div className=" btn-group menu-item">
           <button type="button" className="btn custom-btn">
             <i className="fa-solid fa-gear"></i> Settings
           </button>

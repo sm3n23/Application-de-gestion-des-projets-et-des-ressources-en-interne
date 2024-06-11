@@ -155,7 +155,7 @@
 .profile-right .basic-info .info-item {
     font-size: 15px;
     display: flex;
-    justify-content: left;
+    flex-wrap: wrap;
     text-align: left;
     margin-left: 0;
 }
@@ -163,13 +163,17 @@
 .profile-right .basic-info .info-item p {
     color: #757373;
     margin: 5px 0;
+    text-align: left; /* Ensure left alignment */
+    flex: 1; /* Ensure each item takes up the necessary space */
 }
+
 .profile-right .basic-info .info-item p span {
     display: block;
     margin-top: 5px;
     color: #434040;
     margin-right: 50px;
 }
+
 .profile-right .buttons {
     display: flex;
     gap: 10px;
@@ -184,6 +188,7 @@
     padding: 10px 20px;
     cursor: pointer;
 }
+
 
 .experience-list {
     list-style: none;

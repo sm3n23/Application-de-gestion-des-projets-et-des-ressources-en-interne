@@ -23,21 +23,36 @@ const Profile = () => {
         tachesIds: []
     });
 
+    const [projects, setProjects] = useState([]);
+
     useEffect(() => {
-        loadEmployee();
+        loadEmployeeAndProjects();
     }, [id]);
 
-    const loadEmployee = async () => {
+    const loadEmployeeAndProjects = async () => {
         try {
-            const res = await axios.get(`http://localhost:8085/employees/${id}`);
-            setEmployee(res.data);
+            const employeeRes = await axios.get(`http://localhost:8085/employees/${id}`);
+            const projectsRes = await axios.get("http://localhost:8085/allprojects");
+
+            const employeeData = employeeRes.data;
+            const allProjects = projectsRes.data;
+
+            const employeeProjects = allProjects.filter(project =>
+                project.employees.some(emp => emp.id === employeeData.id)
+            ).map(project => {
+                const employeeTasks = project.employees.find(emp => emp.id === employeeData.id).taches;
+                return {
+                    ...project,
+                    tasks: employeeTasks
+                };
+            });
+
+            setEmployee(employeeData);
+            setProjects(employeeProjects);
         } catch (error) {
-            console.error("Error loading employee data:", error);
+            console.error("Error loading employee or projects data:", error);
         }
     };
-
-    console.log(employee)
-
     
 
     const calculateAge = (birthDate) => {
@@ -93,27 +108,27 @@ const Profile = () => {
                         <h3>Experience</h3>
                         <ul className="experience-list">
                             <li>
-                                <div className="circle infosys">ST</div>
+                                <div className="circle infosys">CD</div>
                                 <div>
-                                    <p><strong>Infosys</strong></p>
-                                    <p>Product & UI/UX Designer</p>
-                                    <p>Apr 2018 - Present | Pune, India</p>
+                                    <p><strong>chef De Projet</strong></p>
+                                    <p>developper full stack</p>
+                                    <p>Apr 2020 - Present | Casablanca, Anfa</p>
                                 </div>
                             </li>
                             <li>
-                                <div className="circle pixel-studio">PS</div>
+                                <div className="circle pixel-studio">BD</div>
                                 <div>
-                                    <p><strong>Pixel Studio</strong></p>
-                                    <p>UI/UX Designer</p>
-                                    <p>Oct 2016 - July 2016 | Bengaluru, India</p>
+                                    <p><strong>Backend developper</strong></p>
+                                    <p>SpringBoot</p>
+                                    <p>Oct 2018 - July 2019 |Casablanca</p>
                                 </div>
                             </li>
                             <li>
-                                <div className="circle ramotion-studio">RS</div>
+                                <div className="circle ramotion-studio">PFE</div>
                                 <div>
-                                    <p><strong>Ramotion Studio</strong></p>
-                                    <p>Web Designer</p>
-                                    <p>April 2015 - July 2016 | Bengaluru, India</p>
+                                    <p><strong>Satge PFE</strong></p>
+                                    <p>fullStack developper</p>
+                                    <p>April 2016 - July 2018 | Casablanca</p>
                                 </div>
                             </li>
                         </ul>
