@@ -181,6 +181,12 @@
   margin-bottom: 20px;
 }
 
+.container-editEmp {
+  width: 80%;
+  margin-top: 40px;
+  font-size: 0.95em;
+  margin-left: 150px;
+}
 
 .range-container {
   display: flex;

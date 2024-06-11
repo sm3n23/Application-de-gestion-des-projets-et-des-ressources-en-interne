@@ -64,7 +64,7 @@
 }
 
 .icon-button:hover {
-    color: #f6f7f9; /* A darker shade of blue for hover effect */
+    color: #000000; /* A darker shade of blue for hover effect */
 }
 
 .icon-button-brown {
@@ -80,27 +80,27 @@
   color: #f6f7f9; /* A darker shade of blue for hover effect */
 }
 .btn-orange {
-  background-color: orange;
-  border-color: orange;
+  background-color: #ff8c33;
+  border-color: #ff8d35;
   color: white;
 }
 
 .btn-orange:hover {
-  background-color: darkorange;
-  border-color: darkorange;
+  background-color: #f97714;
+  border-color: #f97714;
 }
 
 .btn-orange-primary-edit {
-  background-color: orange;
-  border-color: darkorange;
+  background-color: #ff8c33;
+  border-color: #ff8c33;
   width: auto;
   color: white;
   font-weight:500;
 
 }
 .btn-orange-primary-edit:hover {
-  background-color: darkorange;
-  border-color: darkorange;
+  background-color: #f97714;
+  border-color: #f97714;
 }
 
 

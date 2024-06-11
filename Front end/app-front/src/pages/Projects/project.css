@@ -103,7 +103,7 @@ tr {
 }
 
 .btn-orange {
-    background-color: orange;
+    background-color: #f97714;
     border-color: orange;
     color: white;
 }
@@ -115,53 +115,53 @@ tr {
 
 .btn-orange-outline {
     background-color: transparent;
-    border-color: orange;
-    color: orange;
+    border-color: #ff8c33;
+    color: #ff8c33;
     width: 100px;
-    border: orange 2px solid;
+    border: #ff8c33 2px solid;
     font-weight:500;
 }
 
 .btn-orange-outline:hover {
-    background-color: darkorange;
-    border-color: darkorange;
+    background-color: #f97714;
+    border-color: #f97714;
 }
 
 .btn-orange-primary {
-    background-color: orange;
-    border-color: darkorange;
+    background-color: #ff8c33;
+    border-color: #ff8c33;
     width: 100px;
     color: white;
     font-weight:500;
 
 }
 .btn-orange-primary:hover {
-    background-color: darkorange;
-    border-color: darkorange;
+    background-color: #f97714;
+    border-color: #f97714;
 }
 .btn-orange-st-primary {
-    background-color: orange;
-    border-color: darkorange;
+    background-color: #ff8c33;
+    border-color: #ff8c33;
     width: 180px;
     color: white;
     font-weight:500;
 
 }
 .btn-orange-st-primary:hover {
-    background-color: darkorange;
-    border-color: darkorange;
+    background-color: #f97714;
+    border-color: #f97714;
 }
 .btn-orange-view {
-    background-color: orange;
-    border-color: darkorange;
+    background-color: #ff8c33;
+    border-color: #ff8c33;
     width: 50px;
     color: white;
     font-weight:500;
 
 }
 .btn-orange-view:hover {
-    background-color: darkorange;
-    border-color: darkorange;
+    background-color: #f97714;
+    border-color: #f97714;
     width: 50px;
     color: black;
     font-weight:500;
@@ -169,8 +169,8 @@ tr {
 }
 
 .btn-orange-primary:hover {
-    background-color: darkorange;
-    border-color: darkorange;
+    background-color: #f97714;
+    border-color: #f97714;
 }
 
 .toggle-btn {
@@ -220,26 +220,26 @@ tr {
 
 .btn-orange-outline-table {
     background-color: transparent;
-    border-color: orange;
-    color: orange;
+    border-color: #ff8c33;
+    color: #ff8c33;
     width: 40px;
-    border: orange 2px solid;
+    border: #ff8c33 2px solid;
     font-weight:500;
 }
 
 .btn-orange-outline-table:hover {
-    background-color: darkorange;
-    border-color: darkorange;
+    background-color: #f97714;
+    border-color: #f97714;
 }
 
 .btn-orange-primary-table {
-    background-color: orange;
-    border-color: darkorange;
+    background-color: #ff8c33;
+    border-color: #ff8c33;
     width: 40px;
     color: white;
 
 }
 .btn-orange-primary-table:hover {
-    background-color: darkorange;
-    border-color: darkorange;
+    background-color: #f97714;
+    border-color: #f97714;
 }

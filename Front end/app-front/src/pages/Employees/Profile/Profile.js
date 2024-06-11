@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './Profile.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { AuthContext } from '../../../context/AuthContext';
 
 const Profile = () => {
     const { id } = useParams();
+    const { AuthenticatedEmployee } = useContext(AuthContext);
     const [employee, setEmployee] = useState({
         name: '',
         title: '',
@@ -36,9 +38,7 @@ const Profile = () => {
 
     console.log(employee)
 
-    const handleImageError = (e) => {
-        e.target.src = '/images/fallback.png'; // Set your fallback image path here
-    };
+    
 
     const calculateAge = (birthDate) => {
         const today = new Date();
@@ -55,7 +55,9 @@ const Profile = () => {
         <div className="container-p profile-page">
             <div className="header">
                 <Link to="/collaborateur"><i className="fa fa-arrow-left"></i> Back</Link>
-                <Link to={`/collaborateur/modifierdetails/${employee.id}`}><i className="fa-solid fa-pen-to-square"></i></Link>
+                {AuthenticatedEmployee && AuthenticatedEmployee.id === employee.id && (
+                    <Link to={`/collaborateur/modifierdetails/${employee.id}`}><i className="fa-solid fa-pen-to-square"></i></Link>
+                )}
             </div>
             <div className="profile">
                 <div className="profile-left">

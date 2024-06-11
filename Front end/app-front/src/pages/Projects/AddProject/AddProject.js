@@ -173,7 +173,7 @@ function EmployeeList({ employees, onAddClick, randomColor }) {
         {employees.map((employee) => (
           <div key={employee.id} className="tag my-3" style={{ backgroundColor: randomColor() }}>{employee.name}</div>
         ))}
-        <button type="button" onClick={onAddClick} className="icon-button"><i className="fas fa-circle-plus"></i> Ajouter un(e) Collaborateur</button>
+        <button type="button" onClick={onAddClick} className="icon-button"><i className="fas fa-circle-plus"></i> Ajouter Des Collaborateurs</button>
       </div>
     </div>
   );
@@ -190,7 +190,7 @@ function TaskList({ tasks, onDeleteTask, onAddTask, randomColor }) {
             <button type="button" onClick={() => onDeleteTask(task.id)} className="icon-button"><i className="fa-sharp fa-solid fa-circle-xmark"></i></button>
           </div>
         ))}
-        <button type="button" onClick={onAddTask} className="icon-button"><i className="fas fa-circle-plus"></i> Ajouter une tâche</button>
+        <button type="button" onClick={onAddTask} className="icon-button"><i className="fas fa-circle-plus"></i> Ajouter Des tâches</button>
       </div>
     </div>
   );
@@ -198,7 +198,7 @@ function TaskList({ tasks, onDeleteTask, onAddTask, randomColor }) {
 
 function FormActions() {
   return (
-    <div className="form-actions my-3">
+    <div className="form-actions my-3 mx-1">
       <button type="submit" className="btn  btn-orange-primary-edit px-3">Ajouter projet</button>
       <Link to="/projects" className="btn  btn-orange-outline mx-4">Annuler</Link>
     </div>
