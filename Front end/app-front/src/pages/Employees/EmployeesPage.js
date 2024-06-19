@@ -3,33 +3,37 @@ import axios from "axios";
 import EmployeeTable from "./EmployeesTable";
 import { Link } from 'react-router-dom';
 import { AuthContext } from "../../context/AuthContext";
-
+import Pagination from "./Pagination";
 
 const processProjects = (projects) => {
   let employees = [];
 
   projects.forEach((project) => {
-    project.employees.forEach((employee) => {
-      const tasks = employee.taches.map((tache) => tache.name);
+    if (project.employees) {
+      project.employees.forEach((employee) => {
+        const tasks = employee.taches ? employee.taches.map((tache) => tache.name) : [];
 
-      employees.push({
-        id: employee.id,
-        picture:employee.picture,
-        name: employee.name,
-        projectName: project.name,
-        tasks: tasks.length > 0 ? tasks : ["No Tasks Assigned"],
+        employees.push({
+          id: employee.id,
+          picture: employee.picture,
+          name: employee.name,
+          projectName: project.name,
+          tasks: tasks.length > 0 ? tasks : ["No Tasks Assigned"],
+        });
       });
-    });
+    }
   });
 
   return employees;
 };
 
 const EmployeePage = () => {
-  const {AuthenticatedEmployee} = useContext(AuthContext);
+  const { AuthenticatedEmployee } = useContext(AuthContext);
   const [employees, setEmployees] = useState([]);
   const [projects, setProjects] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const employeesPerPage = 5;
 
   useEffect(() => {
     loadEmployeesAndProjects();
@@ -66,13 +70,18 @@ const EmployeePage = () => {
   };
 
   const filteredEmployees = employees.filter((employee) =>
-    employee.name.toLowerCase().includes(searchTerm.toLowerCase())
+    employee.name && employee.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const indexOfLastEmployee = currentPage * employeesPerPage;
+  const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
+  const currentEmployees = filteredEmployees.slice(indexOfFirstEmployee, indexOfLastEmployee);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="container">
       <div className="search-bar">
-        
         <input
           type="text"
           placeholder="recherche"
@@ -82,14 +91,19 @@ const EmployeePage = () => {
         />
       </div>
       {AuthenticatedEmployee && AuthenticatedEmployee.role === "RH" && (
-      <div className="d-flex justify-content-end">
-        <Link to="/Collaborateur/add" className="btn btn-primary btn-orange mx-3" >
-        <i className="fas fa-circle-plus"></i> Ajouter Collaborateur
-        </Link>
-      </div>
+        <div className="d-flex justify-content-end">
+          <Link to="/Collaborateur/add" className="btn btn-primary btn-orange mx-3">
+            <i className="fas fa-circle-plus"></i> Ajouter Collaborateur
+          </Link>
+        </div>
       )}
-      
-      <EmployeeTable employees={filteredEmployees} setEmployees={setEmployees} />
+      <EmployeeTable employees={currentEmployees} setEmployees={setEmployees} />
+      <Pagination
+        itemsPerPage={employeesPerPage}
+        totalItems={filteredEmployees.length}
+        paginate={paginate}
+        currentPage={currentPage}
+      />
     </div>
   );
 };

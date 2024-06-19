@@ -101,7 +101,7 @@ export default function EditEmployee() {
     };
     try {
       await axios.put(`http://localhost:8085/employees/${id}`, payload);
-      navigate("/collaborateur");
+      navigate("/projects");
     } catch (error) {
       console.error("Failed to save changes:", error.response.data);
       alert("Failed to update employee. Please try again.");
@@ -236,7 +236,7 @@ function FormActions() {
       <button type="submit" className="btn  btn-orange-primary-edit px-3">
         Save Changes
       </button>
-      <Link to="/collaborateur" className="btn  btn-orange-outline mx-4">
+      <Link to="/projects" className="btn  btn-orange-outline mx-4">
         Cancel
       </Link>
     </div>

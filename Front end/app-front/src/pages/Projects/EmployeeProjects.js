@@ -48,7 +48,7 @@ export default function ProjectPage() {
   };
 
   const filteredProjects = projects.filter((project) =>
-    project.name.toLowerCase().includes(searchTerm.toLowerCase())
+    project.name && project.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (

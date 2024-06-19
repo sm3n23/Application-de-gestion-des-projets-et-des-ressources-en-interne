@@ -4,11 +4,14 @@ import ProjectsTable from './ProjectsTable';
 import { useNavigate, Link } from 'react-router-dom';
 import './project.css';
 import { AuthContext } from '../../context/AuthContext';
+import Pagination from '../Employees/Pagination';
 
 export default function ProjectPage() {
   const [projects, setProjects] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const { AuthenticatedEmployee } = useContext(AuthContext);
+  const [currentPage, setCurrentPage] = useState(1);
+  const projectsPerPage = 3;
 
   useEffect(() => {
     loadProjects();
@@ -45,8 +48,14 @@ export default function ProjectPage() {
   };
 
   const filteredProjects = projects.filter((project) =>
-    project.name.toLowerCase().includes(searchTerm.toLowerCase())
+    project.name && project.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const indexOfLastProject = currentPage * projectsPerPage;
+  const indexOfFirstProject = indexOfLastProject - projectsPerPage;
+  const currentProjects = filteredProjects.slice(indexOfFirstProject, indexOfLastProject);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className='container'>
@@ -65,19 +74,24 @@ export default function ProjectPage() {
       {AuthenticatedEmployee && AuthenticatedEmployee.role === "ChefDeProjet" && (
         <div className="d-flex justify-content-end">
           <Link to="/projects" className="btn btn-primary btn-orange mx-3">
-              Mes Projets
+            Mes Projets
           </Link>
-          
         </div>
       )}
       {AuthenticatedEmployee && AuthenticatedEmployee.role === "Collaborateur" && (
-      <div className="d-flex justify-content-end">
-        <Link to={`/collaborateur/edit/${AuthenticatedEmployee.id}`} className="btn btn-primary btn-orange mx-3" >
-          Mes Taches
-        </Link>
-      </div>
+        <div className="d-flex justify-content-end">
+          <Link to={`/collaborateur/edit/${AuthenticatedEmployee.id}`} className="btn btn-primary btn-orange mx-3">
+            Mes Taches
+          </Link>
+        </div>
       )}
-      <ProjectsTable projects={filteredProjects} setProjects={setProjects} />
+      <ProjectsTable projects={currentProjects} setProjects={setProjects} />
+      <Pagination
+        itemsPerPage={projectsPerPage}
+        totalItems={filteredProjects.length}
+        paginate={paginate}
+        currentPage={currentPage}
+      />
     </div>
   );
 }

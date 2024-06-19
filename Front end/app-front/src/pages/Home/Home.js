@@ -18,15 +18,15 @@ export default function Home() {
 
   const processProjects = (projects) => {
     return projects.map(project => {
-        const employees = project.employees.map(emp => emp.name);
-        const tasks = project.taches.map(task => task.name);
-        return {
-            ...project,
-            employees,
-            tasks
-        };
+      const employees = project.employees ? project.employees.map(emp => emp.name) : [];
+      const tasks = project.taches ? project.taches.map(task => task.name) : [];
+      return {
+        ...project,
+        employees,
+        tasks
+      };
     });
-};
+  };
 
   const loadProjects = async () => {
     try {
@@ -35,9 +35,9 @@ export default function Home() {
       setProjects(processedProjects);
 
       const statusCounts = {
-        "Not Started": 0,
-        "On Going": 0,
-        Finished: 0,
+        "PLANNED": 0,
+        "ON GOING": 0,
+        "COMPLETED": 0,
       };
 
       result.data.forEach((project) => {
@@ -48,9 +48,9 @@ export default function Home() {
       });
 
       setProjectStatusData([
-        statusCounts["Not Started"], 
-        statusCounts["On Going"], 
-        statusCounts["Finished"],
+        statusCounts["PLANNED"], 
+        statusCounts["ON GOING"], 
+        statusCounts["COMPLETED"],
       ]);
     } catch (error) {
       console.error("Failed to fetch projects:", error);
@@ -66,18 +66,15 @@ export default function Home() {
     }
   };
 
-  
-
   return (
     <div className="container m-2">
       <div className="py-4">
         <div className="home-container">
           <HomeProject projects={projects} setProjects={setProjects}/>
+          
         </div>
         <div className="row">
-          
           <div className=" col-lg-6 col-md-6  my-3 px-3 mx-4 PieChart-container">
-            
             <PieChart projectData={projectStatusData} />
           </div>
           <div className="col-lg-6 col-md-6 px-3  my-3  emloyees-container">

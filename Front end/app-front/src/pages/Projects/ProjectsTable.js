@@ -90,11 +90,11 @@ const ProjectTable = ({ projects, setProjects }) => {
                       className="status-circle"
                       style={{
                         backgroundColor:
-                          project.status === "On Going"
-                            ? "rgb(255, 172, 28)"
-                            : project.status === "Not Started"
-                            ? "rgb(255, 68, 51)"
-                            : "rgb(0, 128, 0)",
+                        project.status === "ON GOING"
+                            ? "rgb(249, 119, 20)"
+                            : project.status === "PLANNED"
+                            ? "rgb(126, 98, 86)"
+                            : "rgb(154, 154, 154)",
                       }}
                     ></span>{" "}
                     {project.status}

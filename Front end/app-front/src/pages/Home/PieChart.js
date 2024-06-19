@@ -4,7 +4,7 @@ import 'chart.js/auto';
 
 const PieChart = ({ projectData }) => {
   const chartData = {
-    labels: ['Not Started', 'Ongoing', 'Finished'],
+    labels: ['PLANNED', 'ON GOING', 'COMPLETED'],
     datasets: [
       {
         label: 'Project Status',
@@ -38,7 +38,7 @@ const PieChart = ({ projectData }) => {
     },
     layout: {
       padding: {
-        right: 10  // Ensures there is no cut-off on the right side due to the close legend
+        right: 10  
       }
     },
     maintainAspectRatio: false,

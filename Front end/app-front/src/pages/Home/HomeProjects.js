@@ -3,11 +3,17 @@ import "../Projects/project.css";
 import { Link } from "react-router-dom";
 import Modal from "../Projects/Modal";
 import axios from "axios";
+import Pagination from "../Employees/Pagination";
 
 const ProjectTable = ({ projects, setProjects }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const projectsPerPage = 5;
 
-  
+  const indexOfLastProject = currentPage * projectsPerPage;
+  const indexOfFirstProject = indexOfLastProject - projectsPerPage;
+  const currentProjects = projects.slice(indexOfFirstProject, indexOfLastProject);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="container">
@@ -23,28 +29,28 @@ const ProjectTable = ({ projects, setProjects }) => {
             </tr>
           </thead>
           <tbody>
-            {Array.isArray(projects) && projects.length > 0 ? (
-              projects.map((project) => (
+            {Array.isArray(currentProjects) && currentProjects.length > 0 ? (
+              currentProjects.map((project) => (
                 <tr key={project.id}>
                   <td className="p-4 name-column">
                     <strong>{project.name}</strong>
                   </td>
                   <td className="p-4 tache-column">
-                      {project.startDate}
+                    {project.startDate}
                   </td>
                   <td className="p-4 tache-column">
-                      {project.finishDate}
+                    {project.finishDate}
                   </td>
                   <td className="p-4">
                     <span
                       className="status-circle"
                       style={{
                         backgroundColor:
-                          project.status === "On Going"
-                            ? "rgb(255, 172, 28)"
-                            : project.status === "Not Started"
-                            ? "rgb(255, 68, 51)"
-                            : "rgb(0, 128, 0)",
+                          project.status === "ON GOING"
+                            ? "rgb(249, 119, 20)"
+                            : project.status === "PLANNED"
+                            ? "rgb(126, 98, 86)"
+                            : "rgb(154, 154, 154)",
                       }}
                     ></span>{" "}
                     {project.status}
@@ -52,7 +58,6 @@ const ProjectTable = ({ projects, setProjects }) => {
                   <td className="p-4">
                     {project.budget} MAD
                   </td>
-                  
                 </tr>
               ))
             ) : (
@@ -64,7 +69,14 @@ const ProjectTable = ({ projects, setProjects }) => {
             )}
           </tbody>
         </table>
-        
+        {projects.length > projectsPerPage && (
+          <Pagination
+            itemsPerPage={projectsPerPage}
+            totalItems={projects.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
+        )}
       </div>
     </div>
   );

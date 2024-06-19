@@ -5,6 +5,8 @@ import { AuthContext } from "../context/AuthContext";
 const Sidebar = () => {
   const { logout, AuthenticatedEmployee } = useContext(AuthContext);
 
+
+  console.log(AuthenticatedEmployee)
   return (
     <div className="sidebar">
       <div className="sidebar-profile my-5">
@@ -34,7 +36,7 @@ const Sidebar = () => {
         <Link to="/collaborateur" className="menu-item">
           <i className="fa-solid fa-user"></i> Collaborateurs
         </Link>
-        <div className=" btn-group menu-item">
+        <div className=" btn-group menu-item mx-1">
           <button type="button" className="btn custom-btn">
             <i className="fa-solid fa-gear"></i> Settings
           </button>
