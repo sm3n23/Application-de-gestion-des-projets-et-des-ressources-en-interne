@@ -36,20 +36,19 @@ const LoginPage = () => {
     <div className="custom-login-background">
       <img src="/images/bplogo.png" alt="Company Logo" className="custom-login-logo" />
       <div className="custom-login-text">
-        <h1>Heureux de vous voir !</h1>
-        <p>Connectez-vous ou créez votre compte...</p>
+        <div className="h1-big">Heureux de vous voir !</div>
+        <p>Connectez-vous pour accéder à votre session...</p>
       </div>
       <div className="custom-login-container">
         <div className="custom-login-section">
           
         <form className="custom-login-form" onSubmit={handleSubmit}>
-          
-            <label htmlFor="email">Username *</label>
+            <label htmlFor="email">Identifiant *</label>
             <input type="text"
               className="text-input"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="Entrez votre email" required />
+              placeholder="Entrez votre identifiant" required />
             
             <label htmlFor="password">Mot de passe *</label>
             <input type="password"
@@ -59,12 +58,9 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Entrez votre mot de passe" required />
             
-            <div className="custom-login-options">
-              <label className="box-label"><input type="checkbox" name="stay-connected" className="box-input" />
-              <span className="box-label">Rester connectée</span> </label>
-            </div>
             
-            <button type="submit" className="custom-login-btn">CONNEXION</button>
+            
+            <button type="submit" className="custom-login-btn my-5">CONNEXION</button>
           
         </form>
       </div>

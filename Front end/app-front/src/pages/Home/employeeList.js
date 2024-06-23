@@ -12,8 +12,11 @@ const EmployeeList = ({ employees }) => {
             {employees.map((employee, index) => (
             <div key={index} className="employee-item">
                     
-                <Link to={`/collaborateur/view/${employee.id}`} className="employee-name"><img className='picture-home mx-3' src={employee.picture} alt="Profile picture" />
+                <Link to={`/collaborateur/view/${employee.id}`} className="employee-name">
+                
+                    <img className='picture-home mx-3' src={employee.picture} alt="Profile picture" />
                     {employee.name}
+                    
                 </Link>
                     
             </div>

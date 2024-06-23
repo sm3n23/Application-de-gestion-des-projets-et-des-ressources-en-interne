@@ -7,6 +7,7 @@ body.custom-login-body {
     display: flex;
     justify-content: center;
     align-items: center;
+    
   }
   
   .custom-login-page {
@@ -156,3 +157,12 @@ body.custom-login-body {
       padding: 20px;
     }
   }
+
+  .h1-big {
+    font-size: 2em; /* Adjust the size as needed */
+    font-weight: bold; /* Optional: make the text bold */
+    color: white; /* Optional: set the text color */
+    line-height: 1;
+    margin-bottom: 15px;
+  }
+  

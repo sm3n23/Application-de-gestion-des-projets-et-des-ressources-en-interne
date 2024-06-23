@@ -49,3 +49,17 @@
   color: rgb(114, 113, 113);
   margin: 0 10px;
 }
+
+.employee-item {
+  display: flex;
+  align-items: center;
+  
+}
+
+.employee-name {
+  display: flex;
+  align-items: center;
+  text-decoration: none; /* Remove underline from link */
+  color: black; /* Set text color */
+  font-weight: bold; /* Optional: make the text bold */
+}
