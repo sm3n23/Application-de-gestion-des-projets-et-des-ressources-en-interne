@@ -107,7 +107,7 @@ function TaskModal({ isOpen, onClose, task }) {
 
   const handleSaveChanges = async () => {
     try {
-      console.log("Saving changes:", updatedTask); // Debug log
+      console.log("Saving changes:", updatedTask); 
       const payload = {
         id: updatedTask.id,
         name: updatedTask.name,
@@ -115,14 +115,14 @@ function TaskModal({ isOpen, onClose, task }) {
         startDate: updatedTask.startDate,
         finishDate: updatedTask.finishDate,
         advancement: updatedTask.advancement,
-        projectId: updatedTask.id,
+        projectId: task.projectId,
       };
       const response = await axios.put(
         `http://localhost:8085/taches/${updatedTask.id}`,
         payload
       );
       if (response.status === 200) {
-        onClose(); // Close the modal after saving changes
+        onClose(); 
       }
     } catch (error) {
       console.error("Error saving changes:", error);

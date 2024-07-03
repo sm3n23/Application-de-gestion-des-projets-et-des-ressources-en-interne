@@ -95,6 +95,15 @@ const EmployeePage = () => {
           <Link to="/Collaborateur/add" className="btn btn-primary btn-orange mx-3">
             <i className="fas fa-circle-plus"></i> Ajouter Collaborateur
           </Link>
+          
+          
+        </div>
+      )}
+      {AuthenticatedEmployee && AuthenticatedEmployee.role === "ChefDeProjet" && (
+        <div className="d-flex justify-content-end">
+          <Link to="/demandes-congés" className="btn btn-primary btn-orange mx-3">
+            Gérer les vacances
+          </Link>
         </div>
       )}
       <EmployeeTable employees={currentEmployees} setEmployees={setEmployees} />

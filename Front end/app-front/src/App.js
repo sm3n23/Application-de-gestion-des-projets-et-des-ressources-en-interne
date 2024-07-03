@@ -19,6 +19,9 @@ import Login from "./pages/Login/LoginPage";
 import { AuthProvider, AuthContext } from "./context/AuthContext";
 import ProtectedRoute from "./context/ProtectedRoute";
 import { useContext } from "react";
+import HolidayRequestForm from "./pages/Employees/conge/HolidayRequestForm";
+import HolidayRequestManagement from "./pages/Employees/conge/HolidayRequestManagement";
+import MyHolidayRequests from "./pages/Employees/conge/MyHolidayRequests";
 
 function App() {
   return (
@@ -52,6 +55,9 @@ const AppContent = () => {
           <Route exact path="/collaborateur/view/:id" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route exact path="/collaborateur/add" element={<ProtectedRoute><AddEmployee /></ProtectedRoute>} />
           <Route path="/login" element={<Login />} />
+          <Route path="/demande-congé" element={<HolidayRequestForm />} />
+          <Route path="/demandes-congés" element={<HolidayRequestManagement />} />
+          <Route path="/Mes-demandes-vacances" element={<MyHolidayRequests />} /> 
         </Routes>
       </div>
     </>

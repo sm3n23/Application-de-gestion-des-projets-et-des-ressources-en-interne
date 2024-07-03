@@ -19,21 +19,50 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-}
-
-.header button {
+  }
+  
+  .left-links {
+    display: flex;
+    align-items: center;
+  }
+  
+  .right-links {
+    display: flex;
+    align-items: center;
+  }
+  
+  .back-link {
+    color: #3b82f6;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .back-link i {
+    margin-right: 8px;
+  }
+  
+  .right-links .btn {
     background: none;
     border: none;
-    color: #3b82f6;
+    
     font-size: 16px;
     cursor: pointer;
     display: flex;
     align-items: center;
-}
-
-.header button i {
+  }
+  
+  .right-links .btn i {
     margin-right: 8px;
-}
+  }
+  
+  .edit-link {
+    color: #3b82f6;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+  }
+  
 
 .profile {
     display: flex;
@@ -225,3 +254,72 @@
 .experience-list .ramotion-studio {
     background-color: #f59e0b;
 }
+
+.btn-blue {
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+    color: #333;
+    width: auto;
+    border: #f2f6ff 2px solid;
+    font-weight:500;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-blue:hover {
+    background-color: #e0edfa;
+    border-color: #e0edfa;
+    color: #333;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+  }
+  
+  .close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+
+  .modal-conge {
+    height: 600px;
+    width: 500px; /* Set to 50% of the viewport width or adjust based on your design needs */
+    max-width:100%; /* Maximum width so it doesn't get too large on big screens */
+    min-width: fit-content; /* Minimum width so it doesn't get too small */
+    background: white;
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners for a smoother look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    position: relative; /* Needed for positioning the close button absolutely */
+  }
+
+  .text-conge{
+    margin-top: 40px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    color: #6f6f6f;
+  }
