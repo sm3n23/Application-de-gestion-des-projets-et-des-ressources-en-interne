@@ -22,8 +22,12 @@ public interface EmployeeService {
     void deleteEmployee(Long id);
 
     Employee findByEmail(String email);
+<<<<<<< HEAD
 
     Employee findbyUsername(String username);
+=======
+    Employee findByUsername(String username);
+>>>>>>> 02bf6d13d41e0a18176d7d5cd4bca65c934571e5
 
     String getKeycloakAdminToken();
 

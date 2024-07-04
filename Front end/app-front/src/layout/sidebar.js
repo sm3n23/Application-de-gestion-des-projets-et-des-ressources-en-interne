@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
+<<<<<<< HEAD
 const Sidebar = () => {
   const { logout, AuthenticatedEmployee } = useContext(AuthContext);
 
@@ -23,12 +24,29 @@ const Sidebar = () => {
           </>
         ) : (
           <p>Loading...</p>
+=======
+const Sidebar = ({ employee }) => {
+  return (
+    <div className="sidebar">
+      <div className="sidebar-profile my-5">
+        {employee && (
+          <>
+            <p>
+              <img src={employee.picture || "/images/profile.png"} alt="Profile picture" />
+            </p>
+            <p>{employee.name}</p>
+          </>
+>>>>>>> 02bf6d13d41e0a18176d7d5cd4bca65c934571e5
         )}
       </div>
       <div className="separator"></div>
       <div className="menu my-5">
         <Link to="/" className="menu-item">
+<<<<<<< HEAD
           <i className="fas fa-home"></i> Home
+=======
+          <i className="fas fa-home"></i>Home
+>>>>>>> 02bf6d13d41e0a18176d7d5cd4bca65c934571e5
         </Link>
         <Link to="/allprojects" className="menu-item">
           <i className="fa-solid fa-hammer"></i> Projets

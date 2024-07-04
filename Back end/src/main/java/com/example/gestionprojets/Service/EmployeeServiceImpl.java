@@ -144,7 +144,10 @@ public class EmployeeServiceImpl implements EmployeeService{
         return employeeRepository.findByEmail(email);
     }
 
-
+    @Override
+    public Employee findByUsername(String username) {
+        return employeeRepository.findByMatricule(username);
+    }
 
 
     private final String keycloakBaseUrl = "http://localhost:8080";
