@@ -37,8 +37,8 @@ public class Employee {
     private String picture;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Project project;
+    @ManyToMany(mappedBy = "employees", fetch = FetchType.EAGER)
+    private Set<Project> projects;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Tache> taches;

@@ -51,35 +51,46 @@ export default function EditProject() {
     setProject((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Add new employee to project
   const addEmployeeToProject = async (employee) => {
     try {
-      const updatedEmployee = {
-        ...employee,
-        projectId: id,
+      const updatedEmployees = [...project.employees, employee];
+      const updatedProject = {
+        ...project,
+        employees: updatedEmployees.map(emp => emp.id)
       };
-      await axios.put(`http://localhost:8085/employees/${employee.id}`, updatedEmployee);
-      setProject((prev) => ({
+      console.log("Adding employee to project:", updatedProject);
+      await axios.put(`http://localhost:8085/projects/${id}`, updatedProject);
+      setProject(prev => ({
         ...prev,
-        employees: [...prev.employees, updatedEmployee]
+        employees: updatedEmployees
       }));
     } catch (error) {
       console.error("Failed to add employee to project:", error);
       alert("Failed to add employee to project. Please try again.");
     }
   };
+  
+  
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const updatedProject = {
+      ...project,
+      employees: project.employees.map(emp => emp.id),
+      taches: project.taches.map(task => task.id)
+    };
+    console.log("Submitting updated project:", updatedProject);
     try {
-      await axios.put(`http://localhost:8085/projects/${id}`, project);
+      await axios.put(`http://localhost:8085/projects/${id}`, updatedProject);
       navigate("/projects");
     } catch (error) {
       console.error("Failed to save changes:", error);
       alert("Failed to update project. Please try again.");
     }
   };
+  
+
+
 
   const addNewTask = async (taskData) => {
     try {

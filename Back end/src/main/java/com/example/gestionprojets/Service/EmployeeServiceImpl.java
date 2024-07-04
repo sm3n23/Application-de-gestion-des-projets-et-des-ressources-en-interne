@@ -101,10 +101,8 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public Employee updateEmployee(Long id, EmployeeDto employeeDto) {
-        // Fetch the employee by ID or throw an exception if not found
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Employee not found"));
-
 
         employee.setName(employeeDto.getName());
         employee.setUsername(employeeDto.getUsername());
@@ -118,22 +116,20 @@ public class EmployeeServiceImpl implements EmployeeService{
         employee.setLocation(employeeDto.getLocation());
         employee.setPicture(employeeDto.getPicture());
 
-        if(employeeDto.getRole() != null) {
-            employee.setRole(employeeDto.getRole());
+        if (employeeDto.getProjectIds() != null) {
+            List<Project> projects = projectRepository.findAllById(employeeDto.getProjectIds());
+            employee.setProjects(new HashSet<>(projects));
         }
 
-        if (employeeDto.getProjectId() != null) {
-            Project project = projectRepository.findById(employeeDto.getProjectId())
-                    .orElseThrow(()->new NotFoundException("Project note found"));
-            employee.setProject(project);
-        }
-
-        // Fetch the tasks by IDs and set them to the employee
-        if(employeeDto.getTachesIds()!= null) {
+        if (employeeDto.getTachesIds() != null) {
             List<Tache> taches = tacheRepository.findAllById(employeeDto.getTachesIds());
             employee.setTaches(new HashSet<>(taches));
         }
-        // Save and return the updated employee
+
+        if (employeeDto.getRole() != null) {
+            employee.setRole(employeeDto.getRole());
+        }
+
         return employeeRepository.save(employee);
     }
 

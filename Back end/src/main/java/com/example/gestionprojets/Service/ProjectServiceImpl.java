@@ -53,34 +53,64 @@ public class ProjectServiceImpl implements ProjectService{
         project.setFinishDate(projectDto.getFinishDate());
         project.setBudget(projectDto.getBudget());
         project.setDescription(projectDto.getDescription());
-        if(projectDto.getCreatedBy()!= null) {
+        if (projectDto.getCreatedBy() != null) {
             project.setCreatedBy(projectDto.getCreatedBy());
         }
+
+        if (projectDto.getEmployeesIds() != null) {
+            List<Employee> employees = employeeRepository.findAllById(projectDto.getEmployeesIds());
+            project.setEmployees(new HashSet<>(employees));
+        }
+
+        if (projectDto.getTachesIds() != null) {
+            List<Tache> taches = tacheRepository.findAllById(projectDto.getTachesIds());
+            project.setTaches(new HashSet<>(taches));
+        }
+
         return projectRepository.save(project);
     }
 
     @Override
     public Project updateProject(Long projectId, ProjectDto projectDto) {
-
         Project project = projectRepository.findById(projectId)
-                .orElseThrow(()->new NotFoundException("project not found"));
+                .orElseThrow(() -> new NotFoundException("project not found"));
 
         project.setName(projectDto.getName());
         project.setStatus(projectDto.getStatus());
+        project.setStartDate(projectDto.getStartDate());
+        project.setFinishDate(projectDto.getFinishDate());
+        project.setBudget(projectDto.getBudget());
+        project.setDescription(projectDto.getDescription());
 
+        // Update employees
         if (projectDto.getEmployeesIds() != null) {
-            List<Employee> employees = employeeRepository.findAllById(projectDto.getEmployeesIds());
-            project.setEmployees(new HashSet<>(employees));  // Convert to Set
+            Set<Employee> newEmployees = new HashSet<>(employeeRepository.findAllById(projectDto.getEmployeesIds()));
+            project.setEmployees(newEmployees);
+
+            // Add project to each employee
+            for (Employee employee : newEmployees) {
+                employee.getProjects().add(project);
+                employeeRepository.save(employee);
+            }
         }
 
+        // Update tasks
         if (projectDto.getTachesIds() != null) {
-            List<Tache> taches = tacheRepository.findAllById(projectDto.getTachesIds());
-            project.setTaches(new HashSet<>(taches));  // Convert to Set
-        }
+            Set<Tache> newTaches = new HashSet<>(tacheRepository.findAllById(projectDto.getTachesIds()));
+            project.setTaches(newTaches);
 
+            // Add project to each task
+            for (Tache tache : newTaches) {
+                tache.setProject(project);
+                tacheRepository.save(tache);
+            }
+        }
 
         return projectRepository.save(project);
     }
+
+
+
 
     @Override
     public void deleteProject(Long id) {
@@ -89,13 +119,13 @@ public class ProjectServiceImpl implements ProjectService{
 
         // Disassociate employees from the project
         for (Employee employee : project.getEmployees()) {
-            employee.setProject(null);
+            employee.getProjects().remove(project);
             employeeRepository.save(employee);
         }
 
         projectRepository.deleteById(id);
-
     }
+
 
     public List<Project> searchProjects(String name, Date startDate, Date finishDate) {
         List<Project> projects = new ArrayList<>();
