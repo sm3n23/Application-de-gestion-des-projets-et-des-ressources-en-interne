@@ -52,7 +52,7 @@ export default function EditEmployee() {
       setEmployee({
         name,
         title,
-        skills: skills ? skills : [], // Ensure skills is an array
+        skills: skills ? skills : [], 
         description,
         birthDate,
         experience,
@@ -63,7 +63,7 @@ export default function EditEmployee() {
         projectId: project ? project.id : null,
         project: project ? project : null,
         tachesIds: taches ? taches.map((t) => t.id) : [],
-        employeeTasks: taches ? taches : [], // Initialize employee's tasks
+        employeeTasks: taches ? taches : [], 
       });
       
     } catch (error) {

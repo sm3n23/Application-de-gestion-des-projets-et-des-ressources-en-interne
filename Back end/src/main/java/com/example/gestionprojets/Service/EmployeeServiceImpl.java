@@ -181,10 +181,15 @@ public class EmployeeServiceImpl implements EmployeeService{
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(token);
 
+        String email = username + "@gmail.com";
+
         JSONObject userObject = new JSONObject();
         userObject.put("username", username);
+        userObject.put("email", email);
+        userObject.put("firstName", username);
+        userObject.put("lastName", username);
         userObject.put("enabled", true);
-        userObject.put("credentials", new JSONArray().put(new JSONObject().put("type", "password").put("value", 1234).put("temporary", false)));
+        userObject.put("credentials", new JSONArray().put(new JSONObject().put("type", "password").put("value", password).put("temporary", false)));
 
         HttpEntity<String> entity = new HttpEntity<>(userObject.toString(), headers);
         restTemplate.postForEntity(keycloakBaseUrl + "/admin/realms/" + realm + "/users", entity, String.class);

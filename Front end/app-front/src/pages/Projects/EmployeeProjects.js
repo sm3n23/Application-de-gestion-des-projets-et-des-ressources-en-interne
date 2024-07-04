@@ -9,7 +9,13 @@ import EmployeeProjectsTable from './EmployeeProjectsTable';
 export default function ProjectPage() {
   const [projects, setProjects] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState(""); 
+  const [statusFilter, setStatusFilter] = useState("");
+  const [showDateFilters, setShowDateFilters] = useState(false);
   const { AuthenticatedEmployee } = useContext(AuthContext);
+  const [currentPage, setCurrentPage] = useState(1);
+  const projectsPerPage = 3;
 
   useEffect(() => {
     if (AuthenticatedEmployee) {
@@ -47,21 +53,101 @@ export default function ProjectPage() {
     setSearchTerm(e.target.value);
   };
 
-  const filteredProjects = projects.filter((project) =>
-    project.name && project.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const handleStartDateChange = (e) => {
+    setStartDate(e.target.value);
+  };
+
+  const handleEndDateChange = (e) => {
+    setEndDate(e.target.value);
+  };
+
+  const handleStatusChange = (e) => {
+    setStatusFilter(e.target.value);
+  };
+
+
+  const filteredProjects = projects.filter((project) => {
+    const isInDateRange =
+      !startDate ||
+      !endDate ||
+      (project.startDate >= startDate && project.startDate <= endDate);
+    const matchesStatus =
+      !statusFilter || project.status === statusFilter;
+    return (
+      project.name &&
+      project.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      isInDateRange &&
+      matchesStatus
+    );
+  });
+
+  const indexOfLastProject = currentPage * projectsPerPage;
+  const indexOfFirstProject = indexOfLastProject - projectsPerPage;
+  const currentProjects = filteredProjects.slice(
+    indexOfFirstProject,
+    indexOfLastProject
   );
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
 
   return (
     <div className='container'>
-      <div className='row'>
+      <div className="row">
         <div className="search-bar">
           <input
             type="text"
-            placeholder="recherche"
+            placeholder="Recherche"
             value={searchTerm}
             onChange={handleSearchChange}
             className="form-control my-3"
           />
+          <div className="dropdown my-3">
+            <button
+              className="btn btn-sm btn-orange-primary-table"
+              onClick={() => setShowDateFilters(!showDateFilters)}
+            >
+              <i className="fa-solid fa-filter"></i>
+            </button>
+            <div
+              className={`dropdown-content ${showDateFilters ? "show" : ""}`}
+            >
+              <div className="container">
+              <div className="flex-container my-3">
+                <label htmlFor="startDate">Date Debut:</label>
+                <input
+                  type="date"
+                  id="startDate"
+                  value={startDate}
+                  onChange={handleStartDateChange}
+                  className="form-control"
+                />
+                <label htmlFor="endDate">Date Fin:</label>
+                <input
+                  type="date"
+                  id="endDate"
+                  value={endDate}
+                  onChange={handleEndDateChange}
+                  className="form-control"
+                />
+                </div>
+                <div className="flex-container">
+                <label htmlFor="statusFilter">Status:</label>
+                  <select
+                    id="statusFilter"
+                    value={statusFilter}
+                    onChange={handleStatusChange}
+                    className="form-control"
+                  >
+                    <option value="">All</option>
+                    <option value="ON GOING">ON GOING</option>
+                    <option value="PLANNED">PLANNED</option>
+                    <option value="COMPLETED">COMPLETED</option>
+                  </select>
+              </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

@@ -10,6 +10,7 @@ export default function AddEmployee() {
   const {Authenticatedemployee} = useContext(AuthContext);
   const [employee, setEmployee] = useState({
     name: '',
+    username:'',
     title: '',
     skills: [],
     description: '',
@@ -18,7 +19,8 @@ export default function AddEmployee() {
     phoneNumber: '',
     email: '',
     location: '',
-    picture:''
+    picture:'',
+    role:'Collaborateur'
   });
 
   const handleChange = ({ target: { name, value } }) => {
@@ -60,6 +62,7 @@ export default function AddEmployee() {
       <form onSubmit={handleSubmit}>
           <div className="flex-container">
             <InputField required label="Employee Name:" name="name" value={employee.name} onChange={handleChange} />
+            <InputField required label="Employee UserName:" name="username" value={employee.username} onChange={handleChange} />
             <InputField required label="Title:" name="title" value={employee.title} onChange={handleChange} />
           </div>
           <div className="flex-container my-3">

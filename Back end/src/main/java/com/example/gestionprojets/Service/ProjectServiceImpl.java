@@ -84,6 +84,15 @@ public class ProjectServiceImpl implements ProjectService{
 
     @Override
     public void deleteProject(Long id) {
+        Project project = projectRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Project not found"));
+
+        // Disassociate employees from the project
+        for (Employee employee : project.getEmployees()) {
+            employee.setProject(null);
+            employeeRepository.save(employee);
+        }
+
         projectRepository.deleteById(id);
 
     }

@@ -3,7 +3,7 @@ import "./project.css";
 import { Link } from "react-router-dom";
 import Modal from "./Modal";
 import axios from "axios";
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from "../../context/AuthContext";
 
 const EmployeeProjectsTable = ({ projects, setProjects }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,9 +50,8 @@ const EmployeeProjectsTable = ({ projects, setProjects }) => {
               <th className="p-4">Collaborateur</th>
               <th className="p-4">Status</th>
               <th className="p-4">Taches</th>
-              
+
               <th className="p-4"></th>
-              
             </tr>
           </thead>
           <tbody>
@@ -63,40 +62,40 @@ const EmployeeProjectsTable = ({ projects, setProjects }) => {
                     <strong>{project.name}</strong>
                   </td>
                   <td className="p-4 tache-column">
-                      {Array.isArray(project.employees) &&
-                      project.employees.length > 0 ? (
-                        project.employees.map((employee, index) => (
-                          <span
-                            key={index}
-                            className="tag m-1 employee-column"
-                            style={{
-                              backgroundColor: getRandomCommonColorGrey(),
-                            }}
-                          >
-                            {employee}
-                          </span>
-                        ))
-                      ) : (
+                    {Array.isArray(project.employees) &&
+                    project.employees.length > 0 ? (
+                      project.employees.map((employee, index) => (
                         <span
-                          className="tag"
+                          key={index}
+                          className="tag m-1 employee-column"
                           style={{
                             backgroundColor: getRandomCommonColorGrey(),
                           }}
                         >
-                          {"No employees Assigned"}
+                          {employee}
                         </span>
-                      )}
+                      ))
+                    ) : (
+                      <span
+                        className="tag"
+                        style={{
+                          backgroundColor: getRandomCommonColorGrey(),
+                        }}
+                      >
+                        {"No employees Assigned"}
+                      </span>
+                    )}
                   </td>
                   <td className="p-4">
                     <span
                       className="status-circle"
                       style={{
                         backgroundColor:
-                        project.status === "ON GOING"
-                        ? "rgb(249, 119, 20)"
-                        : project.status === "PLANNED"
-                        ? "rgb(126, 98, 86)"
-                        : "rgb(154, 154, 154)",
+                          project.status === "ON GOING"
+                            ? "rgb(249, 119, 20)"
+                            : project.status === "PLANNED"
+                            ? "rgb(126, 98, 86)"
+                            : "rgb(154, 154, 154)",
                       }}
                     ></span>{" "}
                     {project.status}
@@ -125,28 +124,29 @@ const EmployeeProjectsTable = ({ projects, setProjects }) => {
                       </span>
                     )}
                   </td>
-                  {AuthenticatedEmployee && AuthenticatedEmployee.role === "ChefDeProjet" &&(
-                  <td className=" py-4 tache-column">
-                    <Link
-                      className="btn btn-sm btn-orange-outline-table m-1"
-                      to={`/projects/edit/${project.id}`}
-                    >
-                      <i class="fa-solid fa-pen-to-square"></i>
-                    </Link>
-                    <button
-                      className="btn btn-sm btn-orange-primary-table"
-                      onClick={() => deleteProject(project.id)}
-                    >
-                      <i className="fa-solid fa-trash"></i>
-                    </button>
-                  </td>
-                  )}
+                  {AuthenticatedEmployee &&
+                    AuthenticatedEmployee.role === "ChefDeProjet" && (
+                      <td className=" py-4 tache-column">
+                        <Link
+                          className="btn btn-sm btn-orange-outline-table m-1"
+                          to={`/projects/edit/${project.id}`}
+                        >
+                          <i class="fa-solid fa-pen-to-square"></i>
+                        </Link>
+                        <button
+                          className="btn btn-sm btn-orange-primary-table"
+                          onClick={() => deleteProject(project.id)}
+                        >
+                          <i className="fa-solid fa-trash"></i>
+                        </button>
+                      </td>
+                    )}
                 </tr>
               ))
             ) : (
               <tr>
                 <td colSpan="8" className="text-center">
-                Pas de projets disponibles.
+                  Pas de projets disponibles.
                 </td>
               </tr>
             )}
@@ -156,7 +156,12 @@ const EmployeeProjectsTable = ({ projects, setProjects }) => {
           <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
             <div className="modal-overlay">
               <div className="modal-content">
-                <button className="modal-close-button" onClick={()=>setIsModalOpen(false)}><i className=" fa-sharp fa-solid fa-circle-xmark"></i></button>
+                <button
+                  className="modal-close-button"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  <i className=" fa-sharp fa-solid fa-circle-xmark"></i>
+                </button>
                 <h4 className="">Task Details:</h4>
                 <div className="form-box-modal">
                   <div className="flex-container">
@@ -188,34 +193,57 @@ const EmployeeProjectsTable = ({ projects, setProjects }) => {
                         value={selectedTask.description}
                         disabled
                         rows={4}
-                        
                       />
                     </div>
                   </div>
                   <div className="flex-container my-3">
-                            <div className="form-group">
-                                <label className="form-label" for="startDate">Start Date:</label>
-                                <input
-                                    id="startDate"
-                                    name="startDate"
-                                    type="date"
-                                    className="form-control"
-                                    value={selectedTask.startDate}
-                                    disabled
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label className="form-label" for="finishDate">Finish Date:</label>
-                                <input
-                                    id="finishDate"
-                                    name="finishDate"
-                                    type="date"
-                                    className="form-control"
-                                    value={selectedTask.finishDate}
-                                    disabled
-                                />
-                            </div>
-                        </div>
+                    <div className="form-group">
+                      <label className="form-label" for="startDate">
+                        Start Date:
+                      </label>
+                      <input
+                        id="startDate"
+                        name="startDate"
+                        type="date"
+                        className="form-control"
+                        value={selectedTask.startDate}
+                        disabled
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label" for="finishDate">
+                        Finish Date:
+                      </label>
+                      <input
+                        id="finishDate"
+                        name="finishDate"
+                        type="date"
+                        className="form-control"
+                        value={selectedTask.finishDate}
+                        disabled
+                      />
+                    </div>
+                  </div>
+                  <div className="range-container">
+                    <label htmlFor="customRange2" className="form-label">
+                      Avancement
+                    </label>
+                    <input
+                      type="range"
+                      className="form-range"
+                      min="0"
+                      max="100"
+                      step="25"
+                      id="customRange2"
+                      value={selectedTask.advancement || 0}
+                      disabled
+                    />
+                    <div className="range-labels">
+                      <span className="range-label">Not Started</span>
+                      <span className="range-label">On Going</span>
+                      <span className="range-label">Finished</span>
+                    </div>
+                  </div>
                   <div className="flex-container my-3"></div>
                 </div>
               </div>
