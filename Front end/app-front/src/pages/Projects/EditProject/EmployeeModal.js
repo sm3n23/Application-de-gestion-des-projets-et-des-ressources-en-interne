@@ -6,7 +6,7 @@ const EmployeeModal = ({ isOpen, onClose, employees, addEmployee }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const handleAddEmployee = (employee) => {
     addEmployee(employee);
-    onClose(); // Close the modal after adding
+    onClose(); 
   };
 
   const handleSearchChange = (event) => {

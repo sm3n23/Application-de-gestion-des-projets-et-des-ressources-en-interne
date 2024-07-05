@@ -34,7 +34,7 @@ const LoginPage = () => {
 
   return (
     <div className="custom-login-background">
-      <img src="/images/bplogo.png" alt="Company Logo" className="custom-login-logo" />
+      <img src="/images/bcp.png" alt="Company Logo" className="custom-login-logo" />
       <div className="custom-login-text">
         <div className="h1-big">Heureux de vous voir !</div>
         <p>Connectez-vous pour accéder à votre session...</p>
