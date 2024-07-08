@@ -195,14 +195,14 @@ function TaskModal({ isOpen, onClose, task }) {
         </div>
         <div className="range-container">
           <label htmlFor="customRange2" className="form-label">
-            Avancement
+            Avancement ({updatedTask.advancement}%)
           </label>
           <input
             type="range"
             className="form-range"
             min="0"
             max="100"
-            step="25"
+            step="5"
             id="customRange2"
             value={updatedTask.advancement || 0}
             onChange={handleAvancementChange}

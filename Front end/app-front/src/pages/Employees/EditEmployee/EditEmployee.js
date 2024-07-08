@@ -1,90 +1,56 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import "./EditEmployee.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { WithContext as ReactTags } from "react-tag-input";
 import TaskModal from "./TaskModal"; // Adjust the path as necessary
 import { AuthContext } from "../../../context/AuthContext";
 
 export default function EditEmployee() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [tasks, setTasks] = useState([]);
-  const [employee, setEmployee] = useState({
-    name: "",
-    title: "",
-    skills: [],
-    description: "",
-    birthDate: "",
-    experience: "",
-    phoneNumber: "",
-    email: "",
-    location: "",
-    picture:"",
-    projectId: null,
-    project: null,
-    tachesIds: [],
-    employeeTasks: [], // New field for employee's tasks
-  });
+  const [project, setProject] = useState(null);
+  const [employeeTasks, setEmployeeTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const {AuthenticatedEmployee} = useContext(AuthContext);
+  const { AuthenticatedEmployee } = useContext(AuthContext);
 
   useEffect(() => {
-    loadEmployee();
-  }, [id]);
+    if (location.state && location.state.projectId) {
+      loadProject(location.state.projectId);
+    }
+    loadEmployeeTasks();
+  }, [location.state]);
 
-  const loadEmployee = async () => {
+  const loadProject = async (projectId) => {
     try {
-      const response = await axios.get(`http://localhost:8085/employees/${id}`);
-      console.log(response.data)
-      const {
-        name,
-        title,
-        skills,
-        description,
-        birthDate,
-        experience,
-        phoneNumber,
-        email,
-        location,
-        picture,
-        project,
-        taches,
-      } = response.data;
-      setEmployee({
-        name,
-        title,
-        skills: skills ? skills : [], // Ensure skills is an array
-        description,
-        birthDate,
-        experience,
-        phoneNumber,
-        email,
-        location,
-        picture,
-        projectId: project ? project.id : null,
-        project: project ? project : null,
-        tachesIds: taches ? taches.map((t) => t.id) : [],
-        employeeTasks: taches ? taches : [], // Initialize employee's tasks
-      });
-      if (project && project.id) {
-        setTasks(project.taches);
-      }
+      const response = await axios.get(
+        `http://localhost:8085/projects/${projectId}`
+      );
+      setProject(response.data);
+      setTasks(response.data.taches || []);
     } catch (error) {
-      console.error("Error loading employee:", error);
+      console.error("Error loading project:", error);
     }
   };
 
-  console.log(employee)
+  const loadEmployeeTasks = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8085/employees/${id}`);
+      const allTasks = response.data.taches || [];
+      setEmployeeTasks(allTasks);
+    } catch (error) {
+      console.error("Error loading employee tasks:", error);
+    }
+  };
 
   const handleTaskSelection = (task) => {
-    setEmployee((prev) => {
-      const employeeTasks = prev.employeeTasks.some((t) => t.id === task.id)
-        ? prev.employeeTasks.filter((t) => t.id !== task.id)
-        : [...prev.employeeTasks, task];
-      return { ...prev, employeeTasks };
+    setEmployeeTasks((prev) => {
+      return prev.some((t) => t.id === task.id)
+        ? prev.filter((t) => t.id !== task.id)
+        : [...prev, task];
     });
   };
 
@@ -95,12 +61,9 @@ export default function EditEmployee() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const payload = {
-      ...employee,
-      tachesIds: employee.employeeTasks.map((task) => task.id), // Update tachesIds with selected employee tasks
-    };
+    const taskIds = employeeTasks.map((task) => task.id);
     try {
-      await axios.put(`http://localhost:8085/employees/${id}`, payload);
+      await axios.put(`http://localhost:8085/employees/${id}/tasks`, taskIds);
       navigate("/projects");
     } catch (error) {
       console.error("Failed to save changes:", error.response.data);
@@ -121,69 +84,82 @@ export default function EditEmployee() {
     return greenColors[randomIndex];
   };
 
-  
+  // Filter tasks to only include those that belong to the current project
+  const employeeProjectTasks = employeeTasks.filter((task) =>
+    tasks.some((projTask) => projTask.id === task.id)
+  );
 
   return (
     <div className="container">
       <div className="form-box p-5">
-        
         <form onSubmit={handleSubmit}>
-          
-          
-              {employee.project && (
-                <div className="form-group m-1">
-                  <label className="form-label">Projet:</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={employee.project.name}
-                    readOnly
-                  />
-                </div>
-              )}
-              {tasks.length > 0 && (
-                <TaskList
-                  AuthenticatedEmployee={AuthenticatedEmployee}
-                  tasks={tasks}
-                  selectedTaskIds={new Set(employee.tachesIds)}
-                  onTaskSelection={handleTaskSelection}
-                  getRandomCommonColorGreen={getRandomCommonColorGreen}
-                />
-              )}
-              <div className="form-group">
-                <label className="form-label">Tâches de collaborateur:</label>
-                <div className="form-control my-2">
-
-                  {Array.isArray(employee.employeeTasks) && employee.employeeTasks.length > 0 ?( employee.employeeTasks.map((task) => (
-                    <div
-                      key={task.id}
-                      className="tag my-3"
-                      style={{ backgroundColor: getRandomCommonColorGrey() }}
-                      
-                    >
-                      <span  onClick={() => handleTaskClick(task)}>{task.name} {AuthenticatedEmployee && AuthenticatedEmployee.role === "Collaborateur" && (<i  class="fa-solid fa-pen-to-square icon-button"></i>)}</span>
-                      {AuthenticatedEmployee && AuthenticatedEmployee.role === "ChefDeProjet" && (
-                      <button
-                        type="button"
-                        onClick={() => handleTaskSelection(task)}
-                        className="icon-button"
-                      >
-                        <i className="fas fa-minus-circle"></i>
-                      </button>
+          {project && (
+            <div className="form-group m-1">
+              <label className="form-label">Projet:</label>
+              <input
+                type="text"
+                className="form-control"
+                value={project.name}
+                readOnly
+              />
+            </div>
+          )}
+          {tasks.length > 0 && (
+            <TaskList
+              AuthenticatedEmployee={AuthenticatedEmployee}
+              tasks={tasks}
+              selectedTaskIds={new Set(employeeTasks.map((t) => t.id))}
+              onTaskSelection={handleTaskSelection}
+              getRandomCommonColorGreen={getRandomCommonColorGreen}
+            />
+          )}
+          <div className="form-group">
+            <label className="form-label">Tâches de collaborateur:</label>
+            <div className="form-control my-2">
+              {Array.isArray(employeeProjectTasks) &&
+              employeeProjectTasks.length > 0 ? (
+                employeeProjectTasks.map((task) => (
+                  <div
+                    key={task.id}
+                    className="tag my-3"
+                    style={{ backgroundColor: getRandomCommonColorGrey() }}
+                  >
+                    <span onClick={() => handleTaskClick(task)}>
+                      {task.name}{" "}
+                      {AuthenticatedEmployee &&
+                        AuthenticatedEmployee.role === "Collaborateur" && (
+                          <i className="fa-solid fa-pen-to-square icon-button"></i>
+                        )}
+                    </span>
+                    {AuthenticatedEmployee &&
+                      AuthenticatedEmployee.role === "ChefDeProjet" && (
+                        <button
+                          type="button"
+                          onClick={() => handleTaskSelection(task)}
+                          className="icon-button"
+                        >
+                          <i className="fas fa-minus-circle"></i>
+                        </button>
                       )}
-                    </div>
-                  ))):(
-                    <tr>
-                        <td colSpan="8" className="text-center">
-                          aucune tâche assignée.
-                        </td>
-                    </tr>
-                  )}
-                  
-                </div>
-              </div>
+                  </div>
+                ))
+              ) : (
+                <span className="text-center">aucune tâche assignée.</span>
+              )}
+            </div>
+          </div>
+          <div className="form-actions my-3 mx-1">
+          {AuthenticatedEmployee &&
+                      AuthenticatedEmployee.role === "ChefDeProjet" && (
+                        <button type="submit" className="btn btn-orange-primary-edit px-3 mx-4">
+              Enregistrer les changements
+            </button>
+                      )}
             
-          <FormActions />
+            <Link to="/allprojects" className="btn btn-orange-outline ">
+              Annuler
+            </Link>
+          </div>
         </form>
       </div>
       <TaskModal
@@ -196,9 +172,13 @@ export default function EditEmployee() {
   );
 }
 
-
-
-function TaskList({ tasks, selectedTaskIds, onTaskSelection, getRandomCommonColorGreen, AuthenticatedEmployee }) {
+function TaskList({
+  tasks,
+  selectedTaskIds,
+  onTaskSelection,
+  getRandomCommonColorGreen,
+  AuthenticatedEmployee,
+}) {
   return (
     <div className="form-group m-1 my-2">
       <label className="form-label">Tâches de projet:</label>
@@ -210,19 +190,20 @@ function TaskList({ tasks, selectedTaskIds, onTaskSelection, getRandomCommonColo
             style={{ backgroundColor: getRandomCommonColorGreen() }}
           >
             {task.name}
-            {AuthenticatedEmployee && AuthenticatedEmployee.role === "ChefDeProjet" && (
-            <button
-              type="button"
-              onClick={() => onTaskSelection(task)}
-              className="icon-button"
-            >
-              {selectedTaskIds.has(task.id) ? (
-                <i className="fas fa-check-circle"></i>
-              ) : (
-                <i className="fas fa-plus-circle"></i>
+            {AuthenticatedEmployee &&
+              AuthenticatedEmployee.role === "ChefDeProjet" && (
+                <button
+                  type="button"
+                  onClick={() => onTaskSelection(task)}
+                  className="icon-button"
+                >
+                  {selectedTaskIds.has(task.id) ? (
+                    <i className="fas fa-check-circle"></i>
+                  ) : (
+                    <i className="fas fa-plus-circle"></i>
+                  )}
+                </button>
               )}
-            </button>
-            )}
           </div>
         ))}
       </div>
@@ -233,11 +214,11 @@ function TaskList({ tasks, selectedTaskIds, onTaskSelection, getRandomCommonColo
 function FormActions() {
   return (
     <div className="form-actions my-3 mx-1">
-      <button type="submit" className="btn  btn-orange-primary-edit px-3">
-        Save Changes
+      <button type="submit" className="btn btn-orange-primary-edit px-3">
+        Enregistrer les changements
       </button>
-      <Link to="/projects" className="btn  btn-orange-outline mx-4">
-        Cancel
+      <Link to="/allprojects" className="btn btn-orange-outline mx-4">
+        Annuler
       </Link>
     </div>
   );

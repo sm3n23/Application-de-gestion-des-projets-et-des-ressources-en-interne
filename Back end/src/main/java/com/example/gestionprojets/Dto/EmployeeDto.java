@@ -1,21 +1,16 @@
 package com.example.gestionprojets.Dto;
 
 import com.example.gestionprojets.Entity.Role;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.example.gestionprojets.Entity.Role;
-
-
-@Getter@Setter
+@Getter
+@Setter
 public class EmployeeDto {
-
     private String name;
     private String username;
     private Role role;
@@ -27,10 +22,8 @@ public class EmployeeDto {
     private int phoneNumber;
     private String email;
     private String location;
-
-    private Long projectId;
     private String picture;
 
+    private Set<Long> projectIds;
     private Set<Long> tachesIds;
-
 }

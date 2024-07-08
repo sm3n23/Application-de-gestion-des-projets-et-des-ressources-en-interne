@@ -4,7 +4,7 @@ import 'chart.js/auto';
 
 const PieChart = ({ projectData }) => {
   const chartData = {
-    labels: ['PLANNED', 'ON GOING', 'COMPLETED'],
+    labels: ['Prévu', 'En cours', 'Fini'],
     datasets: [
       {
         label: 'Project Status',

@@ -1,7 +1,12 @@
 package com.example.gestionprojets.Repositories;
 
 import com.example.gestionprojets.Entity.Tache;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface TacheRepository extends JpaRepository<Tache,Long> {
+
+
 }

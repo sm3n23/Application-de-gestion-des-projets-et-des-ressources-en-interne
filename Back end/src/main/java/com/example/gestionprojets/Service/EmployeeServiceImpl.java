@@ -68,6 +68,8 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
 
+
+
     @Override
     public Employee createEmployee(EmployeeDto employeeDto) {
         Employee employee = new Employee();
@@ -101,10 +103,8 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public Employee updateEmployee(Long id, EmployeeDto employeeDto) {
-        // Fetch the employee by ID or throw an exception if not found
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Employee not found"));
-
 
         employee.setName(employeeDto.getName());
         employee.setUsername(employeeDto.getUsername());
@@ -118,24 +118,46 @@ public class EmployeeServiceImpl implements EmployeeService{
         employee.setLocation(employeeDto.getLocation());
         employee.setPicture(employeeDto.getPicture());
 
-        if(employeeDto.getRole() != null) {
+        if (employeeDto.getProjectIds() != null) {
+            List<Project> projects = projectRepository.findAllById(employeeDto.getProjectIds());
+            employee.setProjects(new HashSet<>(projects));
+        }
+
+        if (employeeDto.getTachesIds() != null) {
+            List<Tache> taches = tacheRepository.findAllById(employeeDto.getTachesIds());
+            taches.forEach(tache -> tache.setEmployee(employee));
+            employee.setTaches(taches);
+        }
+
+        if (employeeDto.getRole() != null) {
             employee.setRole(employeeDto.getRole());
         }
 
-        if (employeeDto.getProjectId() != null) {
-            Project project = projectRepository.findById(employeeDto.getProjectId())
-                    .orElseThrow(()->new NotFoundException("Project note found"));
-            employee.setProject(project);
-        }
-
-        // Fetch the tasks by IDs and set them to the employee
-        if(employeeDto.getTachesIds()!= null) {
-            List<Tache> taches = tacheRepository.findAllById(employeeDto.getTachesIds());
-            employee.setTaches(new HashSet<>(taches));
-        }
-        // Save and return the updated employee
         return employeeRepository.save(employee);
     }
+
+
+    public Employee assignTasksToEmployee(Long employeeId, List<Long> taskIds) {
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new NotFoundException("Employee not found"));
+
+        List<Tache> taches = tacheRepository.findAllById(taskIds);
+
+        // Remove tasks that are no longer in the taskIds list
+        employee.getTaches().removeIf(tache -> !taskIds.contains(tache.getId()));
+
+        // Add new tasks to the employee's task list
+        for (Tache tache : taches) {
+            if (!employee.getTaches().contains(tache)) {
+                employee.getTaches().add(tache);
+                tache.setEmployee(employee); // Set the relationship correctly
+            }
+        }
+
+        return employeeRepository.save(employee);
+    }
+
+
 
     @Override
     public void deleteEmployee(Long id) {

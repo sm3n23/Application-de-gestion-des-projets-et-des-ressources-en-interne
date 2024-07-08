@@ -23,4 +23,10 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
 
     List<Project> findByCreatedBy(String username);
+
+    @Query("SELECT p FROM Project p LEFT JOIN FETCH p.employees LEFT JOIN FETCH p.taches WHERE p.id = :id")
+    Project findByIdWithAssociations(@Param("id") Long id);
+
+    @Query("SELECT DISTINCT p FROM Project p LEFT JOIN FETCH p.employees LEFT JOIN FETCH p.taches")
+    List<Project> findAllWithAssociations();
 }

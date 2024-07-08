@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react';
-import ProjectsTable from './ProjectsTable';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './project.css';
 import { AuthContext } from '../../context/AuthContext';
 import EmployeeProjectsTable from './EmployeeProjectsTable';
@@ -37,12 +36,16 @@ export default function ProjectPage() {
 
   const loadProjects = async () => {
     try {
-      if (!AuthenticatedEmployee) {
-        throw new Error('AuthenticatedEmployee is null');
-      }
-      const result = await axios.get(`http://localhost:8085/projects/?username=${AuthenticatedEmployee.username}`);
-      const processedProjects = processProjects(result.data);
-      setProjects(processedProjects);
+      const result = await axios.get(`http://localhost:8085/allprojects`); // Fetch all projects
+      const sortedProjects = result.data.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+      const processedProjects = processProjects(sortedProjects);
+
+      // Filter projects by createdBy attribute
+      const filteredProjects = processedProjects.filter(project => 
+        project.createdBy && project.createdBy === AuthenticatedEmployee.username
+      );
+
+      setProjects(filteredProjects);
     } catch (error) {
       console.error('Failed to load projects:', error);
       // Handle error appropriately, e.g., display a message to the user
@@ -61,18 +64,37 @@ export default function ProjectPage() {
     setEndDate(e.target.value);
   };
 
-  const handleStatusChange = (e) => {
-    setStatusFilter(e.target.value);
+  const handleStatusChange = (status) => {
+    setStatusFilter(status);
   };
 
+  const calculateProjectAdvancement = (taches) => {
+    if (!taches || taches.length === 0) {
+      return 0;
+    }
+    const totalAdvancement = taches.reduce((acc, tache) => acc + (tache.advancement || 0), 0);
+    return totalAdvancement / taches.length;
+  };
+
+  const getProjectStatus = (advancement) => {
+    if (advancement === 0) {
+      return "Prévu";
+    } else if (advancement > 0 && advancement < 100) {
+      return "En cours";
+    } else if (advancement === 100) {
+      return "Fini";
+    }
+    return "Unknown";
+  };
 
   const filteredProjects = projects.filter((project) => {
     const isInDateRange =
       !startDate ||
       !endDate ||
       (project.startDate >= startDate && project.startDate <= endDate);
-    const matchesStatus =
-      !statusFilter || project.status === statusFilter;
+    const advancement = calculateProjectAdvancement(project.taches);
+    const status = getProjectStatus(advancement);
+    const matchesStatus = !statusFilter || status === statusFilter;
     return (
       project.name &&
       project.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
@@ -89,7 +111,6 @@ export default function ProjectPage() {
   );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
 
   return (
     <div className='container'>
@@ -113,38 +134,52 @@ export default function ProjectPage() {
               className={`dropdown-content ${showDateFilters ? "show" : ""}`}
             >
               <div className="container">
-              <div className="flex-container my-3">
-                <label htmlFor="startDate">Date Debut:</label>
-                <input
-                  type="date"
-                  id="startDate"
-                  value={startDate}
-                  onChange={handleStartDateChange}
-                  className="form-control"
-                />
-                <label htmlFor="endDate">Date Fin:</label>
-                <input
-                  type="date"
-                  id="endDate"
-                  value={endDate}
-                  onChange={handleEndDateChange}
-                  className="form-control"
-                />
+                <div className="flex-container my-3">
+                  <label htmlFor="startDate">Date Debut:</label>
+                  <input
+                    type="date"
+                    id="startDate"
+                    value={startDate}
+                    onChange={handleStartDateChange}
+                    className="form-control"
+                  />
+                  <label htmlFor="endDate">Date Fin:</label>
+                  <input
+                    type="date"
+                    id="endDate"
+                    value={endDate}
+                    onChange={handleEndDateChange}
+                    className="form-control"
+                  />
                 </div>
                 <div className="flex-container">
-                <label htmlFor="statusFilter">Status:</label>
-                  <select
-                    id="statusFilter"
-                    value={statusFilter}
-                    onChange={handleStatusChange}
-                    className="form-control"
-                  >
-                    <option value="">All</option>
-                    <option value="ON GOING">ON GOING</option>
-                    <option value="PLANNED">PLANNED</option>
-                    <option value="COMPLETED">COMPLETED</option>
-                  </select>
-              </div>
+                  <div className="button-group my-3">
+                    <button
+                      className={`btn  btn-orange-outline mx-1 ${statusFilter === "" ? "active" : ""}`}
+                      onClick={() => handleStatusChange("")}
+                    >
+                      Projets
+                    </button>
+                    <button
+                      className={`btn  btn-orange-outline mx-1 ${statusFilter === "Prévu" ? "active" : ""}`}
+                      onClick={() => handleStatusChange("Prévu")}
+                    >
+                      Prévu
+                    </button>
+                    <button
+                      className={`btn  btn-orange-outline mx-1 ${statusFilter === "En cours" ? "active" : ""}`}
+                      onClick={() => handleStatusChange("En cours")}
+                    >
+                      En cours
+                    </button>
+                    <button
+                      className={`btn  btn-orange-outline mx-1 ${statusFilter === "Fini" ? "active" : ""}`}
+                      onClick={() => handleStatusChange("Fini")}
+                    >
+                      Fini
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -158,7 +193,7 @@ export default function ProjectPage() {
           </Link>
         </div>
       )}
-      <EmployeeProjectsTable projects={filteredProjects} setProjects={setProjects} />
+      <EmployeeProjectsTable projects={currentProjects} setProjects={setProjects} />
     </div>
   );
 }

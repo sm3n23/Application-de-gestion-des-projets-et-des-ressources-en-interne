@@ -28,15 +28,12 @@ public class ProjectServiceImpl implements ProjectService{
 
     @Override
     public List<Project> findProjects() {
-        List<Project> projects =  projectRepository.findAll();
-        return projects;
+        return projectRepository.findAllWithAssociations();
     }
 
     @Override
     public Project findProjectById(Long id) {
-        Project project = projectRepository.findById(id)
-                .orElseThrow(()->new NotFoundException("project not found"));
-        return project;
+        return projectRepository.findByIdWithAssociations(id);
     }
 
     @Override
@@ -53,34 +50,43 @@ public class ProjectServiceImpl implements ProjectService{
         project.setFinishDate(projectDto.getFinishDate());
         project.setBudget(projectDto.getBudget());
         project.setDescription(projectDto.getDescription());
-        if(projectDto.getCreatedBy()!= null) {
+        if (projectDto.getCreatedBy() != null) {
             project.setCreatedBy(projectDto.getCreatedBy());
         }
+
+        if (projectDto.getEmployeesIds() != null) {
+            List<Employee> employees = employeeRepository.findAllById(projectDto.getEmployeesIds());
+            project.setEmployees(new HashSet<>(employees));
+        }
+
+        if (projectDto.getTachesIds() != null) {
+            List<Tache> taches = tacheRepository.findAllById(projectDto.getTachesIds());
+            project.setTaches(new HashSet<>(taches));
+        }
+
         return projectRepository.save(project);
     }
 
     @Override
     public Project updateProject(Long projectId, ProjectDto projectDto) {
-
         Project project = projectRepository.findById(projectId)
-                .orElseThrow(()->new NotFoundException("project not found"));
+                .orElseThrow(() -> new NotFoundException("project not found"));
 
         project.setName(projectDto.getName());
         project.setStatus(projectDto.getStatus());
+        project.setStartDate(projectDto.getStartDate());
+        project.setFinishDate(projectDto.getFinishDate());
+        project.setBudget(projectDto.getBudget());
+        project.setDescription(projectDto.getDescription());
 
-        if (projectDto.getEmployeesIds() != null) {
-            List<Employee> employees = employeeRepository.findAllById(projectDto.getEmployeesIds());
-            project.setEmployees(new HashSet<>(employees));  // Convert to Set
-        }
-
-        if (projectDto.getTachesIds() != null) {
-            List<Tache> taches = tacheRepository.findAllById(projectDto.getTachesIds());
-            project.setTaches(new HashSet<>(taches));  // Convert to Set
-        }
-
+        Set<Employee> employees = new HashSet<>(employeeRepository.findAllById(projectDto.getEmployeesIds()));
+        project.setEmployees(employees);
 
         return projectRepository.save(project);
     }
+
+
+
 
     @Override
     public void deleteProject(Long id) {
@@ -89,13 +95,13 @@ public class ProjectServiceImpl implements ProjectService{
 
         // Disassociate employees from the project
         for (Employee employee : project.getEmployees()) {
-            employee.setProject(null);
+            employee.getProjects().remove(project);
             employeeRepository.save(employee);
         }
 
         projectRepository.deleteById(id);
-
     }
+
 
     public List<Project> searchProjects(String name, Date startDate, Date finishDate) {
         List<Project> projects = new ArrayList<>();

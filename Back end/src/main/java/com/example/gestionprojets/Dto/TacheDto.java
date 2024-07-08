@@ -18,6 +18,6 @@ public class TacheDto {
 
 
 
-
+    private Set<Long> employeeIds;
     private Long projectId;
 }

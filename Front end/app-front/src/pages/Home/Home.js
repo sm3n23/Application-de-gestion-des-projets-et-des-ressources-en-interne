@@ -31,13 +31,14 @@ export default function Home() {
   const loadProjects = async () => {
     try {
       const result = await axios.get("http://localhost:8085/allprojects");
-      const processedProjects = processProjects(result.data);
+      const sortedProjects = result.data.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
+      const processedProjects = processProjects(sortedProjects);
       setProjects(processedProjects);
 
       const statusCounts = {
-        "PLANNED": 0,
-        "ON GOING": 0,
-        "COMPLETED": 0,
+        "Prévu": 0,
+        "En cours": 0,
+        "Fini": 0,
       };
 
       result.data.forEach((project) => {
@@ -48,9 +49,9 @@ export default function Home() {
       });
 
       setProjectStatusData([
-        statusCounts["PLANNED"], 
-        statusCounts["ON GOING"], 
-        statusCounts["COMPLETED"],
+        statusCounts["Prévu"], 
+        statusCounts["En cours"], 
+        statusCounts["Fini"],
       ]);
     } catch (error) {
       console.error("Failed to fetch projects:", error);

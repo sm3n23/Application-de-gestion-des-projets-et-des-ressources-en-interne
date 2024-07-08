@@ -151,7 +151,7 @@ tr:hover {
   }
   
   .search-bar-modal input:focus {
-    border-color: #f0ad4e; /* Orange border color when focused */
+    border-color: #f0ad4e; 
   }
   
   .search-bar-modal input::placeholder {
@@ -171,6 +171,96 @@ tr:hover {
   }
   
   .search-bar-modal-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+
+  .search-bar-home {
+    display: flex;
+    justify-content: left;
+    margin-bottom: 20px;
+    margin-left: 20px;
+  }
+  
+  .search-bar-home input {
+    width: 30%;
+    height: 50px;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 0 5px  5px 0  ;
+    
+    outline: none;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border 0.3s ease;
+    position: relative;
+  }
+  
+
+  
+  .search-bar-home input::placeholder {
+    color: #aaa;
+  }
+  
+  .search-bar-home::before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 50px;
+    background-color: #f97714; /* Orange left border */
+    left:330px;
+    top: 124px;
+    z-index:-1;
+    border-radius: 5px 0 0 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .search-bar-home-wrapper {
+    position: relative;
+    width: 100%;
+  }
+  
+  .search-bar-home-modal {
+    display: flex;
+    justify-content: left;
+    margin-bottom: 20px;
+    margin-left: 25px;
+  }
+  
+  .search-bar-home-modal input {
+    width: 50%;
+    height: 50px;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 0 5px  5px 0  ;
+    
+    outline: none;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border 0.3s ease;
+    position: relative;
+  }
+  
+  .search-bar-home-modal input:focus {
+    border-color: #f0ad4e; 
+  }
+  
+  .search-bar-home-modal input::placeholder {
+    color: #aaa;
+  }
+  
+  .search-bar-home-modal::before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 50px;
+    background-color: #f97714; /* Orange left border */
+    left:35px;
+    top: 36px;
+    border-radius: 5px 0 0 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .search-bar-home-modal-wrapper {
     position: relative;
     width: 100%;
   }

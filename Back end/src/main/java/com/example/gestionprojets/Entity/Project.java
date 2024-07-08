@@ -30,10 +30,16 @@ public class Project {
     private String description;
     private int budget;
 
-    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER)
+    @ManyToMany
+    @JoinTable(
+            name = "project_employee",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "employee_id")
+    )
     private Set<Employee> employees = new HashSet<>();
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Tache> taches = new HashSet<>();
 
     private String createdBy;

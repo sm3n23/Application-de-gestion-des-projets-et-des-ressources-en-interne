@@ -5,26 +5,22 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from "../../context/AuthContext";
 import Pagination from "./Pagination";
 
-const processProjects = (projects) => {
-  let employees = [];
+const processEmployees = (employees, projects) => {
+  return employees.map((employee) => {
+    const tasks = employee.taches ? employee.taches.map((tache) => tache.name) : ["No Tasks Assigned"];
+    const projectNames = projects
+      .filter((project) => project.employees.some((projEmp) => projEmp.id === employee.id))
+      .map((project) => project.name)
+      .join(', ') || "No Project";
 
-  projects.forEach((project) => {
-    if (project.employees) {
-      project.employees.forEach((employee) => {
-        const tasks = employee.taches ? employee.taches.map((tache) => tache.name) : [];
-
-        employees.push({
-          id: employee.id,
-          picture: employee.picture,
-          name: employee.name,
-          projectName: project.name,
-          tasks: tasks.length > 0 ? tasks : ["No Tasks Assigned"],
-        });
-      });
-    }
+    return {
+      id: employee.id,
+      picture: employee.picture,
+      name: employee.name,
+      projectName: projectNames,
+      tasks: tasks.length > 0 ? tasks : ["No Tasks Assigned"],
+    };
   });
-
-  return employees;
 };
 
 const EmployeePage = () => {
@@ -49,17 +45,10 @@ const EmployeePage = () => {
       const allEmployees = employeesResponse.data;
       const allProjects = projectsResponse.data;
 
-      const projectEmployees = processProjects(allProjects);
-
-      const mergedEmployees = allEmployees.map((employee) => {
-        const projectEmployee = projectEmployees.find((projEmp) => projEmp.id === employee.id);
-        return projectEmployee
-          ? projectEmployee
-          : { ...employee, projectName: "No Project", tasks: "No Tasks Assigned" };
-      });
+      const processedEmployees = processEmployees(allEmployees, allProjects);
 
       setProjects(allProjects);
-      setEmployees(mergedEmployees);
+      setEmployees(processedEmployees);
     } catch (error) {
       console.error("Failed to load employees and projects:", error);
     }
@@ -95,8 +84,6 @@ const EmployeePage = () => {
           <Link to="/Collaborateur/add" className="btn btn-primary btn-orange mx-3">
             <i className="fas fa-circle-plus"></i> Ajouter Collaborateur
           </Link>
-          
-          
         </div>
       )}
       {AuthenticatedEmployee && AuthenticatedEmployee.role === "ChefDeProjet" && (

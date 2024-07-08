@@ -8,6 +8,8 @@ import java.util.List;
 public interface TacheService {
 
     List<Tache> getTaches();
+
+    List<Tache> getTasksByIds(List<Long> ids);
     Tache createTache(TacheDto tacheDto);
 
     Tache updateTache(Long id, TacheDto tacheDto);

@@ -8,6 +8,7 @@ import com.example.gestionprojets.Repositories.EmployeeRepository;
 import com.example.gestionprojets.Repositories.ProjectRepository;
 import com.example.gestionprojets.Repositories.TacheRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -25,10 +26,15 @@ public class TacheServiceImpl implements TacheService{
 
     private ProjectRepository projectRepository;
 
+
     @Override
     public List<Tache> getTaches() {
         List<Tache> taches = tacheRepository.findAll();
         return taches;
+    }
+
+    public List<Tache> getTasksByIds(List<Long> ids) {
+        return tacheRepository.findAllById(ids);
     }
 
     @Override

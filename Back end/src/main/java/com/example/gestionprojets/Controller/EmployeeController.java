@@ -63,6 +63,12 @@ public class EmployeeController {
         }
     }
 
+    @PutMapping("/employees/{id}/tasks")
+    public ResponseEntity<Employee> assignTasksToEmployee(@PathVariable Long id, @RequestBody List<Long> taskIds) {
+        Employee updatedEmployee = employeeService.assignTasksToEmployee(id, taskIds);
+        return ResponseEntity.ok(updatedEmployee);
+    }
+
 
     @DeleteMapping("/employees/{id}")
     public ResponseEntity<String> deleteEmployee(@PathVariable Long id){

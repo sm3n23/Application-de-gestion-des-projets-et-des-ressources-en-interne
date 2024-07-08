@@ -26,7 +26,7 @@ export default function EditProject() {
   useEffect(() => {
     loadEmployees();
     loadProject();
-  }, [id]); // Ensure useEffect correctly listens to changes in `id`
+  }, [id]);
 
   const loadProject = async () => {
     try {
@@ -46,40 +46,48 @@ export default function EditProject() {
     }
   };
 
-  // Single change handler for all inputs
   const handleChange = ({ target: { name, value } }) => {
     setProject((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Add new employee to project
   const addEmployeeToProject = async (employee) => {
     try {
-      const updatedEmployee = {
-        ...employee,
-        projectId: id,
-      };
-      await axios.put(`http://localhost:8085/employees/${employee.id}`, updatedEmployee);
+      const response = await axios.get(`http://localhost:8085/employees/${employee.id}`);
+      const employeeData = response.data;
+  
+      if (employeeData.projects && employeeData.projects.length >= 3) {
+        alert("Cet employé travaille déjà sur 3 projets et ne peut être ajouté à un autre.");
+        return;
+      }
+  
+      const employeeWithProject = { ...employee, project };
       setProject((prev) => ({
         ...prev,
-        employees: [...prev.employees, updatedEmployee]
+        employees: [...prev.employees, employeeWithProject]
       }));
     } catch (error) {
-      console.error("Failed to add employee to project:", error);
+      console.error("Error adding employee to project:", error);
       alert("Failed to add employee to project. Please try again.");
     }
   };
+  
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8085/projects/${id}`, project);
+      const updatedProject = {
+        ...project,
+        employeesIds: project.employees.map((emp) => emp.id) || [] // Ensure it's an array
+      };
+      console.log('Updating project with data:', updatedProject); // Debug log
+      await axios.put(`http://localhost:8085/projects/${id}`, updatedProject);
       navigate("/projects");
     } catch (error) {
       console.error("Failed to save changes:", error);
       alert("Failed to update project. Please try again.");
     }
   };
+  
 
   const addNewTask = async (taskData) => {
     try {
@@ -104,7 +112,6 @@ export default function EditProject() {
     }
   };
 
-  // Delete task by ID
   const handleDeleteTask = async (taskId) => {
     try {
       const response = await axios.delete(`http://localhost:8085/taches/${taskId}`);
@@ -149,13 +156,13 @@ export default function EditProject() {
           
           
           <TextAreaField label="Description:" name="description" value={project.description} onChange={handleChange} required />
-          <EmployeeList employees={project.employees} onAddClick={() => setEmployeeModalOpen(true)} randomColor={getRandomCommonColorGrey} />
+          <EmployeeList projectId={id} employees={project.employees} onAddClick={() => setEmployeeModalOpen(true)} randomColor={getRandomCommonColorGrey} />
           <TaskList tasks={project.taches} onDeleteTask={handleDeleteTask} onAddTask={() => setTaskModalOpen(true)} randomColor={getRandomCommonColorGreen} />
           <FormActions />
         </form>
       </div>
       <TaskModal isOpen={isTaskModalOpen} onClose={() => setTaskModalOpen(false)} onSave={addNewTask} />
-      <EmployeeModal isOpen={isEmployeeModalOpen} onClose={() => setEmployeeModalOpen(false)} employees={allEmployees} addEmployee={addEmployeeToProject} />
+      <EmployeeModal isOpen={isEmployeeModalOpen} onClose={() => setEmployeeModalOpen(false)} employees={allEmployees} addEmployee={addEmployeeToProject} projectEmployees={project.employees}/>
     </div>
   );
 }
@@ -191,13 +198,13 @@ function TextAreaField({ label, name, value, onChange, required }) {
   );
 }
 
-function EmployeeList({ employees, onAddClick, randomColor }) {
+function EmployeeList({ projectId, employees, onAddClick, randomColor }) {
   return (
     <div className="form-group m-1">
       <label className="form-label">Collaborateurs:</label>
       <div className="form-control my-2">
         {employees.map((employee) => (
-          <Link to={`/collaborateur/edit/${employee.id}`} key={employee.id} className="tag p-2 m-1" style={{ backgroundColor: randomColor() }}>
+          <Link to={`/collaborateur/edit/${employee.id}`} key={employee.id} state={{ projectId }} className="tag p-2 m-1" style={{ backgroundColor: randomColor() }}>
             {employee.name} <span className="icon-button-brown"><i class="fa-solid fa-pen-to-square"></i></span>
           </Link>
         ))}
@@ -232,4 +239,3 @@ function FormActions() {
     </div>
   );
 }
-

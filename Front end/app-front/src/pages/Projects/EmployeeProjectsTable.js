@@ -29,16 +29,86 @@ const EmployeeProjectsTable = ({ projects, setProjects }) => {
   };
 
   const deleteProject = async (projectId) => {
-    try {
-      await axios.delete(`http://localhost:8085/projects/${projectId}`);
-      setProjects((prevProjects) =>
-        prevProjects.filter((project) => project.id !== projectId)
-      );
-    } catch (error) {
-      console.error("Error deleting project:", error);
-      alert("Failed to delete project. Please try again.");
+    const confirmed = window.confirm("Êtes-vous sûr de vouloir supprimer ce projet ?");
+    if (confirmed) {
+      try {
+        await axios.delete(`http://localhost:8085/projects/${projectId}`);
+        setProjects((prevProjects) =>
+          prevProjects.filter((project) => project.id !== projectId)
+        );
+      } catch (error) {
+        console.error("Error deleting project:", error);
+        alert("Failed to delete project. Please try again.");
+      }
     }
   };
+  
+
+  const calculateProjectAdvancement = (taches) => {
+    if (!taches || taches.length === 0) {
+      return 0;
+    }
+    const totalAdvancement = taches.reduce((acc, tache) => acc + (tache.advancement || 0), 0);
+    return totalAdvancement / taches.length;
+  };
+
+  const getProjectStatus = (advancement) => {
+    if (advancement === 0) {
+      return "Prévu";
+    } else if (advancement > 0 && advancement < 100) {
+      return "En cours";
+    } else if (advancement === 100) {
+      return "Fini";
+    }
+    return "Unknown";
+  };
+
+  const getStatusColor = (status) => {
+    if (status === "En cours") {
+      return "rgb(249, 119, 20)";
+    } else if (status === "Prévu") {
+      return "rgb(126, 98, 86)";
+    } else if (status === "Fini") {
+      return "rgb(154, 154, 154)";
+    }
+    return "rgb(255, 255, 255)";
+  };
+
+  const calculateExpectedAdvancement = (startDate, endDate) => {
+    const now = new Date();
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    if (now < start) return 0;
+    if (now > end) return 100;
+
+    const totalTime = end - start;
+    const elapsedTime = now - start;
+
+    return (elapsedTime / totalTime) * 100;
+  };
+
+  const getAdvancementStatus = (advancement, expectedAdvancement) => {
+    const iconStyle = { fontSize: '24px', marginRight: '8px' }; // Adjust the font size and margin as needed
+  
+    if (advancement < expectedAdvancement * 0.89) {
+      return {
+        icon: <i className="fa-solid fa-face-frown sad" style={iconStyle}></i>,
+        tooltip: `(Fait: ${advancement.toFixed(2)}%, Attendu: ${expectedAdvancement.toFixed(2)}%)`,
+      };
+    } else if (advancement >= expectedAdvancement) {
+      return {
+        icon: <i className="fa-solid fa-face-smile happy" style={iconStyle}></i>,
+        tooltip: `(Fait: ${advancement.toFixed(2)}%, Attendu: ${expectedAdvancement.toFixed(2)}%)`,
+      };
+    } else {
+      return {
+        icon: <i className="fa-solid fa-face-meh normal" style={iconStyle}></i>,
+        tooltip: `(Fait: ${advancement.toFixed(2)}%, Attendu: ${expectedAdvancement.toFixed(2)}%)`,
+      };
+    }
+  };
+
 
   return (
     <div className="container">
@@ -47,102 +117,112 @@ const EmployeeProjectsTable = ({ projects, setProjects }) => {
           <thead>
             <tr>
               <th className="p-4">Projet</th>
+              <th className="p-4">CPI</th>
               <th className="p-4">Collaborateur</th>
               <th className="p-4">Status</th>
               <th className="p-4">Taches</th>
-
+              <th className="p-4">Avancement</th>
+              <th className="p-4">Météo</th>
               <th className="p-4"></th>
             </tr>
           </thead>
           <tbody>
             {Array.isArray(projects) && projects.length > 0 ? (
-              projects.map((project) => (
-                <tr key={project.id}>
-                  <td className="p-4 name-column">
-                    <strong>{project.name}</strong>
-                  </td>
-                  <td className="p-4 tache-column">
-                    {Array.isArray(project.employees) &&
-                    project.employees.length > 0 ? (
-                      project.employees.map((employee, index) => (
+              projects.map((project) => {
+                const advancement = calculateProjectAdvancement(project.taches);
+                const status = getProjectStatus(advancement);
+                const expectedAdvancement = calculateExpectedAdvancement(project.startDate, project.finishDate);
+                const { icon, tooltip } = getAdvancementStatus(advancement, expectedAdvancement);
+                return (
+                  <tr key={project.id}>
+                    <td className="p-4 name-column">
+                      <strong>{project.name}</strong>
+                    </td>
+                    <td className="p-4 name-column">
+                      {AuthenticatedEmployee.name}
+                    </td>
+                    <td className="p-4 tache-column">
+                      {Array.isArray(project.employees) &&
+                      project.employees.length > 0 ? (
+                        project.employees.map((employee, index) => (
+                          <span
+                            key={index}
+                            className="tag m-1 employee-column"
+                            style={{
+                              backgroundColor: getRandomCommonColorGrey(),
+                            }}
+                          >
+                            {employee}
+                          </span>
+                        ))
+                      ) : (
                         <span
-                          key={index}
-                          className="tag m-1 employee-column"
+                          className="tag"
                           style={{
                             backgroundColor: getRandomCommonColorGrey(),
                           }}
                         >
-                          {employee}
+                          {"Aucun Collaborateur affecté"}
                         </span>
-                      ))
-                    ) : (
+                      )}
+                    </td>
+                    <td className="p-4" style={{ minWidth: '160px' }}>
                       <span
-                        className="tag"
-                        style={{
-                          backgroundColor: getRandomCommonColorGrey(),
-                        }}
-                      >
-                        {"No employees Assigned"}
-                      </span>
-                    )}
-                  </td>
-                  <td className="p-4">
-                    <span
-                      className="status-circle"
-                      style={{
-                        backgroundColor:
-                          project.status === "ON GOING"
-                            ? "rgb(249, 119, 20)"
-                            : project.status === "PLANNED"
-                            ? "rgb(126, 98, 86)"
-                            : "rgb(154, 154, 154)",
-                      }}
-                    ></span>{" "}
-                    {project.status}
-                  </td>
-                  <td className="p-4 tache-column">
-                    {Array.isArray(project.taches) &&
-                    project.taches.length > 0 ? (
-                      project.taches.map((task) => (
+                        className="status-circle"
+                        style={{ backgroundColor: getStatusColor(status) }}
+                      ></span>{" "}
+                      {status}
+                    </td>
+                    <td className="p-4 tache-column">
+                      {Array.isArray(project.taches) &&
+                      project.taches.length > 0 ? (
+                        project.taches.map((task) => (
+                          <span
+                            key={task.id}
+                            className="tag m-1"
+                            style={{
+                              backgroundColor: getRandomCommonColorGreen(),
+                            }}
+                            onClick={() => handleTaskClick(task)}
+                          >
+                            {task.name}
+                          </span>
+                        ))
+                      ) : (
                         <span
-                          key={task.id}
-                          className="tag  m-1"
-                          style={{
-                            backgroundColor: getRandomCommonColorGreen(),
-                          }}
-                          onClick={() => handleTaskClick(task)}
+                          className="tag"
+                          style={{ backgroundColor: getRandomCommonColorGreen() }}
                         >
-                          {task.name}
+                          {"Aucune tâche créée"}
                         </span>
-                      ))
-                    ) : (
-                      <span
-                        className="tag"
-                        style={{ backgroundColor: getRandomCommonColorGreen() }}
-                      >
-                        {"No Tasks created"}
-                      </span>
-                    )}
-                  </td>
-                  {AuthenticatedEmployee &&
-                    AuthenticatedEmployee.role === "ChefDeProjet" && (
-                      <td className=" py-4 tache-column">
-                        <Link
-                          className="btn btn-sm btn-orange-outline-table m-1"
-                          to={`/projects/edit/${project.id}`}
-                        >
-                          <i class="fa-solid fa-pen-to-square"></i>
-                        </Link>
-                        <button
-                          className="btn btn-sm btn-orange-primary-table"
-                          onClick={() => deleteProject(project.id)}
-                        >
-                          <i className="fa-solid fa-trash"></i>
-                        </button>
-                      </td>
-                    )}
-                </tr>
-              ))
+                      )}
+                    </td>
+                    <td className="p-4">
+                      {advancement.toFixed(2)}%
+                    </td>
+                    <td className="p-4">
+                      <span title={tooltip}>{icon}</span>
+                    </td>
+                    {AuthenticatedEmployee &&
+                      AuthenticatedEmployee.role === "ChefDeProjet" && (
+                        <td className="py-4 tache-column" style={{ minWidth: '150px' }}>
+                          <Link
+                            className="btn btn-sm btn-orange-outline-table m-1"
+                            to={`/projects/edit/${project.id}`}
+                          >
+                            <i className="fa-solid fa-pen-to-square"></i>
+                          </Link>
+                          <button
+                            className="btn btn-sm btn-orange-primary-table"
+                            onClick={() => deleteProject(project.id)}
+                          >
+                            <i className="fa-solid fa-trash"></i>
+                          </button>
+                        </td>
+                      )}
+                  </tr>
+                );
+              })
             ) : (
               <tr>
                 <td colSpan="8" className="text-center">
@@ -160,14 +240,14 @@ const EmployeeProjectsTable = ({ projects, setProjects }) => {
                   className="modal-close-button"
                   onClick={() => setIsModalOpen(false)}
                 >
-                  <i className=" fa-sharp fa-solid fa-circle-xmark"></i>
+                  <i className="fa-sharp fa-solid fa-circle-xmark"></i>
                 </button>
-                <h4 className="">Task Details:</h4>
+                <h4 className="">Détails de la tâche:</h4>
                 <div className="form-box-modal">
                   <div className="flex-container">
                     <div className="form-group">
-                      <label className="form-label" for="name">
-                        Task Name:
+                      <label className="form-label" htmlFor="name">
+                        Tache:
                       </label>
                       <input
                         id="name"
@@ -182,7 +262,7 @@ const EmployeeProjectsTable = ({ projects, setProjects }) => {
                   </div>
                   <div className="flex-container my-2">
                     <div className="form-group">
-                      <label className="form-label" for="name">
+                      <label className="form-label" htmlFor="name">
                         Description :
                       </label>
                       <textarea
@@ -198,8 +278,8 @@ const EmployeeProjectsTable = ({ projects, setProjects }) => {
                   </div>
                   <div className="flex-container my-3">
                     <div className="form-group">
-                      <label className="form-label" for="startDate">
-                        Start Date:
+                      <label className="form-label" htmlFor="startDate">
+                        Date debut:
                       </label>
                       <input
                         id="startDate"
@@ -211,8 +291,8 @@ const EmployeeProjectsTable = ({ projects, setProjects }) => {
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label" for="finishDate">
-                        Finish Date:
+                      <label className="form-label" htmlFor="finishDate">
+                        Date fin:
                       </label>
                       <input
                         id="finishDate"
@@ -226,7 +306,7 @@ const EmployeeProjectsTable = ({ projects, setProjects }) => {
                   </div>
                   <div className="range-container">
                     <label htmlFor="customRange2" className="form-label">
-                      Avancement
+                    Avancement ({selectedTask.advancement}%)
                     </label>
                     <input
                       type="range"
@@ -239,9 +319,9 @@ const EmployeeProjectsTable = ({ projects, setProjects }) => {
                       disabled
                     />
                     <div className="range-labels">
-                      <span className="range-label">Not Started</span>
-                      <span className="range-label">On Going</span>
-                      <span className="range-label">Finished</span>
+                      <span className="range-label">Pas commencé</span>
+                      <span className="range-label">En cours</span>
+                      <span className="range-label">Fini</span>
                     </div>
                   </div>
                   <div className="flex-container my-3"></div>

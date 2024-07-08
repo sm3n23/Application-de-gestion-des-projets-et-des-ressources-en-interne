@@ -115,7 +115,7 @@ const AddProject = () => {
         <form onSubmit={handleSubmit}>
           <div className="flex-container">
             <InputField required label="Project Name:" name="name" value={project.name} onChange={handleChange} />
-            <SelectField required label="Status:" name="status" value={project.status} options={["On Going", "Not Started", "Finished"]} onChange={handleChange} />
+            <SelectField required label="Status:" name="status" value={project.status} options={["En cours", "Pas commencé", "Fini"]} onChange={handleChange} />
           </div>
           <div className="flex-container">
             <InputField required label="Start Date:" name="startDate" type="date" value={project.startDate} onChange={handleChange} />

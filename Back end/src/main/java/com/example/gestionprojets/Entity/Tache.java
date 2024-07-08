@@ -1,5 +1,7 @@
 package com.example.gestionprojets.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,27 +31,19 @@ public class Tache {
 
 
 
-    @ManyToMany
-    @JoinTable(
-            name = "task_employee",
-            joinColumns = @JoinColumn(name = "tache_id"),
-            inverseJoinColumns = @JoinColumn(name = "employee_id")
-    )
-    private Set<Employee> employees = new HashSet<>();
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id")
+    @JsonBackReference
+    private Employee employee;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "tache",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private Set<SousTache> sousTaches =new HashSet<>();
+    @OneToMany(mappedBy = "tache", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private Set<SousTache> sousTaches = new HashSet<>();
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name= "project_id")
     private Project project;
 
-    /*@OneToMany
-    private Set<ChargeTravail> chargeTravail = new HashSet<>();
 
-
-    @OneToMany
-    private Set<Document> documents =new HashSet<>();*/
 }

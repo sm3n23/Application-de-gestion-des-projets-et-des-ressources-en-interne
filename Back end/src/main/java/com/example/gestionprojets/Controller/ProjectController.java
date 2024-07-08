@@ -61,7 +61,7 @@ public class ProjectController {
     @PostMapping("/projects")
     public ResponseEntity<Project> createProject(@RequestBody ProjectDto projectDto, @RequestParam String username){
         Employee employee = employeeService.findbyUsername(username);
-        projectDto.setCreatedBy(username); // Set the createdBy field to username
+        projectDto.setCreatedBy(username);
         Project createdProject = projectService.createProject(projectDto);
         return new ResponseEntity<>(createdProject, HttpStatus.CREATED);
     }
