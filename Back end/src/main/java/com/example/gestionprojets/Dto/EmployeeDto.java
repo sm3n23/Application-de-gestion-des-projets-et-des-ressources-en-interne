@@ -24,6 +24,8 @@ public class EmployeeDto {
     private String location;
     private String picture;
 
+    private boolean isFullTime;
+
     private Set<Long> projectIds;
     private Set<Long> tachesIds;
 }

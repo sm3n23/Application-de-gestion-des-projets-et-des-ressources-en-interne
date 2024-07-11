@@ -18,9 +18,25 @@ const HolidayRequestManagement = () => {
     }
   };
 
+  const sendNotification = async (employeeId, message) => {
+    try {
+      await axios.post('http://localhost:8085/notifications/create', {
+        employeeId: employeeId,
+        message: message,
+      });
+    } catch (error) {
+      console.error('Error sending notification', error);
+    }
+  };
+
+
   const handleApprove = async (requestId) => {
     try {
       await axios.post(`http://localhost:8085/holiday-requests/approve/${requestId}`);
+      const approvedRequest = requests.find(request => request.id === requestId);
+      if (approvedRequest) {
+      await sendNotification(approvedRequest.employee.id, `Votre demande de congé du ${approvedRequest.startDate} au ${approvedRequest.endDate} a été approuvée.`);
+      }
       loadRequests();
     } catch (error) {
       console.error('Error approving request', error);
@@ -30,6 +46,10 @@ const HolidayRequestManagement = () => {
   const handleDecline = async (requestId) => {
     try {
       await axios.post(`http://localhost:8085/holiday-requests/decline/${requestId}`);
+      const declinedRequest = requests.find(request => request.id === requestId);
+      if (declinedRequest) {
+      await sendNotification(declinedRequest.employee.id, `Votre demande de congé du ${declinedRequest.startDate} au ${declinedRequest.endDate} a été refusée.`);
+      }
       loadRequests();
     } catch (error) {
       console.error('Error declining request', error);

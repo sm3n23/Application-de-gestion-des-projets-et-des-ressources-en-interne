@@ -37,7 +37,7 @@ const EmployeeTable = ({ employees, setEmployees }) => {
             <tr>
               <th></th>
               <th className="p-4">Collaborateur</th>
-              <th className="p-4">Projet</th>
+              <th className="p-4">Projets</th>
               <th className="p-4">Tâches</th>
               {AuthenticatedEmployee && AuthenticatedEmployee.role === "RH" && <th className="p-4">Actions</th>}
             </tr>
@@ -54,7 +54,7 @@ const EmployeeTable = ({ employees, setEmployees }) => {
                   </td>
                   <td className="p-4 name-column">
                     <span className="tag p-2" style={{ backgroundColor: getRandomCommonColorGrey() }}>
-                      {employee.projectName || "No Project"}
+                      {employee.projectName || "Aucun projet assigné"}
                     </span>
                   </td>
                   <td className="p-4">
@@ -70,11 +70,11 @@ const EmployeeTable = ({ employees, setEmployees }) => {
                       ))
                     ) : (
                       <span className="tag" style={{ backgroundColor: getRandomCommonColorGreen() }}>
-                        {"No Tasks Assigned"}
+                        {"Aucune tâche assignée"}
                       </span>
                     )}
                   </td>
-                  {AuthenticatedEmployee && AuthenticatedEmployee.role === "RH" && (
+                  {AuthenticatedEmployee && AuthenticatedEmployee.role === "ChefDeProjet" && (
                     <td className="p-4">
                       <Link className="btn-orange-outline-table btn btn-sm mx-2" to={`/collaborateur/view/${employee.id}`}>
                         <i className="fa-solid fa-eye"></i>

@@ -1,6 +1,9 @@
 package com.example.gestionprojets.Controller;
 
+import com.example.gestionprojets.Dto.BudgetConsumptionDto;
+import com.example.gestionprojets.Dto.EmployeeProjectDto;
 import com.example.gestionprojets.Dto.ProjectDto;
+import com.example.gestionprojets.Entity.BudgetConsumption;
 import com.example.gestionprojets.Entity.Employee;
 import com.example.gestionprojets.Entity.Project;
 import com.example.gestionprojets.Service.EmployeeService;
@@ -13,6 +16,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +24,7 @@ import java.util.List;
 @RequestMapping()
 public class ProjectController {
 
+    @Autowired
     private ProjectService projectService;
 
     @Autowired
@@ -77,6 +82,18 @@ public class ProjectController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
+    @PostMapping("projects/{projectId}/budget-consumption")
+    public Project addBudgetConsumption(@PathVariable Long projectId, @RequestBody BudgetConsumptionDto budgetConsumptionDto) {
+        BudgetConsumption budgetConsumption = new BudgetConsumption();
+        budgetConsumption.setAmount(budgetConsumptionDto.getAmount());
+        budgetConsumption.setComment(budgetConsumptionDto.getComment());
+        budgetConsumption.setDate(LocalDate.now());
+
+        return projectService.addBudgetConsumption(projectId, budgetConsumption);
+    }
+
 
     @DeleteMapping("/projects/{id}")
     public ResponseEntity<String> deleteProject(@PathVariable Long id){

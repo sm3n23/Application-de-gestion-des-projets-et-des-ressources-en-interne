@@ -164,7 +164,13 @@ const ProjectTable = ({ projects, setProjects }) => {
                 return (
                   <tr key={project.id}>
                     <td className="p-4 name-column">
-                      <strong>{project.name}</strong>
+                      <Link
+                              className="link"
+                              to={`/projects/voir/${project.id}`}
+                              
+                      >
+                              <strong>{project.name}</strong>
+                      </Link>
                     </td>
                     <td className="p-4 tache-column">
                       {project.startDate}

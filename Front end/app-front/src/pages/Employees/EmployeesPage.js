@@ -7,18 +7,18 @@ import Pagination from "./Pagination";
 
 const processEmployees = (employees, projects) => {
   return employees.map((employee) => {
-    const tasks = employee.taches ? employee.taches.map((tache) => tache.name) : ["No Tasks Assigned"];
+    const tasks = employee.taches ? employee.taches.map((tache) => tache.name) : ["Aucune tâche assignée"];
     const projectNames = projects
       .filter((project) => project.employees.some((projEmp) => projEmp.id === employee.id))
       .map((project) => project.name)
-      .join(', ') || "No Project";
+      .join(' , ') || "Aucun projet assigné";
 
     return {
       id: employee.id,
       picture: employee.picture,
       name: employee.name,
       projectName: projectNames,
-      tasks: tasks.length > 0 ? tasks : ["No Tasks Assigned"],
+      tasks: tasks.length > 0 ? tasks : ["Aucune tâche assignée"],
     };
   });
 };
@@ -79,20 +79,17 @@ const EmployeePage = () => {
           className="form-control my-3"
         />
       </div>
-      {AuthenticatedEmployee && AuthenticatedEmployee.role === "RH" && (
+      {AuthenticatedEmployee && AuthenticatedEmployee.role === "ChefDeProjet" && (
         <div className="d-flex justify-content-end">
           <Link to="/Collaborateur/add" className="btn btn-primary btn-orange mx-3">
             <i className="fas fa-circle-plus"></i> Ajouter Collaborateur
           </Link>
-        </div>
-      )}
-      {AuthenticatedEmployee && AuthenticatedEmployee.role === "ChefDeProjet" && (
-        <div className="d-flex justify-content-end">
           <Link to="/demandes-congés" className="btn btn-primary btn-orange mx-3">
             Gérer les vacances
           </Link>
         </div>
       )}
+      
       <EmployeeTable employees={currentEmployees} setEmployees={setEmployees} />
       <Pagination
         itemsPerPage={employeesPerPage}

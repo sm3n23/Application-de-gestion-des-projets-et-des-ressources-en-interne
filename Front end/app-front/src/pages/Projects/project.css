@@ -298,3 +298,31 @@ tr {
     text-decoration: none;
     color: #000000;
   }
+
+
+  .info-itemt {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .employee-itemt {
+    display: flex;
+    align-items: center;
+    background-color: #eff5fb;
+    padding: 10px;
+    border-radius: 25px;
+    margin-right: 10px; /* Adjust the spacing between items */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .picture-homet {
+    width: 50px; /* Adjust the size as needed */
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .employee-namet {
+    margin-left: 10px; /* Adjust the spacing between the picture and the name */
+  }
+  

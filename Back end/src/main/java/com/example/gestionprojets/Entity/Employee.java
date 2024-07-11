@@ -8,10 +8,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table
@@ -42,6 +39,7 @@ public class Employee {
     private String picture;
 
 
+
     @JsonIgnore
     @ManyToMany(mappedBy = "employees", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Project> projects = new HashSet<>();
@@ -50,6 +48,10 @@ public class Employee {
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Tache> taches = new ArrayList<>();;
+
+    /*@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ProjectEmployee> projectEmployees = new HashSet<>();*/
+
 
 
 }

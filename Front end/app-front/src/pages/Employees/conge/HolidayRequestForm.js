@@ -16,6 +16,12 @@ const HolidayRequestForm = ({ onClose }) => {
         startDate,
         endDate,
       });
+
+      await axios.post('http://localhost:8085/notifications/create', {
+        message: `Demande de congé de ${AuthenticatedEmployee.name} du ${startDate} au ${endDate}`,
+        employeeId: AuthenticatedEmployee.id, // Assuming the ChefDeProjet ID is known
+      });
+      
       alert('Holiday request submitted');
       onClose(); // Close the modal after submission
     } catch (error) {

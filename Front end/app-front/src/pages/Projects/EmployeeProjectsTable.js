@@ -139,7 +139,16 @@ const EmployeeProjectsTable = ({ projects, setProjects }) => {
                       <strong>{project.name}</strong>
                     </td>
                     <td className="p-4 name-column">
-                      {AuthenticatedEmployee.name}
+                    <span
+                            
+                            className="tag m-1 employee-column"
+                            style={{
+                              backgroundColor: getRandomCommonColorGrey(),
+                            }}
+                          >
+                            {AuthenticatedEmployee.name}
+                          </span>
+                      
                     </td>
                     <td className="p-4 tache-column">
                       {Array.isArray(project.employees) &&
@@ -205,7 +214,10 @@ const EmployeeProjectsTable = ({ projects, setProjects }) => {
                     </td>
                     {AuthenticatedEmployee &&
                       AuthenticatedEmployee.role === "ChefDeProjet" && (
-                        <td className="py-4 tache-column" style={{ minWidth: '150px' }}>
+                        <td className="py-4 tache-column" style={{ minWidth: '160px' }}>
+                          <Link className="btn-orange-outline-table btn btn-sm m-1" to={`/projects/voir/${project.id}`}>
+                            <i className="fa-solid fa-eye"></i>
+                          </Link>
                           <Link
                             className="btn btn-sm btn-orange-outline-table m-1"
                             to={`/projects/edit/${project.id}`}
@@ -244,85 +256,48 @@ const EmployeeProjectsTable = ({ projects, setProjects }) => {
                 </button>
                 <h4 className="">Détails de la tâche:</h4>
                 <div className="form-box-modal">
-                  <div className="flex-container">
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="name">
-                        Tache:
-                      </label>
-                      <input
-                        id="name"
-                        name="name"
-                        type="text"
-                        className="form-control"
-                        value={selectedTask.name}
-                        disabled
-                        required
-                      />
+                <div className="profile-right">
+                    <div className="section basic-info row">
+                      <div className="info-item mb-4">
+                        <p className="col-lg-12">
+                          <strong>
+                            Tache: <span>{selectedTask.name}</span>
+                          </strong>
+                        </p>
+                        
+                      </div>
+                      <div className="info-item mb-4">
+                        
+                        <p className="col-lg-4">
+                          <strong>
+                          Description{" "}
+                            <span>{selectedTask.description}</span>
+                          </strong>
+                        </p>
+                        
+                      </div>
+                      <div className="info-item mb-4">
+                      <p className="col-lg-4">
+                          <strong>
+                          Date debut <span>{selectedTask.startDate}</span>
+                          </strong>
+                        </p>
+                        <p className="col-lg-4">
+                          <strong>
+                          Date fin <span>{selectedTask.finishDate}</span>
+                          </strong>
+                        </p>
+                      </div>
+                      <div className="info-item mb-4">
+                      
+                        <p className="col-lg-4">
+                          <strong>
+                          Avancement  <span>({selectedTask.advancement}%)</span>
+                          </strong>
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex-container my-2">
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="name">
-                        Description :
-                      </label>
-                      <textarea
-                        id="name"
-                        name="name"
-                        type="text"
-                        className="form-control"
-                        value={selectedTask.description}
-                        disabled
-                        rows={4}
-                      />
-                    </div>
-                  </div>
-                  <div className="flex-container my-3">
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="startDate">
-                        Date debut:
-                      </label>
-                      <input
-                        id="startDate"
-                        name="startDate"
-                        type="date"
-                        className="form-control"
-                        value={selectedTask.startDate}
-                        disabled
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="finishDate">
-                        Date fin:
-                      </label>
-                      <input
-                        id="finishDate"
-                        name="finishDate"
-                        type="date"
-                        className="form-control"
-                        value={selectedTask.finishDate}
-                        disabled
-                      />
-                    </div>
-                  </div>
-                  <div className="range-container">
-                    <label htmlFor="customRange2" className="form-label">
-                    Avancement ({selectedTask.advancement}%)
-                    </label>
-                    <input
-                      type="range"
-                      className="form-range"
-                      min="0"
-                      max="100"
-                      step="25"
-                      id="customRange2"
-                      value={selectedTask.advancement || 0}
-                      disabled
-                    />
-                    <div className="range-labels">
-                      <span className="range-label">Pas commencé</span>
-                      <span className="range-label">En cours</span>
-                      <span className="range-label">Fini</span>
-                    </div>
+                    
                   </div>
                   <div className="flex-container my-3"></div>
                 </div>

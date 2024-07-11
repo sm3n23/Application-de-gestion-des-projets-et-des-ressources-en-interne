@@ -2,6 +2,8 @@ import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
+
+
 import Home from "./pages/Home/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AddEmployee from "./pages/Employees/AddEmployee/addEmployee";
@@ -21,6 +23,8 @@ import { useContext } from "react";
 import HolidayRequestForm from "./pages/Employees/conge/HolidayRequestForm";
 import HolidayRequestManagement from "./pages/Employees/conge/HolidayRequestManagement";
 import MyHolidayRequests from "./pages/Employees/conge/MyHolidayRequests";
+import ViewProject from "./pages/Projects/ViewProject/ViewProject";
+import Notification from "./pages/Notification/Notification"
 
 function App() {
   return (
@@ -50,9 +54,11 @@ const AppContent = () => {
           <Route exact path="/collaborateur/modifierdetails/:id" element={<ProtectedRoute><EditEmployeeDetails /></ProtectedRoute>} />
           <Route exact path="/addemployee" element={<ProtectedRoute><AddEmployee /></ProtectedRoute>} />
           <Route exact path="/projects/edit/:id" element={<ProtectedRoute><EditProject /></ProtectedRoute>} />
-          <Route exact path="/projects/add" element={<ProtectedRoute><AddProject /></ProtectedRoute>} />
+          <Route exact path="/projects/ajouter" element={<ProtectedRoute><AddProject /></ProtectedRoute>} />
+          <Route exact path="/projects/voir/:id" element={<ProtectedRoute><ViewProject /></ProtectedRoute>} />
           <Route exact path="/collaborateur/view/:id" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route exact path="/collaborateur/add" element={<ProtectedRoute><AddEmployee /></ProtectedRoute>} />
+          <Route exact path="/Notification" element={<ProtectedRoute><Notification /></ProtectedRoute>} />
           <Route path="/login" element={<Login />} />
           <Route path="/demande-congé" element={<HolidayRequestForm />} />
           <Route path="/demandes-congés" element={<HolidayRequestManagement />} />

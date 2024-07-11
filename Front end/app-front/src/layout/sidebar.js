@@ -1,12 +1,37 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import axios from "axios";
 
 const Sidebar = () => {
   const { logout, AuthenticatedEmployee } = useContext(AuthContext);
+  const [unreadCount, setUnreadCount] = useState(0);
 
+  useEffect(() => {
+    if (AuthenticatedEmployee) {
+      fetchUnreadNotifications();
+    }
+  }, [AuthenticatedEmployee]);
 
-  console.log(AuthenticatedEmployee)
+  const fetchUnreadNotifications = async () => {
+    try {
+      let result;
+      if (AuthenticatedEmployee.role === "ChefDeProjet") {
+        result = await axios.get('http://localhost:8085/notifications/all');
+      } else {
+        result = await axios.get(`http://localhost:8085/notifications/employee/${AuthenticatedEmployee.id}`);
+      }
+      const unreadNotifications = result.data.filter(notification => !notification.read);
+      console.log(unreadNotifications)
+      setUnreadCount(unreadNotifications.length);
+    } catch (error) {
+      console.error("Error fetching unread notifications:", error);
+    }
+  };
+
+  
+
+  console.log(AuthenticatedEmployee);
   return (
     <div className="sidebar">
       <div className="sidebar-profile my-5">
@@ -36,10 +61,12 @@ const Sidebar = () => {
         <Link to="/collaborateur" className="menu-item">
           <i className="fa-solid fa-user"></i> Collaborateurs
         </Link>
-        
-        
-        
-        
+        <Link to="/notification" className="menu-item notification-link">
+          <i className="fa-solid fa-bell"></i> Notifications
+          {unreadCount > 0 && (
+            <span className="notification-badge">{unreadCount}</span>
+          )}
+        </Link>
         <div className=" btn-group menu-item mx-1">
           <button type="button" className="btn custom-btn">
             <i className="fa-solid fa-gear"></i> Settings
@@ -59,11 +86,6 @@ const Sidebar = () => {
                 Profile
               </Link>
               )}
-            </li>
-            <li>
-              <Link className="dropdown-item" to="/settings">
-                Settings
-              </Link>
             </li>
             <li>
               <hr className="dropdown-divider" />

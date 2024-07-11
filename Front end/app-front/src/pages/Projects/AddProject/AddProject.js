@@ -22,7 +22,8 @@ const AddProject = () => {
   const [allEmployees, setAllEmployees] = useState([]);
   const [isTaskModalOpen, setTaskModalOpen] = useState(false);
   const [isEmployeeModalOpen, setEmployeeModalOpen] = useState(false);
-  const { AuthenticatedEmployee } = useContext(AuthContext); // Use AuthContext to get authenticated user
+  const { AuthenticatedEmployee } = useContext(AuthContext); 
+  
 
   useEffect(() => {
     loadEmployees();
@@ -115,7 +116,7 @@ const AddProject = () => {
         <form onSubmit={handleSubmit}>
           <div className="flex-container">
             <InputField required label="Project Name:" name="name" value={project.name} onChange={handleChange} />
-            <SelectField required label="Status:" name="status" value={project.status} options={["En cours", "Pas commencé", "Fini"]} onChange={handleChange} />
+            <SelectField required label="Status:" name="status" value={project.status} options={["En cours", "Prévu", "Fini"]} onChange={handleChange} />
           </div>
           <div className="flex-container">
             <InputField required label="Start Date:" name="startDate" type="date" value={project.startDate} onChange={handleChange} />

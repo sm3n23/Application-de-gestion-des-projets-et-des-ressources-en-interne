@@ -188,7 +188,7 @@ export default function ProjectPage() {
 
       {AuthenticatedEmployee && AuthenticatedEmployee.role === "ChefDeProjet" && (
         <div className="d-flex justify-content-end">
-          <Link to="/projects/add" className="btn btn-primary btn-orange mx-3">
+          <Link to="/projects/ajouter" className="btn btn-primary btn-orange mx-3">
             <i className="fas fa-circle-plus"></i> Ajouter Projet
           </Link>
         </div>

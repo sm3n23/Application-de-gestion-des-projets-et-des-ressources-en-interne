@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import "./project.css";
 import { Link } from "react-router-dom";
 import Modal from "./Modal";
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from "../../context/AuthContext";
 
 const ProjectTable = ({ projects, setProjects }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,7 +31,10 @@ const ProjectTable = ({ projects, setProjects }) => {
     if (!taches || taches.length === 0) {
       return 0;
     }
-    const totalAdvancement = taches.reduce((acc, tache) => acc + (tache.advancement || 0), 0);
+    const totalAdvancement = taches.reduce(
+      (acc, tache) => acc + (tache.advancement || 0),
+      0
+    );
     return totalAdvancement / taches.length;
   };
 
@@ -56,7 +59,7 @@ const ProjectTable = ({ projects, setProjects }) => {
     }
     return "rgb(255, 255, 255)";
   };
-  
+
   const calculateExpectedAdvancement = (startDate, endDate) => {
     const now = new Date();
     const start = new Date(startDate);
@@ -72,22 +75,30 @@ const ProjectTable = ({ projects, setProjects }) => {
   };
 
   const getAdvancementStatus = (advancement, expectedAdvancement) => {
-    const iconStyle = { fontSize: '24px', marginRight: '8px' }; // Adjust the font size and margin as needed
-  
+    const iconStyle = { fontSize: "24px", marginRight: "8px" }; // Adjust the font size and margin as needed
+
     if (advancement < expectedAdvancement * 0.89) {
       return {
         icon: <i className="fa-solid fa-face-frown sad" style={iconStyle}></i>,
-        tooltip: `(Fait: ${advancement.toFixed(2)}%, Attendu: ${expectedAdvancement.toFixed(2)}%)`,
+        tooltip: `(Fait: ${advancement.toFixed(
+          2
+        )}%, Attendu: ${expectedAdvancement.toFixed(2)}%)`,
       };
     } else if (advancement >= expectedAdvancement) {
       return {
-        icon: <i className="fa-solid fa-face-smile happy" style={iconStyle}></i>,
-        tooltip: `(Fait: ${advancement.toFixed(2)}%, Attendu: ${expectedAdvancement.toFixed(2)}%)`,
+        icon: (
+          <i className="fa-solid fa-face-smile happy" style={iconStyle}></i>
+        ),
+        tooltip: `(Fait: ${advancement.toFixed(
+          2
+        )}%, Attendu: ${expectedAdvancement.toFixed(2)}%)`,
       };
     } else {
       return {
         icon: <i className="fa-solid fa-face-meh normal" style={iconStyle}></i>,
-        tooltip: `(Fait: ${advancement.toFixed(2)}%, Attendu: ${expectedAdvancement.toFixed(2)}%)`,
+        tooltip: `(Fait: ${advancement.toFixed(
+          2
+        )}%, Attendu: ${expectedAdvancement.toFixed(2)}%)`,
       };
     }
   };
@@ -111,15 +122,40 @@ const ProjectTable = ({ projects, setProjects }) => {
               projects.map((project) => {
                 const advancement = calculateProjectAdvancement(project.taches);
                 const status = getProjectStatus(advancement);
-                const expectedAdvancement = calculateExpectedAdvancement(project.startDate, project.finishDate);
-                const { icon, tooltip } = getAdvancementStatus(advancement, expectedAdvancement);
+                const expectedAdvancement = calculateExpectedAdvancement(
+                  project.startDate,
+                  project.finishDate
+                );
+                const { icon, tooltip } = getAdvancementStatus(
+                  advancement,
+                  expectedAdvancement
+                );
                 return (
                   <tr key={project.id}>
                     <td className="p-4 name-column ">
-                      <Link className="link" to={`/collaborateur/edit/${AuthenticatedEmployee.id}`} state={{ projectId: project.id }}>
-                        <strong>{project.name}</strong>
-                      </Link>
-                      
+                      {AuthenticatedEmployee &&
+                        AuthenticatedEmployee.role === "ChefDeProjet" && (
+                          <div className="d-flex ">
+                            <Link
+                              className="link"
+                              to={`/projects/voir/${project.id}`}
+                              
+                            >
+                              <strong>{project.name}</strong>
+                            </Link>
+                          </div>
+                        )}
+                      {AuthenticatedEmployee &&
+                        AuthenticatedEmployee.role === "Collaborateur" && (
+                          <div className="d-flex">
+                            <Link
+                              className="link"
+                              to={`/collaborateur/edit/${AuthenticatedEmployee.id}`}
+                            >
+                              <strong>{project.name}</strong>
+                            </Link>
+                          </div>
+                        )}
                     </td>
                     <td className="p-4 tache-column">
                       {Array.isArray(project.employees) &&
@@ -132,16 +168,11 @@ const ProjectTable = ({ projects, setProjects }) => {
                               backgroundColor: getRandomCommonColorGrey(),
                             }}
                           >
-                            
                             {employee.name}
                           </span>
                         ))
                       ) : (
-                        <span
-                          
-                        >
-                          {"Aucun Collaborateur affecté"}
-                        </span>
+                        <span>{"Aucun Collaborateur affecté"}</span>
                       )}
                     </td>
                     <td className="p-4">
@@ -167,21 +198,18 @@ const ProjectTable = ({ projects, setProjects }) => {
                           </span>
                         ))
                       ) : (
-                        <span
-                          
-                        >
-                          {"Aucune tâche créée"}
-                        </span>
+                        <span>{"Aucune tâche créée"}</span>
                       )}
                     </td>
-                    <td className="p-4">
-                      {advancement.toFixed(2)}%
-                    </td>
+                    <td className="p-4">{advancement.toFixed(2)}%</td>
                     <td className="p-4">
                       <span title={tooltip}>{icon}</span>
                     </td>
-                      
-                    
+                    <td className="py-4">
+                      <Link className="btn-orange-outline-table btn btn-sm mx-2" to={`/projects/voir/${project.id}`}>
+                        <i className="fa-solid fa-eye"></i>
+                      </Link>
+                    </td>
                   </tr>
                 );
               })
@@ -207,85 +235,51 @@ const ProjectTable = ({ projects, setProjects }) => {
                 <h4 className="">Détails de la tâche:</h4>
                 <div className="form-box-modal">
                   <div className="flex-container">
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="name">
-                      Tache:
-                      </label>
-                      <input
-                        id="name"
-                        name="name"
-                        type="text"
-                        className="form-control"
-                        value={selectedTask.name}
-                        disabled
-                        required
-                      />
+                  <div className="profile-right">
+                    <div className="section basic-info row">
+                      <div className="info-item mb-4">
+                        <p className="col-lg-12">
+                          <strong>
+                            Tache: <span>{selectedTask.name}</span>
+                          </strong>
+                        </p>
+                        
+                      </div>
+                      <div className="info-item mb-4">
+                        
+                        <p className="col-lg-4">
+                          <strong>
+                          Description{" "}
+                            <span>{selectedTask.description}</span>
+                          </strong>
+                        </p>
+                        
+                      </div>
+                      <div className="info-item mb-4">
+                      <p className="col-lg-4">
+                          <strong>
+                          Date debut <span>{selectedTask.startDate}</span>
+                          </strong>
+                        </p>
+                        <p className="col-lg-4">
+                          <strong>
+                          Date fin <span>{selectedTask.finishDate}</span>
+                          </strong>
+                        </p>
+                      </div>
+                      <div className="info-item mb-4">
+                      
+                        <p className="col-lg-4">
+                          <strong>
+                          Avancement  <span>({selectedTask.advancement}%)</span>
+                          </strong>
+                        </p>
+                      </div>
                     </div>
+                    
                   </div>
-                  <div className="flex-container my-2">
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="name">
-                        Description :
-                      </label>
-                      <textarea
-                        id="name"
-                        name="name"
-                        type="text"
-                        className="form-control"
-                        value={selectedTask.description}
-                        disabled
-                        rows={4}
-                      />
-                    </div>
                   </div>
-                  <div className="flex-container my-3">
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="startDate">
-                      Date debut:
-                      </label>
-                      <input
-                        id="startDate"
-                        name="startDate"
-                        type="date"
-                        className="form-control"
-                        value={selectedTask.startDate}
-                        disabled
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label className="form-label" htmlFor="finishDate">
-                      Date fin:
-                      </label>
-                      <input
-                        id="finishDate"
-                        name="finishDate"
-                        type="date"
-                        className="form-control"
-                        value={selectedTask.finishDate}
-                        disabled
-                      />
-                    </div>
-                  </div>
-                  <div className="range-container">
-                    <label htmlFor="customRange2" className="form-label">
-                      Avancement ({selectedTask.advancement}%)
-                    </label>
-                    <input
-                      type="range"
-                      className="form-range"
-                      min="0"
-                      max="100"
-                      step="25"
-                      id="customRange2"
-                      value={selectedTask.advancement || 0}
-                      disabled
-                    />
-                    <div className="range-labels">
-                      <span className="range-label">Pas commencé</span>
-                      <span className="range-label">En cours</span>
-                      <span className="range-label">Fini</span>
-                    </div>
-                  </div>
+                  
                   <div className="flex-container my-3"></div>
                 </div>
               </div>

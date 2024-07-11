@@ -29,6 +29,7 @@ public class Project {
     @Column(length = 1000)
     private String description;
     private int budget;
+    private int consumedBudget = 0;
 
     @ManyToMany
     @JoinTable(
@@ -44,4 +45,13 @@ public class Project {
 
     private String createdBy;
 
+    @JsonManagedReference
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<BudgetConsumption> budgetConsumptions = new ArrayList<>();
+
+
+
+
+    /*@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ProjectEmployee> projectEmployees = new HashSet<>();*/
 }

@@ -3,6 +3,7 @@ package com.example.gestionprojets.Controller;
 import com.example.gestionprojets.Dto.EmployeeDto;
 import com.example.gestionprojets.Entity.Employee;
 import com.example.gestionprojets.Service.EmployeeService;
+import com.example.gestionprojets.Service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,9 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
+
+    @Autowired
+    private ProjectService projectService;
 
 
 
@@ -48,6 +52,8 @@ public class EmployeeController {
         return new ResponseEntity<>(createdEmployee, HttpStatus.CREATED);
     }
 
+
+
     @PutMapping("/employees/{id}")
     public ResponseEntity<Employee> updateEmployee(
             @PathVariable Long id,
@@ -63,11 +69,21 @@ public class EmployeeController {
         }
     }
 
+    /*@PostMapping("employee/{employeeId}/assign")
+    public ResponseEntity<Employee> assignEmployeeToProject(@PathVariable Long employeeId,
+                                                            @RequestParam Long projectId,
+                                                            @RequestParam boolean isFullTime) {
+        Employee updatedEmployee = projectService.assignEmployeeToProject(employeeId, projectId, isFullTime);
+        return ResponseEntity.ok(updatedEmployee);
+    }*/
+
     @PutMapping("/employees/{id}/tasks")
     public ResponseEntity<Employee> assignTasksToEmployee(@PathVariable Long id, @RequestBody List<Long> taskIds) {
         Employee updatedEmployee = employeeService.assignTasksToEmployee(id, taskIds);
         return ResponseEntity.ok(updatedEmployee);
     }
+
+
 
 
     @DeleteMapping("/employees/{id}")

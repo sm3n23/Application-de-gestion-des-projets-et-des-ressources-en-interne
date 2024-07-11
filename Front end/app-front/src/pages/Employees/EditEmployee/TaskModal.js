@@ -133,67 +133,42 @@ function TaskModal({ isOpen, onClose, task }) {
   const renderTaskDetails = () =>
     updatedTask && (
       <div className="form-box-modal">
-        <div className="flex-container">
-          <div className="form-group">
-            <label className="form-label" htmlFor="name">
-              Tache:
-            </label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              className="form-control"
-              value={updatedTask.name || ""}
-              disabled
-            />
-          </div>
-        </div>
-        <div className="flex-container my-2">
-          <div className="form-group">
-            <label className="form-label" htmlFor="description">
-              Description:
-            </label>
-            <textarea
-              rows={2}
-              id="description"
-              name="description"
-              type="text"
-              className="form-control"
-              value={updatedTask.description || ""}
-              disabled
-              
-            />
-          </div>
-        </div>
-        <div className="flex-container my-3">
-          <div className="form-group">
-            <label className="form-label" htmlFor="startDate">
-              Date debut:
-            </label>
-            <input
-              id="startDate"
-              name="startDate"
-              type="date"
-              className="form-control"
-              value={updatedTask.startDate || ""}
-              disabled
-            />
-          </div>
-          <div className="form-group">
-            <label className="form-label" htmlFor="finishDate">
-              Date fin:
-            </label>
-            <input
-              id="finishDate"
-              name="finishDate"
-              type="date"
-              className="form-control"
-              value={updatedTask.finishDate || ""}
-              disabled
-            />
-          </div>
-        </div>
-        <div className="range-container">
+        <div className="profile-right">
+                    <div className="section basic-info row">
+                      <div className="info-item mb-4">
+                        <p className="col-lg-12">
+                          <strong>
+                            Tache: <span>{updatedTask.name}</span>
+                          </strong>
+                        </p>
+                        
+                      </div>
+                      <div className="info-item mb-4">
+                        
+                        <p className="col-lg-4">
+                          <strong>
+                          Description{" "}
+                            <span>{updatedTask.description}</span>
+                          </strong>
+                        </p>
+                        
+                      </div>
+                      <div className="info-item mb-4">
+                      <p className="col-lg-4">
+                          <strong>
+                          Date debut <span>{updatedTask.startDate}</span>
+                          </strong>
+                        </p>
+                        <p className="col-lg-4">
+                          <strong>
+                          Date fin <span>{updatedTask.finishDate}</span>
+                          </strong>
+                        </p>
+                      </div>
+                      <div className="info-item mb-4">
+                      
+                        <p className="col-lg-4">
+                        <div className="range-container">
           <label htmlFor="customRange2" className="form-label">
             Avancement ({updatedTask.advancement}%)
           </label>
@@ -214,6 +189,12 @@ function TaskModal({ isOpen, onClose, task }) {
             <span className="range-label">Finished</span>
           </div>
         </div>
+                        </p>
+                      </div>
+                    </div>
+                    
+                  </div>
+        
         {AuthenticatedEmployee && AuthenticatedEmployee.role === "Collaborateur" && (
         <button
           type="button"

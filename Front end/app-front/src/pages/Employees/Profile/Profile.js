@@ -109,7 +109,7 @@ const Profile = () => {
                 Demander des vacances
               </button>
               <button onClick={openHolidayRequestsModal} className="btn btn-primary btn-blue mx-3">
-                Mes demande de congé
+                Mes demande de vacances
               </button>
               <Link to={`/collaborateur/modifierdetails/${employee.id}`} className="edit-link mx-3">
                 <i className="fa-solid fa-pen-to-square"></i>
@@ -204,14 +204,14 @@ const Profile = () => {
           </div>
         </div>
   
-        {/* Holiday Request Form Modal */}
+        
         {isHolidayFormModalOpen && (
           <Modal isOpen={isHolidayFormModalOpen} onClose={closeHolidayFormModal}>
             <HolidayRequestForm onClose={closeHolidayFormModal} />
           </Modal>
         )}
   
-        {/* Holiday Requests Modal */}
+        
         {isHolidayRequestsModalOpen && (
           <Modal isOpen={isHolidayRequestsModalOpen} onClose={closeHolidayRequestsModal}>
             <MyHolidayRequests onClose={closeHolidayRequestsModal} />

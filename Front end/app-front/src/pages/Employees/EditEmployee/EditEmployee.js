@@ -13,6 +13,7 @@ export default function EditEmployee() {
   const [tasks, setTasks] = useState([]);
   const [project, setProject] = useState(null);
   const [employeeTasks, setEmployeeTasks] = useState([]);
+  const [initialEmployeeTasks, setInitialEmployeeTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { AuthenticatedEmployee } = useContext(AuthContext);
@@ -41,6 +42,7 @@ export default function EditEmployee() {
       const response = await axios.get(`http://localhost:8085/employees/${id}`);
       const allTasks = response.data.taches || [];
       setEmployeeTasks(allTasks);
+      setInitialEmployeeTasks(allTasks); // Store initial tasks
     } catch (error) {
       console.error("Error loading employee tasks:", error);
     }
@@ -64,9 +66,23 @@ export default function EditEmployee() {
     const taskIds = employeeTasks.map((task) => task.id);
     try {
       await axios.put(`http://localhost:8085/employees/${id}/tasks`, taskIds);
+
+      // Find newly added tasks by comparing with the initial tasks
+      const newTasks = employeeTasks.filter(task => !initialEmployeeTasks.some(initialTask => initialTask.id === task.id));
+
+      // Send notifications only for the new tasks
+      const notificationPromises = newTasks.map((task) => {
+        return axios.post(`http://localhost:8085/notifications/create`, {
+          message: `Vous avez été assigné à la tâche : ${task.name}`,
+          employeeId: id
+        });
+      });
+
+      await Promise.all(notificationPromises);
+
       navigate("/projects");
     } catch (error) {
-      console.error("Failed to save changes:", error.response.data);
+      console.error("Failed to save changes or send notifications:", error.response ? error.response.data : error);
       alert("Failed to update employee. Please try again.");
     }
   };
