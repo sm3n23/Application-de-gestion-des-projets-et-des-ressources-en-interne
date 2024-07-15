@@ -15,6 +15,7 @@ public interface EmployeeService {
 
     List<Employee> findEmployees();
 
+    Employee updateEmployeeAbsences(Long id, int absences);
     Employee createEmployee(EmployeeDto employeeDto);
 
     Employee updateEmployee(Long id, EmployeeDto employeeDto);

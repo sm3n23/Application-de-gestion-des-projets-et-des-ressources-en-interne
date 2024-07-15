@@ -1,37 +1,11 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import axios from "axios";
+import './sidebar.css'
 
-const Sidebar = () => {
+const Sidebar = ({ unreadCount }) => {
   const { logout, AuthenticatedEmployee } = useContext(AuthContext);
-  const [unreadCount, setUnreadCount] = useState(0);
 
-  useEffect(() => {
-    if (AuthenticatedEmployee) {
-      fetchUnreadNotifications();
-    }
-  }, [AuthenticatedEmployee]);
-
-  const fetchUnreadNotifications = async () => {
-    try {
-      let result;
-      if (AuthenticatedEmployee.role === "ChefDeProjet") {
-        result = await axios.get('http://localhost:8085/notifications/all');
-      } else {
-        result = await axios.get(`http://localhost:8085/notifications/employee/${AuthenticatedEmployee.id}`);
-      }
-      const unreadNotifications = result.data.filter(notification => !notification.read);
-      console.log(unreadNotifications)
-      setUnreadCount(unreadNotifications.length);
-    } catch (error) {
-      console.error("Error fetching unread notifications:", error);
-    }
-  };
-
-  
-
-  console.log(AuthenticatedEmployee);
   return (
     <div className="sidebar">
       <div className="sidebar-profile my-5">
@@ -61,13 +35,12 @@ const Sidebar = () => {
         <Link to="/collaborateur" className="menu-item">
           <i className="fa-solid fa-user"></i> Collaborateurs
         </Link>
-        <Link to="/notification" className="menu-item notification-link">
+        <Link to="/Notification" className="menu-item">
           <i className="fa-solid fa-bell"></i> Notifications
-          {unreadCount > 0 && (
-            <span className="notification-badge">{unreadCount}</span>
-          )}
+          {AuthenticatedEmployee && AuthenticatedEmployee.role==="Collaborateur" &&
+            unreadCount > 0 && <span className="notification-badge">{unreadCount}</span>}
         </Link>
-        <div className=" btn-group menu-item mx-1">
+        <div className="btn-group menu-item mx-1">
           <button type="button" className="btn custom-btn">
             <i className="fa-solid fa-gear"></i> Settings
           </button>
@@ -82,9 +55,9 @@ const Sidebar = () => {
           <ul className="dropdown-menu">
             <li>
               {AuthenticatedEmployee && (
-              <Link className="dropdown-item" to={`/collaborateur/view/${AuthenticatedEmployee.id}`}>
-                Profile
-              </Link>
+                <Link className="dropdown-item" to={`/collaborateur/view/${AuthenticatedEmployee.id}`}>
+                  Profile
+                </Link>
               )}
             </li>
             <li>
@@ -100,7 +73,7 @@ const Sidebar = () => {
       </div>
       <div className="footer">
         <div className="bottom-image">
-          <img src="/images/bplogo.png" alt="Banque Populaire logo" />
+          <img src="/images/bp.png" alt="Banque Populaire logo" />
         </div>
       </div>
     </div>

@@ -2,8 +2,6 @@ import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-
-
 import Home from "./pages/Home/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AddEmployee from "./pages/Employees/AddEmployee/addEmployee";
@@ -19,7 +17,8 @@ import Profile from "./pages/Employees/Profile/Profile";
 import Login from "./pages/Login/LoginPage";
 import { AuthProvider, AuthContext } from "./context/AuthContext";
 import ProtectedRoute from "./context/ProtectedRoute";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
+import axios from 'axios';
 import HolidayRequestForm from "./pages/Employees/conge/HolidayRequestForm";
 import HolidayRequestManagement from "./pages/Employees/conge/HolidayRequestManagement";
 import MyHolidayRequests from "./pages/Employees/conge/MyHolidayRequests";
@@ -37,13 +36,33 @@ function App() {
 }
 
 const AppContent = () => {
-  const { user } = useContext(AuthContext);
+  const { AuthenticatedEmployee } = useContext(AuthContext);
+  const [unreadCount, setUnreadCount] = useState(0);
 
-  
+  useEffect(() => {
+    if (AuthenticatedEmployee) {
+      fetchNotifications();
+    }
+  }, [AuthenticatedEmployee]);
+
+  const fetchNotifications = async () => {
+    try {
+      let result;
+      if (AuthenticatedEmployee.role === "ChefDeProjet") {
+        result = await axios.get('http://localhost:8085/notifications/all');
+      } else {
+        result = await axios.get(`http://localhost:8085/notifications/employee/${AuthenticatedEmployee.id}`);
+      }
+      const notifications = result.data;
+      setUnreadCount(notifications.filter(notification => !notification.read).length);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+    }
+  };
 
   return (
     <>
-      {user && <Sidebar />}
+      {AuthenticatedEmployee && <Sidebar unreadCount={unreadCount} />}
       <div className="main-content">
         <Routes>
           <Route exact path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
@@ -58,7 +77,7 @@ const AppContent = () => {
           <Route exact path="/projects/voir/:id" element={<ProtectedRoute><ViewProject /></ProtectedRoute>} />
           <Route exact path="/collaborateur/view/:id" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route exact path="/collaborateur/add" element={<ProtectedRoute><AddEmployee /></ProtectedRoute>} />
-          <Route exact path="/Notification" element={<ProtectedRoute><Notification /></ProtectedRoute>} />
+          <Route exact path="/Notification" element={<ProtectedRoute><Notification onMarkAsRead={fetchNotifications} /></ProtectedRoute>} />
           <Route path="/login" element={<Login />} />
           <Route path="/demande-congé" element={<HolidayRequestForm />} />
           <Route path="/demandes-congés" element={<HolidayRequestManagement />} />

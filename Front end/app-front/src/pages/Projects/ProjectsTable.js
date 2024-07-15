@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import "./project.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Modal from "./Modal";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -8,6 +8,7 @@ const ProjectTable = ({ projects, setProjects }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
   const { AuthenticatedEmployee } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const greyColors = ["#A9A9A9", "#808080", "#899499"];
   const greenColors = ["#008000", "#228B22", "#4F7942"];
@@ -25,6 +26,12 @@ const ProjectTable = ({ projects, setProjects }) => {
   const handleTaskClick = (task) => {
     setSelectedTask(task);
     setIsModalOpen(true);
+  };
+
+  const handleProjectClick = (projectId, projectName) => {
+    navigate(`/collaborateur/edit/${AuthenticatedEmployee.id}`, {
+      state: { projectId, projectName }
+    });
   };
 
   const calculateProjectAdvancement = (taches) => {
@@ -148,12 +155,12 @@ const ProjectTable = ({ projects, setProjects }) => {
                       {AuthenticatedEmployee &&
                         AuthenticatedEmployee.role === "Collaborateur" && (
                           <div className="d-flex">
-                            <Link
+                            <span
                               className="link"
-                              to={`/collaborateur/edit/${AuthenticatedEmployee.id}`}
+                              onClick={() => handleProjectClick(project.id, project.name)}
                             >
                               <strong>{project.name}</strong>
-                            </Link>
+                            </span>
                           </div>
                         )}
                     </td>

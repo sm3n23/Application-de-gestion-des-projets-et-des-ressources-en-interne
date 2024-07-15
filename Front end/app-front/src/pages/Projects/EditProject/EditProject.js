@@ -96,20 +96,47 @@ export default function EditProject() {
   const addEmployeeToProject = async (employee) => {
     try {
       const employeeData = allEmployees.find(emp => emp.id === employee.id);
-
+  
       if (employeeData.projects.split(' , ').length >= 3) {
         const formattedProjects = employeeData.projects.split(' , ').join(', ');
-            setErrorMessage(`Cet employé travaille déjà sur 3 projets (${formattedProjects}) et ne peut être ajouté à un autre.`);
-            setEmployeeProjects(employeeData.projects);
-            setIsErrorModalOpen(true);
-            return;
+        setErrorMessage(`Cet employé travaille déjà sur 3 projets (${formattedProjects}) et ne peut être ajouté à un autre.`);
+        setEmployeeProjects(employeeData.projects);
+        setIsErrorModalOpen(true);
+        return;
       }
-
+  
+      // Fetch holiday requests and check if the employee is on vacation
+      const holidayResponse = await axios.get("http://localhost:8085/holiday-requests");
+      const holidayRequests = holidayResponse.data;
+  
+      const today = new Date();
+      let onVacation = false;
+      let vacationStartDate = null;
+      let vacationEndDate = null;
+  
+      holidayRequests.forEach(request => {
+        const startDate = new Date(request.startDate);
+        const endDate = new Date(request.endDate);
+        if (request.employee.id === employee.id && 
+            request.status === "APPROVED" && 
+            today >= startDate && today <= endDate) {
+          onVacation = true;
+          vacationStartDate = startDate;
+          vacationEndDate = endDate;
+        }
+      });
+  
+      if (onVacation) {
+        setErrorMessage(`Cet employé est actuellement en vacances du ${vacationStartDate.toLocaleDateString()} au ${vacationEndDate.toLocaleDateString()} et ne peut être ajouté à un projet.`);
+        setIsErrorModalOpen(true);
+        return;
+      }
+  
       await axios.post('http://localhost:8085/notifications/create', {
         employeeId: employee.id,
         message: `Vous avez été ajouté au projet: ${project.name}`
       });
-
+  
       const employeeWithProject = { ...employee, project };
       setProject((prev) => ({
         ...prev,
@@ -121,6 +148,8 @@ export default function EditProject() {
       setIsErrorModalOpen(true);
     }
   };
+  
+  
 
   const removeEmployeeFromProject = (employeeId) => {
     setProject((prev) => ({

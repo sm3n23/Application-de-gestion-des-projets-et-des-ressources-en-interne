@@ -129,6 +129,24 @@ tr {
     border-color: #f97714;
     color: #ffffff; /* Optional: To change text color when button is active */
 }
+.btn-orange-outline-home {
+    background-color: transparent;
+    border-color: #ff8c33;
+    color: #ff8c33;
+    width: auto;
+    height: 50px;
+    border-radius: 15px;
+    border: #ff8c33 2px solid;
+    font-weight:500;
+}
+
+.btn-orange-outline-home:hover,
+.btn-orange-outline-home:focus,
+.btn-orange-outline-home:active {
+    background-color: #f97714;
+    border-color: #f97714;
+    color: #ffffff; /* Optional: To change text color when button is active */
+}
 
 .btn-orange-primary {
     background-color: #ff8c33;
@@ -292,6 +310,7 @@ tr {
   .link{
     text-decoration: none;
     color: #454444;
+    cursor: pointer;
   }
 
   .link:hover{

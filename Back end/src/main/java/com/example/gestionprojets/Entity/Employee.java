@@ -37,7 +37,7 @@ public class Employee {
     private String email;
     private String location;
     private String picture;
-
+    private int absences;
 
 
     @JsonIgnore

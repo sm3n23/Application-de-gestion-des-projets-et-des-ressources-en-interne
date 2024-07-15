@@ -117,9 +117,9 @@
 
 .bottom-image {
   position: absolute;
-  bottom:50px; /* Position at the bottom of the sidebar */
-  left: 45px;
-  width: 60%; /* Full width of the sidebar */
+  bottom:20px; /* Position at the bottom of the sidebar */
+  left: 60px;
+  width: 50%; /* Full width of the sidebar */
   text-align: center; /* Center the image horizontally */
 }
 

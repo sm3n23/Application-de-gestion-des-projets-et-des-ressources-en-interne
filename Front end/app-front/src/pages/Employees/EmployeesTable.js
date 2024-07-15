@@ -75,7 +75,7 @@ const EmployeeTable = ({ employees, setEmployees }) => {
                     )}
                   </td>
                   {AuthenticatedEmployee && AuthenticatedEmployee.role === "ChefDeProjet" && (
-                    <td className="p-4">
+                    <td className="p-4 " style={{ minWidth: '160px' }}>
                       <Link className="btn-orange-outline-table btn btn-sm mx-2" to={`/collaborateur/view/${employee.id}`}>
                         <i className="fa-solid fa-eye"></i>
                       </Link>

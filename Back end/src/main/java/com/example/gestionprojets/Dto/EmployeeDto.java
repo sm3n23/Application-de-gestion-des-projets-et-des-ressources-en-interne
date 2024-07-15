@@ -25,7 +25,7 @@ public class EmployeeDto {
     private String picture;
 
     private boolean isFullTime;
-
+    private int absences;
     private Set<Long> projectIds;
     private Set<Long> tachesIds;
 }

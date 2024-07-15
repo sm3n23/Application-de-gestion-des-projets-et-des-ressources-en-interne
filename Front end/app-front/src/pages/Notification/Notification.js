@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
 
-export default function Notification() {
+export default function Notification({ onMarkAsRead }) {
   const [notifications, setNotifications] = useState([]);
   const { AuthenticatedEmployee } = useContext(AuthContext);
 
@@ -15,14 +15,18 @@ export default function Notification() {
   const loadNotifications = async () => {
     try {
       let result;
-      if (AuthenticatedEmployee.role === "ChefDeProjet") {
+      if (AuthenticatedEmployee?.role === "ChefDeProjet") {
         result = await axios.get('http://localhost:8085/notifications/all');
-      } else {
+        const filteredNotifications = result.data.filter(notification =>
+          notification.message.includes("Demande de congé de")
+        );
+        console.log("Filtered Notifications for ChefDeProjet:", filteredNotifications);
+        setNotifications(filteredNotifications.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
+      } else if (AuthenticatedEmployee) {
         result = await axios.get(`http://localhost:8085/notifications/employee/${AuthenticatedEmployee.id}`);
+        console.log("Notifications for Employee:", result.data);
+        setNotifications(result.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
       }
-
-      const sortedNotifications = result.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      setNotifications(sortedNotifications);
     } catch (error) {
       console.error("Error fetching notifications:", error);
     }
@@ -31,16 +35,18 @@ export default function Notification() {
   const handleMarkAsRead = async (notificationId) => {
     try {
       await axios.post(`http://localhost:8085/notifications/${notificationId}/mark-as-read`);
-      setNotifications(notifications.map(notification =>
+      const updatedNotifications = notifications.map(notification =>
         notification.id === notificationId ? { ...notification, read: true } : notification
-      ));
+      );
+      setNotifications(updatedNotifications);
+      onMarkAsRead && onMarkAsRead(); // Call the callback to update the unread count
     } catch (error) {
       console.error("Error marking notification as read:", error);
     }
   };
 
-  const filteredNotifications = AuthenticatedEmployee.role === "ChefDeProjet"
-    ? notifications // Show all notifications for ChefDeProjet
+  const filteredNotifications = AuthenticatedEmployee?.role === "ChefDeProjet"
+    ? notifications // Show filtered notifications for ChefDeProjet
     : notifications.filter(notification => !notification.message.includes("Demande de congé"));
 
   return (
@@ -51,7 +57,6 @@ export default function Notification() {
             <tr>
               <th className="p-4">Message</th>
               <th className="p-4">Date</th>
-              <th className="p-4">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -65,7 +70,7 @@ export default function Notification() {
                       className="btn btn-sm btn-primary"
                       onClick={() => handleMarkAsRead(notification.id)}
                     >
-                      Mark as Read
+                      Marquer comme lu
                     </button>
                   )}
                 </td>

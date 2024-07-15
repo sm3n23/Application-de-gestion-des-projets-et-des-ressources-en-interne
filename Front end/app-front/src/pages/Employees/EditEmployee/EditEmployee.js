@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
+import { useParams, useNavigate, useLocation, Link } from "react-router-dom";
 import axios from "axios";
 import "./EditEmployee.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -19,17 +19,16 @@ export default function EditEmployee() {
   const { AuthenticatedEmployee } = useContext(AuthContext);
 
   useEffect(() => {
-    if (location.state && location.state.projectId) {
-      loadProject(location.state.projectId);
+    const projectId = location.state?.projectId;
+    if (projectId) {
+      loadProject(projectId);
     }
     loadEmployeeTasks();
   }, [location.state]);
 
   const loadProject = async (projectId) => {
     try {
-      const response = await axios.get(
-        `http://localhost:8085/projects/${projectId}`
-      );
+      const response = await axios.get(`http://localhost:8085/projects/${projectId}`);
       setProject(response.data);
       setTasks(response.data.taches || []);
     } catch (error) {

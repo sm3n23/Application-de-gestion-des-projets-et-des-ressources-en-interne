@@ -34,6 +34,25 @@ export default function Home() {
     });
   };
 
+  const calculateProjectAdvancement = (taches) => {
+    if (!taches || taches.length === 0) {
+      return 0;
+    }
+    const totalAdvancement = taches.reduce((acc, tache) => acc + (tache.advancement || 0), 0);
+    return totalAdvancement / taches.length;
+  };
+
+  const getProjectStatus = (advancement) => {
+    if (advancement === 0) {
+      return "Prévu";
+    } else if (advancement > 0 && advancement < 100) {
+      return "En cours";
+    } else if (advancement === 100) {
+      return "Fini";
+    }
+    return "Unknown";
+  };
+
   const loadProjects = async () => {
     try {
       console.log("AuthenticatedEmployee:", AuthenticatedEmployee);
@@ -62,9 +81,11 @@ export default function Home() {
       };
   
       sortedProjects.forEach((project) => {
-        if (project.status) {
-          statusCounts[project.status] =
-            (statusCounts[project.status] || 0) + 1;
+        const advancement = calculateProjectAdvancement(project.taches);
+        const status = getProjectStatus(advancement);
+        if (status) {
+          statusCounts[status] =
+            (statusCounts[status] || 0) + 1;
         }
       });
   
@@ -109,3 +130,4 @@ export default function Home() {
     </div>
   );
 }
+  

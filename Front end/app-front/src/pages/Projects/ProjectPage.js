@@ -182,7 +182,7 @@ export default function ProjectPage() {
                 <div className="flex-container">
                   <div className="button-group my-3">
                     <button
-                      className={`btn  btn-orange-outline mx-1 ${
+                      className={`btn  btn-orange-outline-home mx-1 ${
                         statusFilter === "" ? "active" : ""
                       }`}
                       onClick={() => handleStatusChange("")}
@@ -190,7 +190,7 @@ export default function ProjectPage() {
                       Projets
                     </button>
                     <button
-                      className={`btn  btn-orange-outline mx-1 ${
+                      className={`btn  btn-orange-outline-home mx-1 ${
                         statusFilter === "Prévu" ? "active" : ""
                       }`}
                       onClick={() => handleStatusChange("Prévu")}
@@ -198,7 +198,7 @@ export default function ProjectPage() {
                       Prévu
                     </button>
                     <button
-                      className={`btn  btn-orange-outline mx-1 ${
+                      className={`btn  btn-orange-outline-home mx-1 ${
                         statusFilter === "En cours" ? "active" : ""
                       }`}
                       onClick={() => handleStatusChange("En cours")}
@@ -206,7 +206,7 @@ export default function ProjectPage() {
                       En cours
                     </button>
                     <button
-                      className={`btn  btn-orange-outline mx-1 ${
+                      className={`btn  btn-orange-outline-home mx-1 ${
                         statusFilter === "Fini" ? "active" : ""
                       }`}
                       onClick={() => handleStatusChange("Fini")}

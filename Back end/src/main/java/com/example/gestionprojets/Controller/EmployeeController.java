@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping()
@@ -68,6 +69,22 @@ public class EmployeeController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PutMapping("/employees/{id}/absences")
+    public ResponseEntity<Employee> updateEmployeeAbsences(
+            @PathVariable Long id,
+            @RequestBody Map<String, Integer> absencesPayload) {
+
+        int absences = absencesPayload.get("absences");
+
+        Employee updatedEmployee = employeeService.updateEmployeeAbsences(id, absences);
+        if (updatedEmployee != null) {
+            return ResponseEntity.ok(updatedEmployee);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
     /*@PostMapping("employee/{employeeId}/assign")
     public ResponseEntity<Employee> assignEmployeeToProject(@PathVariable Long employeeId,

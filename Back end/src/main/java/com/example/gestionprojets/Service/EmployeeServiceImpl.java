@@ -85,7 +85,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         employee.setSkills(employeeDto.getSkills());
         employee.setLocation(employeeDto.getLocation());
         employee.setPicture(employeeDto.getPicture());
-
+        employee.setAbsences(0);
         if(employeeDto.getRole() != null) {
             employee.setRole(employeeDto.getRole());
         }
@@ -117,6 +117,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         employee.setSkills(employeeDto.getSkills());
         employee.setLocation(employeeDto.getLocation());
         employee.setPicture(employeeDto.getPicture());
+        employee.setAbsences(employeeDto.getAbsences());
 
         if (employeeDto.getProjectIds() != null) {
             List<Project> projects = projectRepository.findAllById(employeeDto.getProjectIds());
@@ -135,6 +136,17 @@ public class EmployeeServiceImpl implements EmployeeService{
 
         return employeeRepository.save(employee);
     }
+
+    @Override
+    public Employee updateEmployeeAbsences(Long id, int absences) {
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Employee not found"));
+
+        employee.setAbsences(absences);
+
+        return employeeRepository.save(employee);
+    }
+
 
 
     public Employee assignTasksToEmployee(Long employeeId, List<Long> taskIds) {

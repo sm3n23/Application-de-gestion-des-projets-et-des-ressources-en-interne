@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "../Projects/project.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Pagination from "../Employees/Pagination";
+import { AuthContext } from "../../context/AuthContext";
 
 const ProjectTable = ({ projects, setProjects }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const { AuthenticatedEmployee } = useContext(AuthContext);
+
   const projectsPerPage = 5;
 
   const indexOfLastProject = currentPage * projectsPerPage;
@@ -114,25 +117,25 @@ const ProjectTable = ({ projects, setProjects }) => {
           />
           <div className="button-group my-3">
             <button
-              className={`btn  btn-orange-outline mx-1  ${statusFilter === "" ? "active" : ""}`}
+              className={`btn  btn-orange-outline-home mx-1  ${statusFilter === "" ? "active" : ""}`}
               onClick={() => handleStatusChange("")}
             >
               Projets
             </button>
             <button
-              className={`btn  btn-orange-outline mx-1 ${statusFilter === "Prévu" ? "active" : ""}`}
+              className={`btn  btn-orange-outline-home  ${statusFilter === "Prévu" ? "active" : ""}`}
               onClick={() => handleStatusChange("Prévu")}
             >
               Prévu
             </button>
             <button
-              className={`btn  btn-orange-outline mx-1 ${statusFilter === "En cours" ? "active" : ""}`}
+              className={`btn  btn-orange-outline-home mx-1 ${statusFilter === "En cours" ? "active" : ""}`}
               onClick={() => handleStatusChange("En cours")}
             >
               En cours
             </button>
             <button
-              className={`btn  btn-orange-outline mx-1 ${statusFilter === "Fini" ? "active" : ""}`}
+              className={`btn  btn-orange-outline-home  ${statusFilter === "Fini" ? "active" : ""}`}
               onClick={() => handleStatusChange("Fini")}
             >
               Fini
@@ -148,7 +151,10 @@ const ProjectTable = ({ projects, setProjects }) => {
               <th className="p-4">Date debut</th>
               <th className="p-4">Date fin</th>
               <th className="p-4">Status</th>
+              {AuthenticatedEmployee && AuthenticatedEmployee.role === "ChefDeProjet" &&(
+              
               <th className="p-4">Budget</th>
+              )}
               <th className="p-4">Avancement</th>
               <th className="p-4">Météo</th>
             </tr>
@@ -185,9 +191,12 @@ const ProjectTable = ({ projects, setProjects }) => {
                       ></span>{" "}
                       {status}
                     </td>
+                    {AuthenticatedEmployee && AuthenticatedEmployee.role === "ChefDeProjet" &&(
                     <td className="p-4">
                       {project.budget} MAD
                     </td>
+                    )}
+                    
                     <td className="p-4">
                       {advancement.toFixed(2)}%
                     </td>

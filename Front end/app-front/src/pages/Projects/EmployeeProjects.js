@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import './project.css';
 import { AuthContext } from '../../context/AuthContext';
 import EmployeeProjectsTable from './EmployeeProjectsTable';
+import Pagination from "../Employees/Pagination";
 
 export default function ProjectPage() {
   const [projects, setProjects] = useState([]);
@@ -155,25 +156,25 @@ export default function ProjectPage() {
                 <div className="flex-container">
                   <div className="button-group my-3">
                     <button
-                      className={`btn  btn-orange-outline mx-1 ${statusFilter === "" ? "active" : ""}`}
+                      className={`btn  btn-orange-outline-home mx-1 ${statusFilter === "" ? "active" : ""}`}
                       onClick={() => handleStatusChange("")}
                     >
                       Projets
                     </button>
                     <button
-                      className={`btn  btn-orange-outline mx-1 ${statusFilter === "Prévu" ? "active" : ""}`}
+                      className={`btn  btn-orange-outline-home mx-1 ${statusFilter === "Prévu" ? "active" : ""}`}
                       onClick={() => handleStatusChange("Prévu")}
                     >
                       Prévu
                     </button>
                     <button
-                      className={`btn  btn-orange-outline mx-1 ${statusFilter === "En cours" ? "active" : ""}`}
+                      className={`btn  btn-orange-outline-home mx-1 ${statusFilter === "En cours" ? "active" : ""}`}
                       onClick={() => handleStatusChange("En cours")}
                     >
                       En cours
                     </button>
                     <button
-                      className={`btn  btn-orange-outline mx-1 ${statusFilter === "Fini" ? "active" : ""}`}
+                      className={`btn  btn-orange-outline-home mx-1 ${statusFilter === "Fini" ? "active" : ""}`}
                       onClick={() => handleStatusChange("Fini")}
                     >
                       Fini
@@ -194,6 +195,12 @@ export default function ProjectPage() {
         </div>
       )}
       <EmployeeProjectsTable projects={currentProjects} setProjects={setProjects} />
+      <Pagination
+        itemsPerPage={projectsPerPage}
+        totalItems={filteredProjects.length}
+        paginate={paginate}
+        currentPage={currentPage}
+      />
     </div>
   );
 }
