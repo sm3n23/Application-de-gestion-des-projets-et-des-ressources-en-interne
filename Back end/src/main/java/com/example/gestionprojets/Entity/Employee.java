@@ -40,17 +40,23 @@ public class Employee {
     private int absences;
 
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "employees", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Set<Project> projects = new HashSet<>();
+
 
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Tache> taches = new ArrayList<>();;
 
-    /*@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ProjectEmployee> projectEmployees = new HashSet<>();*/
+
+
+    public enum AssignmentType {
+        FULL_TIME,
+        PART_TIME
+    }
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ProjectAssignment> projectAssignments = new HashSet<>();
+
 
 
 

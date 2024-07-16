@@ -31,13 +31,7 @@ public class Project {
     private int budget;
     private int consumedBudget = 0;
 
-    @ManyToMany
-    @JoinTable(
-            name = "project_employee",
-            joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "employee_id")
-    )
-    private Set<Employee> employees = new HashSet<>();
+
 
     @JsonManagedReference
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -51,7 +45,8 @@ public class Project {
 
 
 
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ProjectAssignment> projectAssignments = new HashSet<>();
 
-    /*@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ProjectEmployee> projectEmployees = new HashSet<>();*/
+
 }

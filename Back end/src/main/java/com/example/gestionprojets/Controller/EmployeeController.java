@@ -27,6 +27,7 @@ public class EmployeeController {
 
 
 
+
     @GetMapping("/employees/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
         return ResponseEntity.ok(employeeService.getEmployee(id));
@@ -86,19 +87,13 @@ public class EmployeeController {
     }
 
 
-    /*@PostMapping("employee/{employeeId}/assign")
-    public ResponseEntity<Employee> assignEmployeeToProject(@PathVariable Long employeeId,
-                                                            @RequestParam Long projectId,
-                                                            @RequestParam boolean isFullTime) {
-        Employee updatedEmployee = projectService.assignEmployeeToProject(employeeId, projectId, isFullTime);
-        return ResponseEntity.ok(updatedEmployee);
-    }*/
 
     @PutMapping("/employees/{id}/tasks")
     public ResponseEntity<Employee> assignTasksToEmployee(@PathVariable Long id, @RequestBody List<Long> taskIds) {
         Employee updatedEmployee = employeeService.assignTasksToEmployee(id, taskIds);
         return ResponseEntity.ok(updatedEmployee);
     }
+
 
 
 

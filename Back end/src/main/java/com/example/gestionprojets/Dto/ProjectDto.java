@@ -25,4 +25,6 @@ public class ProjectDto {
     private Set<Long> tachesIds;
 
     private String createdBy;
+
+    private List<EmployeeAssignmentDto> employeeAssignments;
 }

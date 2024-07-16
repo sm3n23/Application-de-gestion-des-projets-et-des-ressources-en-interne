@@ -1,11 +1,8 @@
 package com.example.gestionprojets.Service;
 
 import com.example.gestionprojets.Dto.EmployeeDto;
-import com.example.gestionprojets.Entity.Employee;
-import com.example.gestionprojets.Entity.Project;
+import com.example.gestionprojets.Entity.*;
 //import com.example.gestionprojets.Entity.Tache;
-import com.example.gestionprojets.Entity.Role;
-import com.example.gestionprojets.Entity.Tache;
 import com.example.gestionprojets.Repositories.EmployeeRepository;
 import com.example.gestionprojets.Repositories.ProjectRepository;
 import com.example.gestionprojets.Repositories.TacheRepository;
@@ -16,13 +13,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.json.JSONArray;
 import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.http.*;
 import org.json.JSONObject;
 
@@ -43,7 +38,9 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Autowired
     private ProjectRepository projectRepository;
 
+    @Autowired
     private TacheRepository tacheRepository;
+
 
 
 
@@ -119,10 +116,7 @@ public class EmployeeServiceImpl implements EmployeeService{
         employee.setPicture(employeeDto.getPicture());
         employee.setAbsences(employeeDto.getAbsences());
 
-        if (employeeDto.getProjectIds() != null) {
-            List<Project> projects = projectRepository.findAllById(employeeDto.getProjectIds());
-            employee.setProjects(new HashSet<>(projects));
-        }
+
 
         if (employeeDto.getTachesIds() != null) {
             List<Tache> taches = tacheRepository.findAllById(employeeDto.getTachesIds());
@@ -168,6 +162,10 @@ public class EmployeeServiceImpl implements EmployeeService{
 
         return employeeRepository.save(employee);
     }
+
+
+
+
 
 
 

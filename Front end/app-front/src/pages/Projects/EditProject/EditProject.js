@@ -457,30 +457,40 @@ function TextAreaField({ label, name, value, onChange, required }) {
 }
 
 function EmployeeList({ projectId, employees, onAddClick, randomColor, removeEmployeeFromProject }) {
+  if (!employees || employees.length === 0) {
+    return (
+      <div className="form-group m-1">
+        <label className="form-label">Collaborateurs:</label>
+        <div className="form-control my-2">
+          <button type="button" onClick={onAddClick} className="icon-button">
+            <i className="fas fa-circle-plus"></i> Ajouter un(e) Collaborateur
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="form-group m-1">
       <label className="form-label">Collaborateurs:</label>
       <div className="form-control my-2">
         {employees.map((employee) => (
-          <>
-          <Link
-            to={`/collaborateur/edit/${employee.id}`}
-            key={employee.id}
-            state={{ projectId }}
-            className="tag p-2 m-1"
-            style={{ backgroundColor: randomColor() }}
-          >
-            {employee.name}{" "}
-            <span className="icon-button-brown">
-              <i class="fa-solid fa-pen-to-square"></i>
+          <React.Fragment key={employee.id}>
+            <Link
+              to={`/collaborateur/edit/${employee.id}`}
+              state={{ projectId }}
+              className="tag p-2 m-1"
+              style={{ backgroundColor: randomColor() }}
+            >
+              {employee.name}{" "}
+              <span className="icon-button-brown">
+                <i className="fa-solid fa-pen-to-square"></i>
+              </span>
+            </Link>
+            <span className="remove-employee-button" onClick={() => removeEmployeeFromProject(employee.id)}>
+              <i className="fa-sharp fa-solid fa-circle-xmark"></i>
             </span>
-            
-          </Link>
-          <span className="remove-employee-button" 
-          onClick={() => removeEmployeeFromProject(employee.id)}>
-          <i className=" fa-sharp fa-solid fa-circle-xmark"></i></span>
-          </>
-        
+          </React.Fragment>
         ))}
         <button type="button" onClick={onAddClick} className="icon-button">
           <i className="fas fa-circle-plus"></i> Ajouter un(e) Collaborateur
@@ -489,6 +499,7 @@ function EmployeeList({ projectId, employees, onAddClick, randomColor, removeEmp
     </div>
   );
 }
+
 
 function TaskList({ tasks, onDeleteTask, onAddTask, randomColor }) {
   return (

@@ -28,4 +28,6 @@ public class EmployeeDto {
     private int absences;
     private Set<Long> projectIds;
     private Set<Long> tachesIds;
+
+    private List<ProjectAssignmentDto> projectAssignments;
 }
